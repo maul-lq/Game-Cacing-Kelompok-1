@@ -1,5 +1,5 @@
 # Add background image and music
-
+# region IMPORT
 from pygame.font import Font
 import sys
 from asyncio import events
@@ -14,12 +14,12 @@ from os import system
 from sys import exit
 # from _tema1 import *
 
+# endregion
+
+# region VAR
 SIZE = 40
 # BACKGROUND_COLOR = (110, 110, 5)
 LAYAR = (1000, 680)
-# TBL_BORDER = "#c19a00"
-# TBL_HEADER = "#13a10d"
-# TBL_COLUMN = "#fafafa"
 PATH = Path("./res/image")
 PATH_IKON = Path("./res/ikon")
 PATH_MUSIC = Path("./res/music")
@@ -52,6 +52,7 @@ konsol = Console()
 bg_game = None
 get_skin = None
 get_food = None
+# endregion
 
 
 def cls(): return system("@cls")
@@ -147,6 +148,7 @@ def pengaturan():
             pengaturan()
         set_skin()
     elif pilih == '3':
+        cls()
         tabel = None
 
         def set_tema():
@@ -159,7 +161,7 @@ def pengaturan():
             tabel.add_row('3. Kembali')
             konsol.print(tabel, justify='center')
             konsol.print('Pilih Tema Dengan Memasukan Angka (1, ..., 3):')
-            plh_tma = str(input('>>'))
+            plh_tma = str(input('>> '))
             if plh_tma == '2':
                 TBL_HEADER = "#c19a00"
                 TBL_COLUMN = "#b4009f"
@@ -277,9 +279,9 @@ class Snake:
         self.image = pygame.image.load(sk_image).convert()
         self.direction = 'down'
 
-        self.length = 4
-        self.x = [40, 40, 40, 40]
-        self.y = [40, 40, 40, 40]
+        self.length = 5
+        self.x = [40, 40, 40, 40, 40]
+        self.y = [40, 40, 40, 40, 40]
 
     def move_left(self):
         self.direction = 'left'
