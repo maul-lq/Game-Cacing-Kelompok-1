@@ -1,5 +1,6 @@
 # Add background image and music
 # region IMPORT
+from pygame_gui import *
 from json.encoder import ESCAPE
 from pygame.font import Font
 import sys
@@ -494,8 +495,80 @@ class Game:
 if __name__ == '__main__':
     # stop()
     cls()
+    from pygame import *
+    from pygame_gui import *
+    from pygame.locals import *
+
+    init()
+    WIN_SIZE = (1000, 680)  # (LEBAR, TINGGI)
+    TITLE = "Kelompok 1: Game Ular Kotak!!"
+    FPS = 60
+
+    fontStyle = font.SysFont(None, 40)
+
+    # region default var
+    red = 255
+    green = 255
+    blue = 255
+    # endregion
+
+    def draw_text(text: str = ..., fontStyle: font.Font = ..., color: tuple = (red, green, blue), permukaan: Surface = ..., x_pos: float = int, y_pos: float = int):
+        textObj = fontStyle.render(text, True, color)
+        textRect = textObj.get_rect()
+        textRect.topleft = (x_pos, y_pos)
+        permukaan.blit(textObj, textRect)
+
+    class MenuUtama:
+        def __init__(self):
+            init()
+            display.set_caption(TITLE)
+
+            self.layar = display.set_mode(WIN_SIZE)
+            self.manager = UIManager(WIN_SIZE)
+
+            self.layar_bg = Surface(WIN_SIZE)
+            self.clock = time.Clock()
+            self.fps = self.clock.tick(FPS)/1000.0
+
+            self.layar_bg.fill(Color('#5e6745'))
+
+            # Text
+            draw_text("Menu Utama: Game Ular Kotak!", fontStyle, Color(
+                '#e3eec0'), permukaan=self.layar_bg, x_pos=20, y_pos=20)
+
+            # Button
+            self.play_btn = elements.UIButton(
+                Rect((20, 100), (100, 50)), "Main", self.manager)
+
+        def run(self):
+            self.running = True  # Game Sedang Berjalan
+
+            while self.running:
+                for peristiwa in event.get():
+                    if peristiwa.type == QUIT or peristiwa.type == K_F4:
+                        self.running = False
+
+                    if peristiwa.type == KEYDOWN:
+                        if peristiwa.key == K_RETURN:
+                            Game().run()
+                            pass
+
+                    if peristiwa.type == UI_BUTTON_PRESSED:
+                        if peristiwa.ui_element == self.play_btn:
+                            # print('Hello World!')
+                            Game().run()
+
+                    self.manager.process_events(peristiwa)
+
+                self.manager.update(self.fps)
+                self.layar.blit(self.layar_bg, (0, 0))
+                self.manager.draw_ui(self.layar)
+
+                display.update()
+
     default()
-    while True:
-        main()
-        if pilih == '4':
-            break
+    MenuUtama().run()
+    # while True:
+    #     main()
+    #     if pilih == '4':
+    #         break
