@@ -1,5 +1,6 @@
 # Add background image and music
 # region IMPORT
+from json.encoder import ESCAPE
 from pygame.font import Font
 import sys
 from asyncio import events
@@ -20,6 +21,7 @@ from sys import exit
 SIZE = 40
 # BACKGROUND_COLOR = (110, 110, 5)
 LAYAR = (1000, 680)
+JUDUL = "Snake Game: Kelompok 1"
 PATH = Path("./res/image")
 PATH_IKON = Path("./res/ikon")
 PATH_MUSIC = Path("./res/music")
@@ -30,6 +32,7 @@ SKIN = {
     'Spesial': 'block_spesial.jpeg',
     'Putih': 'block_putih.jpg',
     'Gradiasi 1': 'block_gradiasi1.jpg',
+    'Legend': 'block_legend.jpeg',
 
     # Tema ke 1
     'Theme 1': 'ular_tema1.jpg'
@@ -52,6 +55,7 @@ konsol = Console()
 bg_game = None
 get_skin = None
 get_food = None
+FRAME = 10
 # endregion
 
 
@@ -136,6 +140,8 @@ def pengaturan():
                 sk_image = PATH / SKIN["Original"]
             elif sk_image == 'putih' or sk_image == 'Putih':
                 sk_image = PATH / SKIN["Putih"]
+            elif sk_image == 'legend' or sk_image == 'Legend':
+                sk_image = PATH / SKIN["Legend"]
             else:
                 print(f'\n>> {sk_image} Tidak dikenal!')
                 stop()
@@ -261,16 +267,27 @@ class Makanan:
         self.parent_screen = parent_screen
         self.image = pygame.image.load(
             fd_image).convert()
+        self.bonus = pygame.image.load(PATH / MAKANAN["Cabe"]).convert()
         self.x = 120
         self.y = 120
+        self.bx = 120
+        self.by = 120
 
     def draw(self):
         self.parent_screen.blit(self.image, (self.x, self.y))
-        pygame.display.flip()
+        # pygame.display.flip()
+
+    def bdraw(self):
+        self.parent_screen.blit(self.bonus, (self.bx, self.by))
+        # pygame.display.flip()
 
     def move(self):
         self.x = random.randint(1, 24)*SIZE
         self.y = random.randint(1, 16)*SIZE
+
+    def bmove(self):
+        self.bx = random.randint(1, 24)*SIZE
+        self.by = random.randint(1, 16)*SIZE
 
 
 class Snake:
@@ -324,11 +341,16 @@ class Snake:
         self.x.append(-1)
         self.y.append(-1)
 
+    def bincrease_length(self):
+        self.length += 1
+        self.x.append(-1)
+        self.y.append(-1)
+
 
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption("Snake Game: Kelompok 1")
+        pygame.display.set_caption(JUDUL)
         pygame.display.set_icon(IKON)
 
         pygame.mixer.init()
@@ -339,6 +361,8 @@ class Game:
         self.snake.draw()
         self.makanan = Makanan(self.surface)
         self.makanan.draw()
+        self.makanan.bdraw()
+        self.FRAME = FRAME
 
     def play_background_music(self):
         pygame.mixer.music.load(PATH_MUSIC / 'bg_music_1.mp3')
@@ -372,6 +396,8 @@ class Game:
         self.render_background()
         self.snake.walk()
         self.makanan.draw()
+        self.makanan.bdraw()
+        self.skor = (self.snake.length-5)
         self.display_score()
         pygame.display.flip()
 
@@ -381,6 +407,12 @@ class Game:
                 self.play_sound("ding")
                 self.snake.increase_length()
                 self.makanan.move()
+
+        for i in range(self.snake.length):
+            if self.is_collision(self.snake.x[i], self.snake.y[i], self.makanan.bx, self.makanan.by):
+                self.play_sound("ding")
+                self.snake.bincrease_length()
+                self.makanan.bmove()
 
         # snake colliding with itself
         for i in range(3, self.snake.length):
@@ -398,8 +430,7 @@ class Game:
 
     def display_score(self):
         font = pygame.font.SysFont('arial', 30)
-        score = font.render(
-            f"Skor: {self.snake.length-4}", True, (200, 200, 200))
+        score = font.render(f"Skor: {self.skor}", True, (200, 200, 200))
         self.surface.blit(score, (850, 10))
 
     def show_game_over(self):
@@ -457,7 +488,7 @@ class Game:
                 pause = True
                 self.reset()
 
-            time.sleep(.1)
+            pygame.time.Clock().tick(FRAME)
 
 
 if __name__ == '__main__':
