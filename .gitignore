@@ -150,6 +150,7 @@ cython_debug/
 
 # Vscode
 .vscode/
+.vs/
 
 # PyCharm
 #  JetBrains specific template is maintainted in a separate JetBrains.gitignore that can

@@ -7,6 +7,8 @@ import sys
 from asyncio import events
 import pygame
 from pygame.locals import *
+from pygame_gui import *
+from pygame.locals import *
 import time
 import random
 from pathlib import Path
@@ -477,8 +479,6 @@ class Game:
 
 if __name__ == '__main__':
     from time import sleep
-    from typing import Tuple
-
     from pygame import *
     from pygame.locals import *
     from pygame_gui import *
@@ -508,7 +508,7 @@ if __name__ == '__main__':
         teksRect.topleft = (x_pos, y_pos)
         return permukaan.blit(teksObj, teksRect)
 
-    def draw_btn(UIManager: layar, teks: str = 'Tombol', luas: Tuple = (20, 20), xy_pos: Tuple = (0, 0), terlihat: int = 1, anchor: dict = None):
+    def draw_btn(UIManager: layar, teks: str = 'Tombol', luas: tuple = (20, 20), xy_pos: tuple = (0, 0), terlihat: int = 1, anchor: dict = None):
         """
         Fungsi Membuat Tombol Menggunakan Pygame & Pygame_gui.  
 
