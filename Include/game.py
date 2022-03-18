@@ -1,30 +1,24 @@
 # Monday, February - 28 - 2022 (28/2/22) [22:57:04,954 PM]  /  GMT+0700 || 9
-# TODO: Translate semua isi dari class Pengaturan ke menu utama!
 from random import randint
 import pygame_widgets as pw
 
 from pygame import *
 from sys import exit
-from fig import rgb, Tombol, tema1, tema0, tema2, tema3, theme_path_1
+from fig import *
 
+# region
 # inisialisasi pygame
 init()
 judul = 'Snake Game'
 # frame rate
 fps = time.Clock()
+FPS = 60
 
 thp1 = theme_path_1
-
-wLine = tema0['wl']
-bg = tema0['bg']
-pn1 = tema0['pn1']
-warnaTeks = tema0['tk']
-# tombol
-wBA = tema0['btnA']
-wBH = tema0['btnH']
-wBP = tema0['btnP']
-wBSh = tema0['btnSh']
-
+thp2 = theme_path_2
+thp3 = theme_path_3
+thp4 = theme_path_4
+mkn = makanan
 
 # membuat window / layar
 imgSize = 30  # Ukuran gambar (ular, makanan, dll)
@@ -35,6 +29,7 @@ layar = display.set_mode(WIN_SIZE)
 # memuat judul dan ikon
 display.set_caption('Game Ular | Kelompok 1')
 display.set_icon(image.load('./res/ikon/ikon.png'))
+# endregion
 
 
 class GAME:
@@ -82,7 +77,7 @@ class GAME:
                                shadowColour=wBSh,
                                teks="Play",
                                sudutRad=3,
-                               onClick=self.fbtn_play)
+                               onRelease=self.fbtn_play)
 
         # membuat tombol pengaturan
         self.btn_pengRect = Rect((self.panel_11Rect.topleft[0]+10,
@@ -102,7 +97,7 @@ class GAME:
                                shadowColour=wBSh,
                                teks="Pengaturan",
                                sudutRad=3,
-                               onClick=self.btn_pengaturan)
+                               onRelease=self.btn_pengaturan)
 
         # membuat tombol keluar
         self.btn_keluarRect = Rect((self.panel_11Rect.topleft[0]+10,
@@ -123,7 +118,7 @@ class GAME:
                                  shadowColour=wBSh,
                                  teks='Keluar',
                                  sudutRad=3,
-                                 onClick=lambda: exit())
+                                 onRelease=lambda: exit())
         # endregion
 
         # endregion
@@ -172,7 +167,7 @@ class GAME:
                                   shadowDistance=2,
                                   shadowColour=wBSh,
                                   sudutRad=3,
-                                  onClick=self.klikKembali)
+                                  onRelease=self.klikKembali)
 
         # membuat tombol tema bawaan
         self.btn_defaultRect = Rect((self.btn_kembaliRect.topright[0]+20,
@@ -184,7 +179,7 @@ class GAME:
                                    self.btn_defaultRect.width,
                                    self.btn_defaultRect.height,
                                    self.btn_font, 20,
-                                   'Default Theme',
+                                   'Default',
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
                                    warnaDitekan=wBP,
@@ -206,7 +201,7 @@ class GAME:
                                  self.btn_theme1Rect.width,
                                  self.btn_theme1Rect.height,
                                  self.btn_font, 50,
-                                 'Theme 1',
+                                 'Red Corn Snake',
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
                                  warnaDitekan=wBP,
@@ -268,6 +263,11 @@ class GAME:
         # region Play
         # inisialisasi si ular dan makanannya
         self.plAktif = True
+        self.reset()
+        self.go_nskor = 0
+        self.go_high_skor = 0
+        self.nths = 0
+        self.isreset = False
 
         # membuat background
         self.pbg = Surface(WIN_SIZE)
@@ -278,45 +278,89 @@ class GAME:
         # mwmbuat panel skor
         self.pskor = Surface((WIN_SIZE[0], imgSize*2))
         self.pskor_rect = self.pskor.get_rect(topleft=(0, 0))
-        self.pskor.fill(rgb(0, 100, 2))
+        self.pskor.fill(skp)
 
         self.border3 = Surface((imgSize*(celln), imgSize))
         self.border3_rect = self.border3.get_rect(
             topleft=self.pskor_rect.bottomleft)
-        self.border3.fill(pn1)
+        self.border3.fill(brd)
 
         self.border0 = Surface((imgSize, imgSize*(celln-2)))
         self.border0_rect = self.border0.get_rect(
             topleft=self.border3_rect.bottomleft)
-        self.border0.fill(pn1)
+        self.border0.fill(brd)
 
         self.border1 = Surface((imgSize*(celln-1), imgSize))
         self.border1_rect = self.border1.get_rect(
             bottomleft=(self.border0_rect.bottomright[0],
                         WIN_SIZE[1]))
-        self.border1.fill(pn1)
+        self.border1.fill(brd)
 
         self.border2 = Surface((imgSize, imgSize*(celln-1)))
         self.border2_rect = self.border2.get_rect(
             topright=self.border3_rect.topright)
-        self.border2.fill(pn1)
+        self.border2.fill(brd)
+
+        self.boardRect = Rect(self.border0_rect.topright,
+                              (imgSize*21, imgSize*19))
         # endregion
 
         # rumput
-        self.warnaRumput = rgb(175, 199, 72)
+        self.warnaRumput = tema0['rm']
 
-        # bayangan
-        self.boardSh_rect = Rect(
-            self.border0_rect.topright, (imgSize*21, imgSize*20))
+        # region Tampilan Game Over
+        self.plgAktif = True
+        self.pngmRect = Rect((0, 0), (350, 400))
+        self.pngmRect.center = self.boardRect.center
 
+        # piala
+        self.piala = image.load('./res/image/misc/piala.png').convert_alpha()
+
+        # region Tombol
+        self.btnHomeRect = Rect((self.pngmRect.midleft[0]+10,
+                                 (self.pngmRect.bottomleft[1]-int(self.btnSize[1]/2))-30),
+                                (int(self.btnSize[0]/2)+40, int(self.btnSize[1]/2)+20))
+        self.btnHome = Tombol(layar,
+                              self.btnHomeRect.x,
+                              self.btnHomeRect.y,
+                              self.btnHomeRect.width,
+                              self.btnHomeRect.height,
+                              self.btn_font1, 20,
+                              "Home",
+                              warnaTeks,
+                              wBA, wBH, wBP, 20, 2,
+                              onRelease=self.klikHome)
+
+        self.btnResetRect = Rect((self.pngmRect.midright[0]-10-(int(self.btnSize[0]/2)+40),
+                                  (self.pngmRect.bottomright[1]-int(self.btnSize[1]/2))-30),
+                                 (int(self.btnSize[0]/2)+40, int(self.btnSize[1]/2)+20))
+        self.btnReset = Tombol(layar,
+                               self.btnResetRect.x,
+                               self.btnResetRect.y,
+                               self.btnResetRect.width,
+                               self.btnResetRect.height,
+                               self.btn_font1, 20,
+                               "Try Again",
+                               warnaTeks,
+                               wBA, wBH, wBP, 20, 2,
+                               onRelease=self.klikReset)
         # endregion
 
+        # endregion
+        # endregion
+
+        # region Enable & Disable Tombol
         self.btn_defaultT.disable()
         self.btn_defaultT.hide()
         self.btn_kembali.hide()
         self.btn_theme1.hide()
         self.btn_theme2.hide()
         self.btn_theme3.hide()
+        self.btnHome.disable()
+        self.btnHome.hide()
+        self.btnReset.disable()
+        self.btnReset.hide()
+        # endregion
 
         # region Ular
         # inisialisasi ular
@@ -346,39 +390,36 @@ class GAME:
 
         # region Makanan
         self.acakPos()
-        self.makanan = image.load(
-            './res/image/makanan/sate.png').convert_alpha()
+        self.makanan = image.load(mkn / 'sate.png').convert_alpha()
         # endregion
         pass
 
-    def btn_pengaturan(self):
-        self.btn_defaultT.show()
-        self.btn_kembali.show()
-        self.btn_theme1.show()
-        self.btn_theme2.show()
-        self.btn_theme3.show()
-
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
-
-        self.pengaturan()
-
-    def fbtn_play(self):
-        self.badan = [Vector2(5, 12), Vector2(
-            4, 12), Vector2(3, 12), Vector2(2, 12)]
-        self.arah = Vector2(0, 0)
-        self.fd_pos = Vector2(8, 12)
-        self.play()
-
+    # ! Membuat menu Utama
     def draw(self):
         layar.blit(self.bg1, self.bg1_rect)
         layar.blit(self.judul, self.judul_rect)
         # mebuat garis bawah pada judul
-        draw.line(layar, wLine,
-                  (self.judul_rect.midleft[0],
-                   self.judul_rect.midleft[1]+40),
-                  (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
+
+        if self.wline == 0:
+            draw.line(layar, wLine,
+                      (self.judul_rect.midleft[0],
+                       self.judul_rect.midleft[1]+40),
+                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
+        elif self.wline == 1:
+            draw.line(layar, tema1['wl'],
+                      (self.judul_rect.midleft[0],
+                       self.judul_rect.midleft[1]+40),
+                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
+        elif self.wline == 2:
+            draw.line(layar, tema2['wl'],
+                      (self.judul_rect.midleft[0],
+                       self.judul_rect.midleft[1]+40),
+                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
+        elif self.wline == 3:
+            draw.line(layar, tema3['wl'],
+                      (self.judul_rect.midleft[0],
+                       self.judul_rect.midleft[1]+40),
+                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
 
         # layar.blit(self.panel_1, self.panel_11Rect)
 
@@ -396,17 +437,18 @@ class GAME:
 
             pw.update(ki)
             display.update()
-            fps.tick(100)
+            fps.tick(FPS)
 
         pass
 
     # ! Membuat menu pengaturan
+    # region Pengaturan
     def pengDraw(self):
         # gambar tampilan pengaturan
         layar.blit(self.bg, self.bg_rect)
         layar.blit(self.panel_1, self.panel_1Rect)
         layar.blit(self.teksH1, self.teksH1_rect)
-        layar.blit(self.teks1, self.teks1_rect)
+        # layar.blit(self.teks1, self.teks1_rect)
 
         if self.wline == 0:
             # garis kotak di pinggir layar
@@ -532,275 +574,12 @@ class GAME:
 
             pw.update(ki)
             display.update()
-            fps.tick(100)
+            fps.tick(FPS)
 
-    def klikKembali(self):
-        self.btn_kembali.hide()
-        self.btn_defaultT.hide()
-        self.btn_theme1.hide()
-        self.btn_theme2.hide()
-        self.btn_theme3.hide()
+    # endregion
 
-        self.btn_keluar.show()
-        self.btn_play.show()
-        self.btn_peng.show()
-        self.run()
-
-    def setDefTheme(self):
-        global warnaTeks
-        self.wline = 0
-        self.bg.fill(tema0['bg'])
-        self.panel_1.fill(tema0['pn1'])
-        warnaTeks = tema0['tk']
-
-        # region Pengaturan
-        self.teks1 = self.font_h2.render('Theme: Default', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
-        self.btn_kembali.inactiveColour = tema0['btnA']
-        self.btn_kembali.hoverColour = tema0['btnH']
-        self.btn_kembali.pressedColour = tema0['btnP']
-        self.btn_kembali.textColour = warnaTeks
-        self.btn_defaultT.inactiveColour = tema0['btnA']
-        self.btn_defaultT.hoverColour = tema0['btnH']
-        self.btn_defaultT.pressedColour = tema0['btnP']
-        self.btn_defaultT.textColour = warnaTeks
-        self.btn_theme1.inactiveColour = tema0['btnA']
-        self.btn_theme1.hoverColour = tema0['btnH']
-        self.btn_theme1.pressedColour = tema0['btnP']
-        self.btn_theme1.textColour = warnaTeks
-        self.btn_theme2.inactiveColour = tema0['btnA']
-        self.btn_theme2.hoverColour = tema0['btnH']
-        self.btn_theme2.pressedColour = tema0['btnP']
-        self.btn_theme2.textColour = warnaTeks
-        self.btn_theme3.inactiveColour = tema0['btnA']
-        self.btn_theme3.hoverColour = tema0['btnH']
-        self.btn_theme3.pressedColour = tema0['btnP']
-        self.btn_theme3.textColour = warnaTeks
-        # endregion
-
-        # region Menu Utama
-        self.bg1.fill(tema0['bg'])
-        self.btn_play.inactiveColour = tema0['btnA']
-        self.btn_play.hoverColour = tema0['btnH']
-        self.btn_play.pressedColour = tema0['btnP']
-        self.btn_play.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema0['btnA']
-        self.btn_keluar.hoverColour = tema0['btnH']
-        self.btn_keluar.pressedColour = tema0['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.btn_peng.inactiveColour = tema0['btnA']
-        self.btn_peng.hoverColour = tema0['btnH']
-        self.btn_peng.pressedColour = tema0['btnP']
-        self.btn_peng.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema0['btnA']
-        self.btn_keluar.hoverColour = tema0['btnH']
-        self.btn_keluar.pressedColour = tema0['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.judul = self.title_font.render(
-            judul, True, warnaTeks)
-        # endregion
-
-        # region Ular
-        self.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
-
-        self.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp1/'badan_br.png').convert_alpha()
-
-        self.b_v = image.load(thp1/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp1/'badan_h.png').convert_alpha()
-
-        self.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
-        # endregion
-
-        # region END
-        self.btn_defaultT.disable()
-        self.btn_theme1.enable()
-        self.btn_theme2.enable()
-        self.btn_theme3.enable()
-        # region
-        pass
-
-    def setTheme1(self):
-        global warnaTeks
-        self.wline = 1
-        self.bg.fill(tema1['bg'])
-        self.panel_1.fill(tema1['pn1'])
-        warnaTeks = tema1['tk']
-
-        self.teks1 = self.font_h2.render('Theme: Red Brick', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
-        self.btn_kembali.inactiveColour = tema1['btnA']
-        self.btn_kembali.hoverColour = tema1['btnH']
-        self.btn_kembali.pressedColour = tema1['btnP']
-        self.btn_kembali.textColour = warnaTeks
-        self.btn_defaultT.inactiveColour = tema1['btnA']
-        self.btn_defaultT.hoverColour = tema1['btnH']
-        self.btn_defaultT.pressedColour = tema1['btnP']
-        self.btn_defaultT.textColour = warnaTeks
-        self.btn_theme1.inactiveColour = tema1['btnA']
-        self.btn_theme1.hoverColour = tema1['btnH']
-        self.btn_theme1.pressedColour = tema1['btnP']
-        self.btn_theme1.textColour = warnaTeks
-        self.btn_theme2.inactiveColour = tema1['btnA']
-        self.btn_theme2.hoverColour = tema1['btnH']
-        self.btn_theme2.pressedColour = tema1['btnP']
-        self.btn_theme2.textColour = warnaTeks
-        self.btn_theme3.inactiveColour = tema1['btnA']
-        self.btn_theme3.hoverColour = tema1['btnH']
-        self.btn_theme3.pressedColour = tema1['btnP']
-        self.btn_theme3.textColour = warnaTeks
-
-        self.bg1.fill(tema1['bg'])
-        self.btn_play.inactiveColour = tema1['btnA']
-        self.btn_play.hoverColour = tema1['btnH']
-        self.btn_play.pressedColour = tema1['btnP']
-        self.btn_play.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema1['btnA']
-        self.btn_keluar.hoverColour = tema1['btnH']
-        self.btn_keluar.pressedColour = tema1['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.btn_peng.inactiveColour = tema1['btnA']
-        self.btn_peng.hoverColour = tema1['btnH']
-        self.btn_peng.pressedColour = tema1['btnP']
-        self.btn_peng.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema1['btnA']
-        self.btn_keluar.hoverColour = tema1['btnH']
-        self.btn_keluar.pressedColour = tema1['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.judul = self.title_font.render(
-            judul, True, warnaTeks)
-
-        self.btn_defaultT.enable()
-        self.btn_theme1.disable()
-        self.btn_theme2.enable()
-        self.btn_theme3.enable()
-        pass
-
-    def setTheme2(self):
-        global warnaTeks
-        self.bg.fill(tema2['bg'])
-        self.panel_1.fill(tema2['pn1'])
-        warnaTeks = tema2['tk']
-        self.wline = 2
-
-        self.teks1 = self.font_h2.render('Theme: Snowy Time', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
-        self.btn_kembali.inactiveColour = tema2['btnA']
-        self.btn_kembali.hoverColour = tema2['btnH']
-        self.btn_kembali.pressedColour = tema2['btnP']
-        self.btn_kembali.textColour = warnaTeks
-        self.btn_defaultT.inactiveColour = tema2['btnA']
-        self.btn_defaultT.hoverColour = tema2['btnH']
-        self.btn_defaultT.pressedColour = tema2['btnP']
-        self.btn_defaultT.textColour = warnaTeks
-        self.btn_theme1.inactiveColour = tema2['btnA']
-        self.btn_theme1.hoverColour = tema2['btnH']
-        self.btn_theme1.pressedColour = tema2['btnP']
-        self.btn_theme1.textColour = warnaTeks
-        self.btn_theme2.inactiveColour = tema2['btnA']
-        self.btn_theme2.hoverColour = tema2['btnH']
-        self.btn_theme2.pressedColour = tema2['btnP']
-        self.btn_theme2.textColour = warnaTeks
-        self.btn_theme3.inactiveColour = tema2['btnA']
-        self.btn_theme3.hoverColour = tema2['btnH']
-        self.btn_theme3.pressedColour = tema2['btnP']
-        self.btn_theme3.textColour = warnaTeks
-
-        self.bg1.fill(tema2['bg'])
-        self.btn_play.inactiveColour = tema2['btnA']
-        self.btn_play.hoverColour = tema2['btnH']
-        self.btn_play.pressedColour = tema2['btnP']
-        self.btn_play.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema2['btnA']
-        self.btn_keluar.hoverColour = tema2['btnH']
-        self.btn_keluar.pressedColour = tema2['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.btn_peng.inactiveColour = tema2['btnA']
-        self.btn_peng.hoverColour = tema2['btnH']
-        self.btn_peng.pressedColour = tema2['btnP']
-        self.btn_peng.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema2['btnA']
-        self.btn_keluar.hoverColour = tema2['btnH']
-        self.btn_keluar.pressedColour = tema2['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.judul_rect = self.judul_rect
-        self.judul = self.title_font.render(
-            judul, True, warnaTeks)
-
-        self.btn_defaultT.enable()
-        self.btn_theme1.enable()
-        self.btn_theme2.disable()
-        self.btn_theme3.enable()
-        pass
-
-    def setTheme3(self):
-        global warnaTeks
-        self.bg.fill(tema3['bg'])
-        self.panel_1.fill(tema3['pn1'])
-        warnaTeks = tema3['tk']
-
-        self.teks1 = self.font_h2.render('Theme: Pastel', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
-        self.btn_kembali.inactiveColour = tema3['btnA']
-        self.btn_kembali.hoverColour = tema3['btnH']
-        self.btn_kembali.pressedColour = tema3['btnP']
-        self.btn_kembali.textColour = warnaTeks
-        self.btn_defaultT.inactiveColour = tema3['btnA']
-        self.btn_defaultT.hoverColour = tema3['btnH']
-        self.btn_defaultT.pressedColour = tema3['btnP']
-        self.btn_defaultT.textColour = warnaTeks
-        self.btn_theme1.inactiveColour = tema3['btnA']
-        self.btn_theme1.hoverColour = tema3['btnH']
-        self.btn_theme1.pressedColour = tema3['btnP']
-        self.btn_theme1.textColour = warnaTeks
-        self.btn_theme2.inactiveColour = tema3['btnA']
-        self.btn_theme2.hoverColour = tema3['btnH']
-        self.btn_theme2.pressedColour = tema3['btnP']
-        self.btn_theme2.textColour = warnaTeks
-        self.btn_theme3.inactiveColour = tema3['btnA']
-        self.btn_theme3.hoverColour = tema3['btnH']
-        self.btn_theme3.pressedColour = tema3['btnP']
-        self.btn_theme3.textColour = warnaTeks
-
-        self.bg1.fill(tema3['bg'])
-        self.btn_play.inactiveColour = tema3['btnA']
-        self.btn_play.hoverColour = tema3['btnH']
-        self.btn_play.pressedColour = tema3['btnP']
-        self.btn_play.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema3['btnA']
-        self.btn_keluar.hoverColour = tema3['btnH']
-        self.btn_keluar.pressedColour = tema3['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.btn_peng.inactiveColour = tema3['btnA']
-        self.btn_peng.hoverColour = tema3['btnH']
-        self.btn_peng.pressedColour = tema3['btnP']
-        self.btn_peng.textColour = warnaTeks
-        self.btn_keluar.inactiveColour = tema3['btnA']
-        self.btn_keluar.hoverColour = tema3['btnH']
-        self.btn_keluar.pressedColour = tema3['btnP']
-        self.btn_keluar.textColour = warnaTeks
-        self.judul_rect = self.judul_rect
-        self.judul = self.title_font.render(
-            judul, True, warnaTeks)
-
-        self.btn_defaultT.enable()
-        self.btn_theme1.enable()
-        self.btn_theme2.enable()
-        self.btn_theme3.disable()
-
-        pass
+    # ! membuat Gamenya
+    # region Game
 
     def drawElem(self):
         layar.blit(self.pbg, self.pbg_rect)
@@ -826,6 +605,7 @@ class GAME:
         if self.fd_pos == self.badan[0]:
             self.acakPos()
             self.tambah_blok()
+            self.go_nskor += 1
             # print(self.newblok)
             pass
 
@@ -838,17 +618,88 @@ class GAME:
             self.gameOver()
 
         for blok in self.badan[1:]:
-            if blok == self.badan[0]:
+            if blok == self.badan[0] and self.arah != Vector2(0, 0):
                 self.gameOver()
 
         pass
 
+    def drawGameOver(self):
+        if self.nths == 0:
+            draw.rect(layar, tema0['pn1'], self.pngmRect, 0, 4)
+        elif self.nths == 1:
+            draw.rect(layar, tema1['pn1'], self.pngmRect, 0, 4)
+        elif self.nths == 2:
+            draw.rect(layar, tema2['pn1'], self.pngmRect, 0, 4)
+        elif self.nths == 3:
+            draw.rect(layar, tema3['pn1'], self.pngmRect, 0, 4)
+        # membuat tulisan game over
+        self.tkgmover = self.font_h1.render('Game Over', True, warnaTeks)
+        self.tkgmoverRect = self.tkgmover.get_rect(midtop=(self.pngmRect.midtop[0],
+                                                           self.pngmRect.midtop[1]+10))
+
+        self.pngmRect.center = self.boardRect.center
+
+        # region Skor dan HighSkor
+        self.dis_makanan2x = transform.smoothscale(
+            self.makanan, (self.pskor_rect.height-25, self.pskor_rect.height-25))
+        self.dis_makanan2xRect = self.dis_makanan2x.get_rect(
+            midleft=(self.pngmRect.midleft[0]+40, int(self.boardRect.midleft[1]-(self.boardRect.midleft[1]*(1/4)))))
+
+        self.teks_skor = self.font_h1.render(f'{self.nskor}', True, warnaTeks)
+        self.teks_skorRect = self.teks_skor.get_rect(
+            midleft=self.dis_makanan2xRect.midright)
+        self.teks_skorRect.x += 5
+        self.teks_skorRect.y += 2
+
+        # membuat high skor
+        if self.go_nskor > self.go_high_skor:
+            self.go_high_skor = self.go_nskor
+        teks_hskor = self.font_h1.render(
+            f'{self.go_high_skor}', True, warnaTeks)
+        teks_hskorRect = teks_hskor.get_rect(
+            midleft=(self.pngmRect.midright[0]-80, self.teks_skorRect.midright[1]))
+
+        pialaRect = self.piala.get_rect(
+            midright=(teks_hskorRect.midleft[0]-5, teks_hskorRect.midleft[1]))
+
+        # endregion
+
+        layar.blits([(self.tkgmover, self.tkgmoverRect), (self.dis_makanan2x, self.dis_makanan2xRect),
+                     (self.teks_skor, self.teks_skorRect), (teks_hskor, teks_hskorRect), (self.piala, pialaRect)])
+        pass
+
     def gameOver(self):
-        self.reset()
+        # region Disable & Enable Tombol
+        self.btnHome.enable()
+        self.btnHome.show()
+        self.btnReset.enable()
+        self.btnReset.show()
+        self.btn_play.disable()
+        self.btn_keluar.disable()
+        self.btn_peng.disable()
+        self.btn_play.hide()
+        self.btn_keluar.hide()
+        self.btn_peng.hide()
+        # endregion
+
+        while self.plgAktif:
+            ki = event.get()
+            for ki in ki:
+                if ki.type == QUIT:
+                    quit()
+                    exit()
+                if ki.type == KEYDOWN:
+                    if ki.key == K_ESCAPE:
+                        self.run()
+
+            self.drawGameOver()
+            pw.update(ki)
+            display.update()
+            fps.tick(FPS)
 
     def play(self):
         UPDATE_LAYAR = USEREVENT
-        time.set_timer(UPDATE_LAYAR, 150)
+        time.set_timer(UPDATE_LAYAR, 135)
         while self.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
@@ -856,24 +707,25 @@ class GAME:
                     exit()
                 if ki.type == UPDATE_LAYAR:
                     self.update()
+
                 if ki.type == KEYDOWN:
                     if ki.key == K_ESCAPE:
                         self.run()
 
                     # Kontrol si ular
-                    if ki.key == K_UP:
+                    if ki.key == K_UP or ki.key == K_w:
                         if self.arah.y != 1:
                             self.arah = Vector2(0, -1)
 
-                    if ki.key == K_RIGHT:
+                    if ki.key == K_RIGHT or ki.key == K_d:
                         if self.arah.x != -1:
                             self.arah = Vector2(1, 0)
 
-                    if ki.key == K_DOWN:
+                    if ki.key == K_DOWN or ki.key == K_s:
                         if self.arah.y != -1:
                             self.arah = Vector2(0, 1)
 
-                    if ki.key == K_LEFT:
+                    if ki.key == K_LEFT or ki.key == K_a:
                         if self.arah.x != 1:
                             self.arah = Vector2(-1, 0)
 
@@ -881,17 +733,44 @@ class GAME:
 
             self.drawElem()
             display.update()
-            fps.tick(100)
+            fps.tick(FPS)
 
     def skor(self):
         # membuat tulisan skor
-        self.nskor = (len(self.badan)-4)
-        self.teks_skor = self.font_h1.render(
-            f'Skor : {self.nskor}', True, warnaTeks)
-        self.teks_skorRect = self.teks_skor.get_rect(midleft=(self.border0_rect.topright[0],
-                                                              self.pskor_rect.midleft[1]))
+        self.dis_makanan2x = transform.smoothscale(
+            self.makanan, (self.pskor_rect.height-25, self.pskor_rect.height-25))
+        self.dis_makanan2xRect = self.dis_makanan2x.get_rect(
+            midleft=(self.border0_rect.topright[0]+125, self.pskor_rect.midleft[1]))
 
-        layar.blit(self.teks_skor, self.teks_skorRect)
+        self.nskor = (len(self.badan)-4)
+        self.teks_skor = self.font_h1.render(f'{self.nskor}', True, warnaTeks)
+        self.teks_skorRect = self.teks_skor.get_rect(
+            midleft=self.dis_makanan2xRect.midright)
+        self.teks_skorRect.x += 5
+        self.teks_skorRect.y += 2
+
+        # membuat piala jika player mengulang game
+        dis_piala2x = transform.smoothscale(
+            self.piala, (self.pskor_rect.height-25, self.pskor_rect.height-25))
+        dis_piala2xRect = dis_piala2x.get_rect(
+            midleft=(self.border0_rect.topright[0]+(125*3), self.pskor_rect.midleft[1]))
+
+        layar.blits([(self.teks_skor, self.teks_skorRect),
+                    (self.dis_makanan2x, self.dis_makanan2xRect)])
+
+        if self.go_high_skor != 0:
+            nskor = self.nskor
+            if nskor >= self.go_high_skor:
+                self.go_high_skor = nskor
+
+            teks_hskor = self.font_h1.render(
+                f'{self.go_high_skor}', True, warnaTeks)
+            teks_hskorRect = teks_hskor.get_rect(
+                midleft=(dis_piala2xRect.midright[0]+5, dis_piala2xRect.midright[1]))
+
+            layar.blit(dis_piala2x, dis_piala2xRect)
+            layar.blit(teks_hskor, teks_hskorRect)
+
         pass
 
     def rumput(self):
@@ -910,6 +789,8 @@ class GAME:
                         draw.rect(layar, self.warnaRumput, rumputRect)
                 pass
         pass
+
+    # endregion
 
     # region Ular
     def gambar_ular(self):
@@ -982,9 +863,10 @@ class GAME:
             self.badan = badanC[:]
             self.newblok = False
         else:
-            badanC = self.badan[:-1]
-            badanC.insert(0, badanC[0]+self.arah)
-            self.badan = badanC[:]
+            if self.arah != Vector2(0, 0):
+                badanC = self.badan[:-1]
+                badanC.insert(0, badanC[0]+self.arah)
+                self.badan = badanC[:]
 
     def tambah_blok(self):
         self.newblok = True
@@ -1014,7 +896,464 @@ class GAME:
 
     # endregion
 
+    # region Fungsi Tombol
+    def klikHome(self):
+        self.btnHome.disable()
+        self.btnHome.hide()
+        self.btnReset.disable()
+        self.btnReset.hide()
+        self.btn_play.enable()
+        self.btn_keluar.enable()
+        self.btn_peng.enable()
+        self.btn_play.show()
+        self.btn_keluar.show()
+        self.btn_peng.show()
+        self.run()
+
+    def klikReset(self):
+        self.btnHome.disable()
+        self.btnHome.hide()
+        self.btnReset.disable()
+        self.btnReset.hide()
+        self.reset()
+        self.go_nskor = 0
+        self.play()
+
+    def btn_pengaturan(self):
+        self.btn_defaultT.show()
+        self.btn_kembali.show()
+        self.btn_theme1.show()
+        self.btn_theme2.show()
+        self.btn_theme3.show()
+
+        self.btn_keluar.hide()
+        self.btn_play.hide()
+        self.btn_peng.hide()
+
+        self.pengaturan()
+
+    def klikKembali(self):
+        self.btn_kembali.hide()
+        self.btn_defaultT.hide()
+        self.btn_theme1.hide()
+        self.btn_theme2.hide()
+        self.btn_theme3.hide()
+
+        self.btn_keluar.show()
+        self.btn_play.show()
+        self.btn_peng.show()
+        self.run()
+
+    def fbtn_play(self):
+        # self.badan = [Vector2(5, 12), Vector2(
+        #     4, 12), Vector2(3, 12), Vector2(2, 12)]
+        # self.arah = Vector2(0, 0)
+        # self.fd_pos = Vector2(8, 12)
+        self.reset()
+        self.go_nskor = 0
+        self.play()
+
+    def setDefTheme(self):
+        global warnaTeks
+        self.wline = 0
+        self.bg.fill(tema0['bg'])
+        self.panel_1.fill(tema0['pn1'])
+        warnaTeks = tema0['tk']
+
+        # region Pengaturan
+        # self.teks1 = self.font_h2.render('Theme: Default', True, warnaTeks)
+        self.teksH1 = self.font_h1.render(
+            'Pengaturan | Theme Game Ular', True, warnaTeks)
+        self.btn_kembali.inactiveColour = tema0['btnA']
+        self.btn_kembali.hoverColour = tema0['btnH']
+        self.btn_kembali.pressedColour = tema0['btnP']
+        self.btn_kembali.textColour = warnaTeks
+        self.btn_defaultT.inactiveColour = tema0['btnA']
+        self.btn_defaultT.hoverColour = tema0['btnH']
+        self.btn_defaultT.pressedColour = tema0['btnP']
+        self.btn_defaultT.textColour = warnaTeks
+        self.btn_theme1.inactiveColour = tema0['btnA']
+        self.btn_theme1.hoverColour = tema0['btnH']
+        self.btn_theme1.pressedColour = tema0['btnP']
+        self.btn_theme1.textColour = warnaTeks
+        self.btn_theme2.inactiveColour = tema0['btnA']
+        self.btn_theme2.hoverColour = tema0['btnH']
+        self.btn_theme2.pressedColour = tema0['btnP']
+        self.btn_theme2.textColour = warnaTeks
+        self.btn_theme3.inactiveColour = tema0['btnA']
+        self.btn_theme3.hoverColour = tema0['btnH']
+        self.btn_theme3.pressedColour = tema0['btnP']
+        self.btn_theme3.textColour = warnaTeks
+        # endregion
+
+        # region Menu Utama
+        self.bg1.fill(tema0['bg'])
+        self.btn_play.inactiveColour = tema0['btnA']
+        self.btn_play.hoverColour = tema0['btnH']
+        self.btn_play.pressedColour = tema0['btnP']
+        self.btn_play.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema0['btnA']
+        self.btn_keluar.hoverColour = tema0['btnH']
+        self.btn_keluar.pressedColour = tema0['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.btn_peng.inactiveColour = tema0['btnA']
+        self.btn_peng.hoverColour = tema0['btnH']
+        self.btn_peng.pressedColour = tema0['btnP']
+        self.btn_peng.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema0['btnA']
+        self.btn_keluar.hoverColour = tema0['btnH']
+        self.btn_keluar.pressedColour = tema0['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.judul = self.title_font.render(
+            judul, True, warnaTeks)
+        # endregion
+
+        # region Ular
+        self.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
+        self.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
+        self.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
+        self.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
+
+        self.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
+        self.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
+        self.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
+        self.b_br = image.load(thp1/'badan_br.png').convert_alpha()
+
+        self.b_v = image.load(thp1/'badan_v.png').convert_alpha()
+        self.b_h = image.load(thp1/'badan_h.png').convert_alpha()
+
+        self.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
+        self.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
+        self.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
+        self.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
+        # endregion
+
+        # region Play
+        self.nths = 0
+        self.warnaRumput = tema0['rm']
+        self.pbg.fill(tema0['bg'])
+        self.pskor.fill(tema0['skp'])
+        self.border0.fill(tema0['brd'])
+        self.border1.fill(tema0['brd'])
+        self.border2.fill(tema0['brd'])
+        self.border3.fill(tema0['brd'])
+        self.btnReset.inactiveColour = tema0['btnA']
+        self.btnReset.hoverColour = tema0['btnH']
+        self.btnReset.pressedColour = tema0['btnP']
+        self.btnHome.inactiveColour = tema0['btnA']
+        self.btnHome.hoverColour = tema0['btnH']
+        self.btnHome.pressedColour = tema0['btnP']
+        # endregion
+
+        # region END
+        self.btn_defaultT.disable()
+        self.btn_theme1.enable()
+        self.btn_theme2.enable()
+        self.btn_theme3.enable()
+        # endregion
+        pass
+
+    def setTheme1(self):
+        global warnaTeks
+        self.wline = 1
+        self.bg.fill(tema1['bg'])
+        self.panel_1.fill(tema1['pn1'])
+        warnaTeks = tema1['tk']
+
+        # region pengaturan
+        # self.teks1 = self.font_h2.render('Theme: ', True, warnaTeks)
+        self.teksH1 = self.font_h1.render(
+            'Pengaturan | Theme Game Ular', True, warnaTeks)
+        self.btn_kembali.inactiveColour = tema1['btnA']
+        self.btn_kembali.hoverColour = tema1['btnH']
+        self.btn_kembali.pressedColour = tema1['btnP']
+        self.btn_kembali.textColour = warnaTeks
+        self.btn_defaultT.inactiveColour = tema1['btnA']
+        self.btn_defaultT.hoverColour = tema1['btnH']
+        self.btn_defaultT.pressedColour = tema1['btnP']
+        self.btn_defaultT.textColour = warnaTeks
+        self.btn_theme1.inactiveColour = tema1['btnA']
+        self.btn_theme1.hoverColour = tema1['btnH']
+        self.btn_theme1.pressedColour = tema1['btnP']
+        self.btn_theme1.textColour = warnaTeks
+        self.btn_theme2.inactiveColour = tema1['btnA']
+        self.btn_theme2.hoverColour = tema1['btnH']
+        self.btn_theme2.pressedColour = tema1['btnP']
+        self.btn_theme2.textColour = warnaTeks
+        self.btn_theme3.inactiveColour = tema1['btnA']
+        self.btn_theme3.hoverColour = tema1['btnH']
+        self.btn_theme3.pressedColour = tema1['btnP']
+        self.btn_theme3.textColour = warnaTeks
+        # endregion
+
+        # region menu utama
+        self.bg1.fill(tema1['bg'])
+        self.btn_play.inactiveColour = tema1['btnA']
+        self.btn_play.hoverColour = tema1['btnH']
+        self.btn_play.pressedColour = tema1['btnP']
+        self.btn_play.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema1['btnA']
+        self.btn_keluar.hoverColour = tema1['btnH']
+        self.btn_keluar.pressedColour = tema1['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.btn_peng.inactiveColour = tema1['btnA']
+        self.btn_peng.hoverColour = tema1['btnH']
+        self.btn_peng.pressedColour = tema1['btnP']
+        self.btn_peng.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema1['btnA']
+        self.btn_keluar.hoverColour = tema1['btnH']
+        self.btn_keluar.pressedColour = tema1['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.judul = self.title_font.render(
+            judul, True, warnaTeks)
+        # endregion
+
+        # region Ular
+        self.h_up = image.load(thp2/'kepala_up.png').convert_alpha()
+        self.h_down = image.load(thp2/'kepala_down.png').convert_alpha()
+        self.h_left = image.load(thp2/'kepala_left.png').convert_alpha()
+        self.h_right = image.load(thp2/'kepala_right.png').convert_alpha()
+
+        self.b_tr = image.load(thp2/'badan_tr.png').convert_alpha()
+        self.b_tl = image.load(thp2/'badan_tl.png').convert_alpha()
+        self.b_bl = image.load(thp2/'badan_bl.png').convert_alpha()
+        self.b_br = image.load(thp2/'badan_br.png').convert_alpha()
+
+        self.b_v = image.load(thp2/'badan_v.png').convert_alpha()
+        self.b_h = image.load(thp2/'badan_h.png').convert_alpha()
+
+        self.t_up = image.load(thp2/'ekor_up.png').convert_alpha()
+        self.t_down = image.load(thp2/'ekor_down.png').convert_alpha()
+        self.t_left = image.load(thp2/'ekor_left.png').convert_alpha()
+        self.t_right = image.load(thp2/'ekor_right.png').convert_alpha()
+        # endregion
+
+        # region Play
+        self.nths = 1
+        self.warnaRumput = tema1['rm']
+        self.pbg.fill(tema1['bg'])
+        self.pskor.fill(tema1['skp'])
+        self.border0.fill(tema1['brd'])
+        self.border1.fill(tema1['brd'])
+        self.border2.fill(tema1['brd'])
+        self.border3.fill(tema1['brd'])
+        self.btnReset.inactiveColour = tema1['btnA']
+        self.btnReset.hoverColour = tema1['btnH']
+        self.btnReset.pressedColour = tema1['btnP']
+        self.btnHome.inactiveColour = tema1['btnA']
+        self.btnHome.hoverColour = tema1['btnH']
+        self.btnHome.pressedColour = tema1['btnP']
+        # endregion
+
+        self.btn_defaultT.enable()
+        self.btn_theme1.disable()
+        self.btn_theme2.enable()
+        self.btn_theme3.enable()
+        pass
+
+    def setTheme2(self):
+        global warnaTeks
+        self.bg.fill(tema2['bg'])
+        self.panel_1.fill(tema2['pn1'])
+        warnaTeks = tema2['tk']
+        self.wline = 2
+
+        # region pengaturan
+        # self.teks1 = self.font_h2.render('Theme: Snowy Time', True, warnaTeks)
+        self.teksH1 = self.font_h1.render(
+            'Pengaturan | Theme Game Ular', True, warnaTeks)
+        self.btn_kembali.inactiveColour = tema2['btnA']
+        self.btn_kembali.hoverColour = tema2['btnH']
+        self.btn_kembali.pressedColour = tema2['btnP']
+        self.btn_kembali.textColour = warnaTeks
+        self.btn_defaultT.inactiveColour = tema2['btnA']
+        self.btn_defaultT.hoverColour = tema2['btnH']
+        self.btn_defaultT.pressedColour = tema2['btnP']
+        self.btn_defaultT.textColour = warnaTeks
+        self.btn_theme1.inactiveColour = tema2['btnA']
+        self.btn_theme1.hoverColour = tema2['btnH']
+        self.btn_theme1.pressedColour = tema2['btnP']
+        self.btn_theme1.textColour = warnaTeks
+        self.btn_theme2.inactiveColour = tema2['btnA']
+        self.btn_theme2.hoverColour = tema2['btnH']
+        self.btn_theme2.pressedColour = tema2['btnP']
+        self.btn_theme2.textColour = warnaTeks
+        self.btn_theme3.inactiveColour = tema2['btnA']
+        self.btn_theme3.hoverColour = tema2['btnH']
+        self.btn_theme3.pressedColour = tema2['btnP']
+        self.btn_theme3.textColour = warnaTeks
+        # endregion
+
+        # region menu utama
+        self.bg1.fill(tema2['bg'])
+        self.btn_play.inactiveColour = tema2['btnA']
+        self.btn_play.hoverColour = tema2['btnH']
+        self.btn_play.pressedColour = tema2['btnP']
+        self.btn_play.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema2['btnA']
+        self.btn_keluar.hoverColour = tema2['btnH']
+        self.btn_keluar.pressedColour = tema2['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.btn_peng.inactiveColour = tema2['btnA']
+        self.btn_peng.hoverColour = tema2['btnH']
+        self.btn_peng.pressedColour = tema2['btnP']
+        self.btn_peng.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema2['btnA']
+        self.btn_keluar.hoverColour = tema2['btnH']
+        self.btn_keluar.pressedColour = tema2['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.judul_rect = self.judul_rect
+        self.judul = self.title_font.render(
+            judul, True, warnaTeks)
+        # endregion
+
+        # region Ular
+        self.h_up = image.load(thp3/'kepala_up.png').convert_alpha()
+        self.h_down = image.load(thp3/'kepala_down.png').convert_alpha()
+        self.h_left = image.load(thp3/'kepala_left.png').convert_alpha()
+        self.h_right = image.load(thp3/'kepala_right.png').convert_alpha()
+
+        self.b_tr = image.load(thp3/'badan_tr.png').convert_alpha()
+        self.b_tl = image.load(thp3/'badan_tl.png').convert_alpha()
+        self.b_bl = image.load(thp3/'badan_bl.png').convert_alpha()
+        self.b_br = image.load(thp3/'badan_br.png').convert_alpha()
+
+        self.b_v = image.load(thp3/'badan_v.png').convert_alpha()
+        self.b_h = image.load(thp3/'badan_h.png').convert_alpha()
+
+        self.t_up = image.load(thp3/'ekor_up.png').convert_alpha()
+        self.t_down = image.load(thp3/'ekor_down.png').convert_alpha()
+        self.t_left = image.load(thp3/'ekor_left.png').convert_alpha()
+        self.t_right = image.load(thp3/'ekor_right.png').convert_alpha()
+        # endregion
+
+        # region Play
+        self.nths = 2
+        self.warnaRumput = tema2['rm']
+        self.pbg.fill(tema2['bg'])
+        self.pskor.fill(tema2['skp'])
+        self.border0.fill(tema2['brd'])
+        self.border1.fill(tema2['brd'])
+        self.border2.fill(tema2['brd'])
+        self.border3.fill(tema2['brd'])
+        self.btnReset.inactiveColour = tema2['btnA']
+        self.btnReset.hoverColour = tema2['btnH']
+        self.btnReset.pressedColour = tema2['btnP']
+        self.btnHome.inactiveColour = tema2['btnA']
+        self.btnHome.hoverColour = tema2['btnH']
+        self.btnHome.pressedColour = tema2['btnP']
+        # endregion
+
+        self.btn_defaultT.enable()
+        self.btn_theme1.enable()
+        self.btn_theme2.disable()
+        self.btn_theme3.enable()
+        pass
+
+    def setTheme3(self):
+        global warnaTeks
+        self.bg.fill(tema3['bg'])
+        self.panel_1.fill(tema3['pn1'])
+        warnaTeks = tema3['tk']
+
+        # region pengaturan
+        # self.teks1 = self.font_h2.render('Theme: Pastel', True, warnaTeks)
+        self.teksH1 = self.font_h1.render(
+            'Pengaturan | Theme Game Ular', True, warnaTeks)
+        self.btn_kembali.inactiveColour = tema3['btnA']
+        self.btn_kembali.hoverColour = tema3['btnH']
+        self.btn_kembali.pressedColour = tema3['btnP']
+        self.btn_kembali.textColour = warnaTeks
+        self.btn_defaultT.inactiveColour = tema3['btnA']
+        self.btn_defaultT.hoverColour = tema3['btnH']
+        self.btn_defaultT.pressedColour = tema3['btnP']
+        self.btn_defaultT.textColour = warnaTeks
+        self.btn_theme1.inactiveColour = tema3['btnA']
+        self.btn_theme1.hoverColour = tema3['btnH']
+        self.btn_theme1.pressedColour = tema3['btnP']
+        self.btn_theme1.textColour = warnaTeks
+        self.btn_theme2.inactiveColour = tema3['btnA']
+        self.btn_theme2.hoverColour = tema3['btnH']
+        self.btn_theme2.pressedColour = tema3['btnP']
+        self.btn_theme2.textColour = warnaTeks
+        self.btn_theme3.inactiveColour = tema3['btnA']
+        self.btn_theme3.hoverColour = tema3['btnH']
+        self.btn_theme3.pressedColour = tema3['btnP']
+        self.btn_theme3.textColour = warnaTeks
+        # endregion
+
+        # region menu utama
+        self.bg1.fill(tema3['bg'])
+        self.btn_play.inactiveColour = tema3['btnA']
+        self.btn_play.hoverColour = tema3['btnH']
+        self.btn_play.pressedColour = tema3['btnP']
+        self.btn_play.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema3['btnA']
+        self.btn_keluar.hoverColour = tema3['btnH']
+        self.btn_keluar.pressedColour = tema3['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.btn_peng.inactiveColour = tema3['btnA']
+        self.btn_peng.hoverColour = tema3['btnH']
+        self.btn_peng.pressedColour = tema3['btnP']
+        self.btn_peng.textColour = warnaTeks
+        self.btn_keluar.inactiveColour = tema3['btnA']
+        self.btn_keluar.hoverColour = tema3['btnH']
+        self.btn_keluar.pressedColour = tema3['btnP']
+        self.btn_keluar.textColour = warnaTeks
+        self.judul_rect = self.judul_rect
+        self.judul = self.title_font.render(
+            judul, True, warnaTeks)
+        # endregion
+
+        # region Ular
+        self.h_up = image.load(thp4/'kepala_up.png').convert_alpha()
+        self.h_down = image.load(thp4/'kepala_down.png').convert_alpha()
+        self.h_left = image.load(thp4/'kepala_left.png').convert_alpha()
+        self.h_right = image.load(thp4/'kepala_right.png').convert_alpha()
+
+        self.b_tr = image.load(thp4/'badan_tr.png').convert_alpha()
+        self.b_tl = image.load(thp4/'badan_tl.png').convert_alpha()
+        self.b_bl = image.load(thp4/'badan_bl.png').convert_alpha()
+        self.b_br = image.load(thp4/'badan_br.png').convert_alpha()
+
+        self.b_v = image.load(thp4/'badan_v.png').convert_alpha()
+        self.b_h = image.load(thp4/'badan_h.png').convert_alpha()
+
+        self.t_up = image.load(thp4/'ekor_up.png').convert_alpha()
+        self.t_down = image.load(thp4/'ekor_down.png').convert_alpha()
+        self.t_left = image.load(thp4/'ekor_left.png').convert_alpha()
+        self.t_right = image.load(thp4/'ekor_right.png').convert_alpha()
+        # endregion
+
+        # region Play
+        self.nths = 3
+        self.warnaRumput = tema3['rm']
+        self.pbg.fill(tema3['bg'])
+        self.pskor.fill(tema3['skp'])
+        self.border0.fill(tema3['brd'])
+        self.border1.fill(tema3['brd'])
+        self.border2.fill(tema3['brd'])
+        self.border3.fill(tema3['brd'])
+        self.btnReset.inactiveColour = tema3['btnA']
+        self.btnReset.hoverColour = tema3['btnH']
+        self.btnReset.pressedColour = tema3['btnP']
+        self.btnHome.inactiveColour = tema3['btnA']
+        self.btnHome.hoverColour = tema3['btnH']
+        self.btnHome.pressedColour = tema3['btnP']
+        # endregion
+
+        self.btn_defaultT.enable()
+        self.btn_theme1.enable()
+        self.btn_theme2.enable()
+        self.btn_theme3.disable()
+
+        pass
+
+    # endregion
+
 
 if __name__ == "__main__":
     m = GAME()
     m.run()
+
+# https://mega.nz/file/7QVw3LzC#Zm--bQGmT1E9Rdg_8RFUVLcaKxg0vTxLZPOrL2Nxhec
