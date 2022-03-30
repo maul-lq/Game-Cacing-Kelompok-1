@@ -9,10 +9,10 @@ from fig import *
 # region
 # inisialisasi pygame
 init()
-judul = 'Snake Game'
+judul = 'Game Cacing'
 # frame rate
 fps = time.Clock()
-FPS = 60
+FPS = 100
 
 thp1 = theme_path_1
 thp2 = theme_path_2
@@ -27,7 +27,7 @@ WIN_SIZE = (imgSize*celln, imgSize*celln)
 layar = display.set_mode(WIN_SIZE)
 
 # memuat judul dan ikon
-display.set_caption('Game Ular | Kelompok 1')
+display.set_caption('Game Cacing | Kelompok 1')
 display.set_icon(image.load('./res/ikon/ikon.png'))
 # endregion
 
@@ -269,6 +269,10 @@ class GAME:
         self.nths = 0
         self.isreset = False
 
+        # suara
+        self.suara_makan = mixer.Sound(suara / "suara_makan.mp3")
+        self.suara_nabrak = mixer.Sound(suara / "suara_nabrak.mp3")
+
         # membuat background
         self.pbg = Surface(WIN_SIZE)
         self.pbg_rect = self.pbg.get_rect(topleft=(0, 0))
@@ -390,11 +394,12 @@ class GAME:
 
         # region Makanan
         self.acakPos()
-        self.makanan = image.load(mkn / 'sate.png').convert_alpha()
+        self.makanan = image.load(mkn / 'pete.png').convert_alpha()
         # endregion
         pass
 
     # ! Membuat menu Utama
+    # region Menu Utama
     def draw(self):
         layar.blit(self.bg1, self.bg1_rect)
         layar.blit(self.judul, self.judul_rect)
@@ -440,6 +445,7 @@ class GAME:
             fps.tick(FPS)
 
         pass
+    # endregion
 
     # ! Membuat menu pengaturan
     # region Pengaturan
@@ -607,6 +613,7 @@ class GAME:
             self.tambah_blok()
             self.go_nskor += 1
             # print(self.newblok)
+            self.suara_makan.play()
             pass
 
         for blok in self.badan[1:]:
@@ -615,10 +622,12 @@ class GAME:
 
     def cek_gagal(self):
         if not 1 <= self.badan[0].x < celln-1 or not 3 <= self.badan[0].y < celln-1:
+            self.suara_nabrak.play()
             self.gameOver()
 
         for blok in self.badan[1:]:
             if blok == self.badan[0] and self.arah != Vector2(0, 0):
+                self.suara_nabrak.play()
                 self.gameOver()
 
         pass
@@ -689,9 +698,11 @@ class GAME:
                     quit()
                     exit()
                 if ki.type == KEYDOWN:
-                    if ki.key == K_ESCAPE:
-                        self.run()
-
+                    if ki.key == K_RETURN:
+                        self.klikReset()
+                if ki.type == KEYDOWN:
+                    if ki.key == K_SPACE:
+                        self.klikHome()
             self.drawGameOver()
             pw.update(ki)
             display.update()
@@ -699,7 +710,8 @@ class GAME:
 
     def play(self):
         UPDATE_LAYAR = USEREVENT
-        time.set_timer(UPDATE_LAYAR, 135)
+        time.set_timer(UPDATE_LAYAR, 160)
+        pre = 0
         while self.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
@@ -709,23 +721,21 @@ class GAME:
                     self.update()
 
                 if ki.type == KEYDOWN:
-                    if ki.key == K_ESCAPE:
-                        self.run()
 
                     # Kontrol si ular
-                    if ki.key == K_UP or ki.key == K_w:
+                    if ki.key == K_w:
                         if self.arah.y != 1:
                             self.arah = Vector2(0, -1)
 
-                    if ki.key == K_RIGHT or ki.key == K_d:
+                    if ki.key == K_d:
                         if self.arah.x != -1:
                             self.arah = Vector2(1, 0)
 
-                    if ki.key == K_DOWN or ki.key == K_s:
+                    if ki.key == K_s:
                         if self.arah.y != -1:
                             self.arah = Vector2(0, 1)
 
-                    if ki.key == K_LEFT or ki.key == K_a:
+                    if ki.key == K_a:
                         if self.arah.x != 1:
                             self.arah = Vector2(-1, 0)
 
@@ -896,7 +906,7 @@ class GAME:
 
     # endregion
 
-    # region Fungsi Tombol
+    # region Fungsi Tombol5
     def klikHome(self):
         self.btnHome.disable()
         self.btnHome.hide()
@@ -1045,6 +1055,9 @@ class GAME:
         self.btnHome.pressedColour = tema0['btnP']
         # endregion
 
+        # makanan
+        self.makanan = image.load(mkn / 'pete.png').convert_alpha()
+
         # region END
         self.btn_defaultT.disable()
         self.btn_theme1.enable()
@@ -1145,6 +1158,8 @@ class GAME:
         self.btnHome.pressedColour = tema1['btnP']
         # endregion
 
+        self.makanan = image.load(mkn / 'nasgor.png').convert_alpha()
+
         self.btn_defaultT.enable()
         self.btn_theme1.disable()
         self.btn_theme2.enable()
@@ -1244,6 +1259,8 @@ class GAME:
         self.btnHome.pressedColour = tema2['btnP']
         # endregion
 
+        self.makanan = image.load(mkn / 'sate.png').convert_alpha()
+
         self.btn_defaultT.enable()
         self.btn_theme1.enable()
         self.btn_theme2.disable()
@@ -1342,6 +1359,8 @@ class GAME:
         self.btnHome.pressedColour = tema3['btnP']
         # endregion
 
+        self.makanan = image.load(mkn / 'jengkol.png').convert_alpha()
+
         self.btn_defaultT.enable()
         self.btn_theme1.enable()
         self.btn_theme2.enable()
@@ -1355,5 +1374,3 @@ class GAME:
 if __name__ == "__main__":
     m = GAME()
     m.run()
-
-# https://mega.nz/file/7QVw3LzC#Zm--bQGmT1E9Rdg_8RFUVLcaKxg0vTxLZPOrL2Nxhec

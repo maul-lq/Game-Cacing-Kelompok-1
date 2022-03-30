@@ -15,6 +15,7 @@ theme_path_1 = Path('./res/image/ular/tema0')
 theme_path_2 = Path('./res/image/ular/tema1')
 theme_path_3 = Path('./res/image/ular/tema2')
 theme_path_4 = Path('./res/image/ular/tema3')
+suara = Path('./res/music')
 
 makanan = Path('./res/image/makanan/')
 
