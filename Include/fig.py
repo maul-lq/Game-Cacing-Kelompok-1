@@ -8,17 +8,36 @@ def rgb(r: int, g: int, b: int, a: int = 255):
     return pygame.Color(r, g, b, a)
 
 
+# Variabel Ukuran Layar
+UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan, dll)
+BANYAK_KOTAK = 23
+UKURAN_WINDOWS = (UKURAN_GAMBAR*BANYAK_KOTAK, UKURAN_GAMBAR*BANYAK_KOTAK)
+
 # Theme Colour, Skin, etc.
+# frame rate
+fps = pygame.time.Clock()
+FPS = 60
 # bg=backgroun, pn1=Panel 1,
 # tk=Teks, btn[A,H,P,Sh]=Tombol[aktif,pointerdiarahkan,ditekan,bayangan]
-theme_path_1 = Path('./res/image/ular/tema0')
-theme_path_2 = Path('./res/image/ular/tema1')
-theme_path_3 = Path('./res/image/ular/tema2')
-theme_path_4 = Path('./res/image/ular/tema3')
-suara = Path('./res/music')
+LOKASI_FONT_UNTUK_TULISAN = Path('./res/font')
+LOKASI_ULAR_TEMA_KE_1 = Path('./res/image/ular/tema0')
+LOKASI_ULAR_TEMA_KE_2 = Path('./res/image/ular/tema1')
+LOKASI_ULAR_TEMA_KE_3 = Path('./res/image/ular/tema2')
+LOKASI_ULAR_TEMA_KE_4 = Path('./res/image/ular/tema3')
+LOKASI_SUARA = Path('./res/music')
 
-makanan = Path('./res/image/makanan/')
+LOKASI_MAKANAN = Path('./res/image/makanan/')
 
+# Penamaan dan Warna Tema
+JUDUL_PADA_WINDOWS = 'Game Cacing | Kelompok 1'
+judul = 'Game Cacing'
+nama_tombol_main = "Main"
+nama_tombol_pengaturan = 'Pengaturan'
+nama_tombol_keluar = 'Keluar'
+nama_tombol_kembali_ke_menu_utama = 'Kembali'
+nama_tombol_kembali = 'Kembali'
+nama_tombol_ulang_game = 'Ulang'
+nama_tombol_default = 'Default'
 # region Theme Colour
 # ulet buah
 tema0 = {
@@ -35,6 +54,7 @@ tema0 = {
     'rm': rgb(175, 199, 72)
 }
 # cacing tanah
+nama_tema_ke_1 = 'Cacing Tanah'
 tema1 = {
     'bg': rgb(255, 170, 94),
     'pn1': rgb(208, 129, 89),
@@ -48,7 +68,7 @@ tema1 = {
     'brd': rgb(244, 150, 67),
     'rm': rgb(255, 165, 87)
 }
-#
+nama_tema_ke_2 = 'Cacing Kutub'
 tema2 = {
     'bg': rgb(255, 255, 255),
     'pn1': rgb(139, 202, 221),
@@ -62,6 +82,7 @@ tema2 = {
     'brd': rgb(130, 196, 217),
     'rm': rgb(250, 250, 250)
 }
+nama_tema_ke_3 = 'Cacing Emas'
 tema3 = {
     'bg': rgb(150, 206, 180),
     'pn1': rgb(255, 238, 173),
@@ -113,32 +134,3 @@ def Tombol(win: pygame.Surface,
                   inactiveColour=warnaAktif, hoverColour=warnaHover, pressedColour=warnaDitekan,
                   radius=sudutRad, onClick=onClick, textColour=warnaTeks, shadowDistance=shadowDistance,
                   shadowColour=shadowColour, font=font, onRelease=onRelease)
-
-
-if __name__ == "__main__":
-    import pygame_widgets
-    import pygame
-    import time
-    from pygame_widgets.progressbar import ProgressBar
-
-    startTime = time.time()
-
-    pygame.init()
-    win = pygame.display.set_mode((1000, 600))
-
-    progressBar = ProgressBar(
-        win, 100, 100, 500, 40, lambda: 1 - (time.time() - startTime) / 10, curved=True)
-
-    run = True
-    while run:
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                run = False
-                quit()
-
-        win.fill((255, 255, 255))
-
-        pygame_widgets.update(events)
-        pygame.display.update()

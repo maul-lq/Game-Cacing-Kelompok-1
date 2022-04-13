@@ -1,33 +1,32 @@
 # Monday, February - 28 - 2022 (28/2/22) [22:57:04,954 PM]  /  GMT+0700 || 9
+import time as tm
 from random import randint
-import pygame_widgets as pw
-
-from pygame import *
 from sys import exit
+
+import pygame_widgets as pw
+from pygame import *
+
 from fig import *
+
+waktu_mulai = tm.time()
+
 
 # region
 # inisialisasi pygame
 init()
-judul = 'Game Cacing'
-# frame rate
-fps = time.Clock()
-FPS = 100
-
-thp1 = theme_path_1
-thp2 = theme_path_2
-thp3 = theme_path_3
-thp4 = theme_path_4
-mkn = makanan
+thp1 = LOKASI_ULAR_TEMA_KE_1
+thp2 = LOKASI_ULAR_TEMA_KE_2
+thp3 = LOKASI_ULAR_TEMA_KE_3
+thp4 = LOKASI_ULAR_TEMA_KE_4
+mkn = LOKASI_MAKANAN
 
 # membuat window / layar
-imgSize = 30  # Ukuran gambar (ular, makanan, dll)
-celln = 23
-WIN_SIZE = (imgSize*celln, imgSize*celln)
-layar = display.set_mode(WIN_SIZE)
+imgSize = UKURAN_GAMBAR  # Ukuran gambar (ular, makanan, dll)
+celln = BANYAK_KOTAK
+layar = display.set_mode(UKURAN_WINDOWS)
 
 # memuat judul dan ikon
-display.set_caption('Game Cacing | Kelompok 1')
+display.set_caption(JUDUL_PADA_WINDOWS)
 display.set_icon(image.load('./res/ikon/ikon.png'))
 # endregion
 
@@ -37,19 +36,20 @@ class GAME:
         # region Menu Utama
         # inisialisasi menu utama
         self.aktif = True
-        self.title_font = font.Font(None, 70)
+        self.title_font = font.Font(
+            LOKASI_FONT_UNTUK_TULISAN / 'StudioGrotesk-Regular.ttf', 70)
         self.btn_font1 = font.Font(None, 40)
         self.wline = 1
 
         # membuat background
-        self.bg1 = Surface(WIN_SIZE)
+        self.bg1 = Surface(UKURAN_WINDOWS)
         self.bg1_rect = self.bg1.get_rect(topleft=(0, 0))
         self.bg1.fill(bg)
 
         # membuat judul
         self.judul = self.title_font.render(
             judul, True, warnaTeks)
-        self.judul_rect = self.judul.get_rect(center=(WIN_SIZE[0]/2, 75))
+        self.judul_rect = self.judul.get_rect(center=(UKURAN_WINDOWS[0]/2, 75))
 
         # membuat panel untuk meletakan / memberi posisi tombol
         self.panel_11 = Surface((380, 480))
@@ -75,7 +75,7 @@ class GAME:
                                warnaHover=wBH,
                                shadowDistance=2,
                                shadowColour=wBSh,
-                               teks="Play",
+                               teks=nama_tombol_main,
                                sudutRad=3,
                                onRelease=self.fbtn_play)
 
@@ -95,7 +95,7 @@ class GAME:
                                warnaHover=wBH,
                                shadowDistance=2,
                                shadowColour=wBSh,
-                               teks="Pengaturan",
+                               teks=nama_tombol_pengaturan,
                                sudutRad=3,
                                onRelease=self.btn_pengaturan)
 
@@ -116,7 +116,7 @@ class GAME:
                                  warnaHover=wBH,
                                  shadowDistance=2,
                                  shadowColour=wBSh,
-                                 teks='Keluar',
+                                 teks=nama_tombol_keluar,
                                  sudutRad=3,
                                  onRelease=lambda: exit())
         # endregion
@@ -125,24 +125,26 @@ class GAME:
 
         # region Pengaturan
         # membuat background
-        self.bg = Surface(WIN_SIZE)
+        self.bg = Surface(UKURAN_WINDOWS)
         self.bg_rect = self.bg.get_rect(topleft=(0, 0))
         self.bg.fill(bg)
 
         # top panel
-        self.panel_1 = Surface((WIN_SIZE[0], 100))
+        self.panel_1 = Surface((UKURAN_WINDOWS[0], 100))
         self.panel_1Rect = self.panel_1.get_rect(topleft=(0, 0))
         self.panel_1.fill(pn1)
 
         # inisialisasi
         self.paktif = True
-        self.font_h1 = font.Font(None, 50)
-        self.font_h2 = font.Font(None, 35)
+        self.font_h1 = font.Font(
+            LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 33)
+        self.font_h2 = font.Font(
+            LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 28)
         self.btn_font = font.Font(None, 25)
 
         # membuat tulisan Pengaturan
         self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
+            'Pengaturan | Tema Game Ular', True, warnaTeks)
         self.teksH1_rect = self.teksH1.get_rect(midleft=(self.panel_1Rect.midleft[0]+20,
                                                          self.panel_1Rect.midleft[1]))
 
@@ -159,7 +161,7 @@ class GAME:
                                   self.btn_kembaliRect.height,
                                   self.btn_font,
                                   20,
-                                  'Kembali',
+                                  nama_tombol_kembali,
                                   warnaAktif=wBA,
                                   warnaHover=wBH,
                                   warnaDitekan=wBP,
@@ -179,7 +181,7 @@ class GAME:
                                    self.btn_defaultRect.width,
                                    self.btn_defaultRect.height,
                                    self.btn_font, 20,
-                                   'Default',
+                                   nama_tombol_default,
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
                                    warnaDitekan=wBP,
@@ -201,7 +203,7 @@ class GAME:
                                  self.btn_theme1Rect.width,
                                  self.btn_theme1Rect.height,
                                  self.btn_font, 50,
-                                 'Red Corn Snake',
+                                 nama_tema_ke_1,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
                                  warnaDitekan=wBP,
@@ -221,7 +223,7 @@ class GAME:
                                  self.btn_theme2Rect.width,
                                  self.btn_theme2Rect.height,
                                  self.btn_font, 50,
-                                 "Theme 2",
+                                 nama_tema_ke_2,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
                                  warnaDitekan=wBP,
@@ -240,7 +242,7 @@ class GAME:
                                  self.btn_theme3Rect.width,
                                  self.btn_theme3Rect.height,
                                  self.btn_font, 50,
-                                 'Theme 3',
+                                 nama_tema_ke_3,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
                                  warnaDitekan=wBP,
@@ -253,7 +255,7 @@ class GAME:
         # endregion
         # endregion
 
-        # membuat tulisan
+        # # membuat tulisan
         self.teks1 = self.font_h2.render(
             f'Theme: Default', True, warnaTeks)
         self.teks1_rect = self.teks1.get_rect(bottomleft=(self.btn_kembaliRect.topleft[0],
@@ -270,21 +272,21 @@ class GAME:
         self.isreset = False
 
         # suara
-        self.suara_makan = mixer.Sound(suara / "suara_makan.mp3")
-        self.suara_nabrak = mixer.Sound(suara / "suara_nabrak.mp3")
-        self.suara_latar_belakang = mixer.Sound(suara / "bgm.mp3")
+        self.suara_makan = mixer.Sound(LOKASI_SUARA / "suara_makan.mp3")
+        self.suara_nabrak = mixer.Sound(LOKASI_SUARA / "suara_nabrak.mp3")
+        self.suara_latar_belakang = mixer.Sound(LOKASI_SUARA / "bgm.mp3")
         self.suara_latar_belakang.set_volume(0.58)
         self.suara_makan.set_volume(0.7)
         self.suara_nabrak.set_volume(0.7)
 
         # membuat background
-        self.pbg = Surface(WIN_SIZE)
+        self.pbg = Surface(UKURAN_WINDOWS)
         self.pbg_rect = self.pbg.get_rect(topleft=(0, 0))
         self.pbg.fill(bg)
 
         # region Border
         # mwmbuat panel skor
-        self.pskor = Surface((WIN_SIZE[0], imgSize*2))
+        self.pskor = Surface((UKURAN_WINDOWS[0], imgSize*2))
         self.pskor_rect = self.pskor.get_rect(topleft=(0, 0))
         self.pskor.fill(skp)
 
@@ -301,7 +303,7 @@ class GAME:
         self.border1 = Surface((imgSize*(celln-1), imgSize))
         self.border1_rect = self.border1.get_rect(
             bottomleft=(self.border0_rect.bottomright[0],
-                        WIN_SIZE[1]))
+                        UKURAN_WINDOWS[1]))
         self.border1.fill(brd)
 
         self.border2 = Surface((imgSize, imgSize*(celln-1)))
@@ -334,7 +336,7 @@ class GAME:
                               self.btnHomeRect.width,
                               self.btnHomeRect.height,
                               self.btn_font1, 20,
-                              "Home",
+                              nama_tombol_kembali_ke_menu_utama,
                               warnaTeks,
                               wBA, wBH, wBP, 20, 2,
                               onRelease=self.klikHome)
@@ -348,7 +350,7 @@ class GAME:
                                self.btnResetRect.width,
                                self.btnResetRect.height,
                                self.btn_font1, 20,
-                               "Try Again",
+                               nama_tombol_ulang_game,
                                warnaTeks,
                                wBA, wBH, wBP, 20, 2,
                                onRelease=self.klikReset)
@@ -462,8 +464,8 @@ class GAME:
 
         if self.wline == 0:
             # garis kotak di pinggir layar
-            draw.line(layar, wLine, (0, 0), (WIN_SIZE[0], 0), 2)
-            draw.line(layar, wLine, (0, 0), (0, WIN_SIZE[1]), 2)
+            draw.line(layar, wLine, (0, 0), (UKURAN_WINDOWS[0], 0), 2)
+            draw.line(layar, wLine, (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       wLine,
                       (self.bg_rect.bottomleft[0],
@@ -483,13 +485,13 @@ class GAME:
                       wLine,
                       (0,
                        self.teks1_rect.midbottom[1]+10),
-                      (WIN_SIZE[0],
+                      (UKURAN_WINDOWS[0],
                        self.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       wLine,
                       (0, self.panel_1Rect.midbottom[1]),
-                      (WIN_SIZE[0], self.panel_1Rect.midbottom[1]), 3)
+                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       wLine,
@@ -499,8 +501,8 @@ class GAME:
 
         if self.wline == 1:
             # garis kotak di pinggir layar
-            draw.line(layar, tema1['wl'], (0, 0), (WIN_SIZE[0], 0), 2)
-            draw.line(layar, tema1['wl'], (0, 0), (0, WIN_SIZE[1]), 2)
+            draw.line(layar, tema1['wl'], (0, 0), (UKURAN_WINDOWS[0], 0), 2)
+            draw.line(layar, tema1['wl'], (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       tema1['wl'],
                       (self.bg_rect.bottomleft[0],
@@ -520,13 +522,13 @@ class GAME:
                       tema1['wl'],
                       (0,
                        self.teks1_rect.midbottom[1]+10),
-                      (WIN_SIZE[0],
+                      (UKURAN_WINDOWS[0],
                        self.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       tema1['wl'],
                       (0, self.panel_1Rect.midbottom[1]),
-                      (WIN_SIZE[0], self.panel_1Rect.midbottom[1]), 3)
+                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema1['wl'],
@@ -536,8 +538,8 @@ class GAME:
 
         if self.wline == 2:
             # garis kotak di pinggir layar
-            draw.line(layar, tema2['wl'], (0, 0), (WIN_SIZE[0], 0), 2)
-            draw.line(layar, tema2['wl'], (0, 0), (0, WIN_SIZE[1]), 2)
+            draw.line(layar, tema2['wl'], (0, 0), (UKURAN_WINDOWS[0], 0), 2)
+            draw.line(layar, tema2['wl'], (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       tema2['wl'],
                       (self.bg_rect.bottomleft[0],
@@ -557,13 +559,13 @@ class GAME:
                       tema2['wl'],
                       (0,
                        self.teks1_rect.midbottom[1]+10),
-                      (WIN_SIZE[0],
+                      (UKURAN_WINDOWS[0],
                        self.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       tema2['wl'],
                       (0, self.panel_1Rect.midbottom[1]),
-                      (WIN_SIZE[0], self.panel_1Rect.midbottom[1]), 3)
+                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema2['wl'],
@@ -716,8 +718,7 @@ class GAME:
 
     def play(self):
         UPDATE_LAYAR = USEREVENT
-        time.set_timer(UPDATE_LAYAR, 160)
-        pre = 0
+        pygame.time.set_timer(UPDATE_LAYAR, 160)
         while self.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
@@ -782,7 +783,7 @@ class GAME:
             teks_hskor = self.font_h1.render(
                 f'{self.go_high_skor}', True, warnaTeks)
             teks_hskorRect = teks_hskor.get_rect(
-                midleft=(dis_piala2xRect.midright[0]+5, dis_piala2xRect.midright[1]))
+                midleft=(dis_piala2xRect.midright[0]+5, dis_piala2xRect.midright[1]+1))
 
             layar.blit(dis_piala2x, dis_piala2xRect)
             layar.blit(teks_hskor, teks_hskorRect)
@@ -981,7 +982,7 @@ class GAME:
         # region Pengaturan
         # self.teks1 = self.font_h2.render('Theme: Default', True, warnaTeks)
         self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
+            'Pengaturan | Tema Game Ular', True, warnaTeks)
         self.btn_kembali.inactiveColour = tema0['btnA']
         self.btn_kembali.hoverColour = tema0['btnH']
         self.btn_kembali.pressedColour = tema0['btnP']
@@ -1084,7 +1085,7 @@ class GAME:
         # region pengaturan
         # self.teks1 = self.font_h2.render('Theme: ', True, warnaTeks)
         self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
+            'Pengaturan | Tema Game Ular', True, warnaTeks)
         self.btn_kembali.inactiveColour = tema1['btnA']
         self.btn_kembali.hoverColour = tema1['btnH']
         self.btn_kembali.pressedColour = tema1['btnP']
@@ -1184,7 +1185,7 @@ class GAME:
         # region pengaturan
         # self.teks1 = self.font_h2.render('Theme: Snowy Time', True, warnaTeks)
         self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
+            'Pengaturan | Tema Game Ular', True, warnaTeks)
         self.btn_kembali.inactiveColour = tema2['btnA']
         self.btn_kembali.hoverColour = tema2['btnH']
         self.btn_kembali.pressedColour = tema2['btnP']
@@ -1284,7 +1285,7 @@ class GAME:
         # region pengaturan
         # self.teks1 = self.font_h2.render('Theme: Pastel', True, warnaTeks)
         self.teksH1 = self.font_h1.render(
-            'Pengaturan | Theme Game Ular', True, warnaTeks)
+            'Pengaturan | Tema Game Ular', True, warnaTeks)
         self.btn_kembali.inactiveColour = tema3['btnA']
         self.btn_kembali.hoverColour = tema3['btnH']
         self.btn_kembali.pressedColour = tema3['btnP']
@@ -1380,5 +1381,37 @@ class GAME:
 
 
 if __name__ == "__main__":
+    import pygame_widgets
+    from pygame_widgets.progressbar import ProgressBar
+
+    tampilan_loading = ProgressBar(layar, 0, 0,
+                                   UKURAN_WINDOWS[0]-200, 80, lambda: 1 - (tm.time() - waktu_mulai) / 10)
+    tampilan_loading.incompletedColour = rgb(54, 152, 12)
+    tampilan_loading.completedColour = rgb(53, 53, 53)
+    tampilan_loading.setX(100)
+    tampilan_loading.setY(
+        int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2))
+
+    waktu = 1 - (tm.time() - waktu_mulai) / 10
+
+    teks = GAME().font_h1.render('Loading...', True, rgb(199, 199, 199))
+    teks_rect = teks.get_rect(center=(
+        UKURAN_WINDOWS[0]/2, int((UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)-50)))
+
+    while tampilan_loading.percent != 0:
+        ki = event.get()
+        for ki in ki:
+            if ki.type == QUIT:
+                quit()
+                exit()
+
+        layar.fill(rgb(12, 12, 12))
+        layar.blit(teks, teks_rect)
+        pygame_widgets.update(ki)
+        display.update()
+
+    tampilan_loading.disable()
+    tampilan_loading.hide()
+
     m = GAME()
     m.run()
