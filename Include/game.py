@@ -272,6 +272,10 @@ class GAME:
         # suara
         self.suara_makan = mixer.Sound(suara / "suara_makan.mp3")
         self.suara_nabrak = mixer.Sound(suara / "suara_nabrak.mp3")
+        self.suara_latar_belakang = mixer.Sound(suara / "bgm.mp3")
+        self.suara_latar_belakang.set_volume(0.58)
+        self.suara_makan.set_volume(0.7)
+        self.suara_nabrak.set_volume(0.7)
 
         # membuat background
         self.pbg = Surface(WIN_SIZE)
@@ -622,11 +626,13 @@ class GAME:
 
     def cek_gagal(self):
         if not 1 <= self.badan[0].x < celln-1 or not 3 <= self.badan[0].y < celln-1:
+            self.suara_latar_belakang.stop()
             self.suara_nabrak.play()
             self.gameOver()
 
         for blok in self.badan[1:]:
             if blok == self.badan[0] and self.arah != Vector2(0, 0):
+                self.suara_latar_belakang.stop()
                 self.suara_nabrak.play()
                 self.gameOver()
 
@@ -649,19 +655,19 @@ class GAME:
         self.pngmRect.center = self.boardRect.center
 
         # region Skor dan HighSkor
-        self.dis_makanan2x = transform.smoothscale(
+        self.display_makanan2x = transform.smoothscale(
             self.makanan, (self.pskor_rect.height-25, self.pskor_rect.height-25))
-        self.dis_makanan2xRect = self.dis_makanan2x.get_rect(
+        self.display_makanan2xRect = self.display_makanan2x.get_rect(
             midleft=(self.pngmRect.midleft[0]+40, int(self.boardRect.midleft[1]-(self.boardRect.midleft[1]*(1/4)))))
 
         self.teks_skor = self.font_h1.render(f'{self.nskor}', True, warnaTeks)
         self.teks_skorRect = self.teks_skor.get_rect(
-            midleft=self.dis_makanan2xRect.midright)
+            midleft=self.display_makanan2xRect.midright)
         self.teks_skorRect.x += 5
         self.teks_skorRect.y += 2
 
         # membuat high skor
-        if self.go_nskor > self.go_high_skor:
+        if self.go_nskor >= self.go_high_skor:
             self.go_high_skor = self.go_nskor
         teks_hskor = self.font_h1.render(
             f'{self.go_high_skor}', True, warnaTeks)
@@ -673,7 +679,7 @@ class GAME:
 
         # endregion
 
-        layar.blits([(self.tkgmover, self.tkgmoverRect), (self.dis_makanan2x, self.dis_makanan2xRect),
+        layar.blits([(self.tkgmover, self.tkgmoverRect), (self.display_makanan2x, self.display_makanan2xRect),
                      (self.teks_skor, self.teks_skorRect), (teks_hskor, teks_hskorRect), (self.piala, pialaRect)])
         pass
 
@@ -723,19 +729,19 @@ class GAME:
                 if ki.type == KEYDOWN:
 
                     # Kontrol si ular
-                    if ki.key == K_w:
+                    if ki.key == K_w or ki.key == K_UP:
                         if self.arah.y != 1:
                             self.arah = Vector2(0, -1)
 
-                    if ki.key == K_d:
+                    if ki.key == K_d or ki.key == K_RIGHT:
                         if self.arah.x != -1:
                             self.arah = Vector2(1, 0)
 
-                    if ki.key == K_s:
+                    if ki.key == K_s or ki.key == K_DOWN:
                         if self.arah.y != -1:
                             self.arah = Vector2(0, 1)
 
-                    if ki.key == K_a:
+                    if ki.key == K_a or ki.key == K_LEFT:
                         if self.arah.x != 1:
                             self.arah = Vector2(-1, 0)
 
@@ -747,15 +753,16 @@ class GAME:
 
     def skor(self):
         # membuat tulisan skor
-        self.dis_makanan2x = transform.smoothscale(
+        self.display_makanan2x = transform.smoothscale(
             self.makanan, (self.pskor_rect.height-25, self.pskor_rect.height-25))
-        self.dis_makanan2xRect = self.dis_makanan2x.get_rect(
+        self.display_makanan2xRect = self.display_makanan2x.get_rect(
             midleft=(self.border0_rect.topright[0]+125, self.pskor_rect.midleft[1]))
 
-        self.nskor = (len(self.badan)-4)
+        self.nskor = int(len(self.badan)-5)
+        self.nskor += 1
         self.teks_skor = self.font_h1.render(f'{self.nskor}', True, warnaTeks)
         self.teks_skorRect = self.teks_skor.get_rect(
-            midleft=self.dis_makanan2xRect.midright)
+            midleft=self.display_makanan2xRect.midright)
         self.teks_skorRect.x += 5
         self.teks_skorRect.y += 2
 
@@ -766,12 +773,11 @@ class GAME:
             midleft=(self.border0_rect.topright[0]+(125*3), self.pskor_rect.midleft[1]))
 
         layar.blits([(self.teks_skor, self.teks_skorRect),
-                    (self.dis_makanan2x, self.dis_makanan2xRect)])
+                    (self.display_makanan2x, self.display_makanan2xRect)])
 
         if self.go_high_skor != 0:
-            nskor = self.nskor
-            if nskor >= self.go_high_skor:
-                self.go_high_skor = nskor
+            if self.nskor >= self.go_high_skor:
+                self.go_high_skor = self.nskor
 
             teks_hskor = self.font_h1.render(
                 f'{self.go_high_skor}', True, warnaTeks)
@@ -906,7 +912,7 @@ class GAME:
 
     # endregion
 
-    # region Fungsi Tombol5
+    # region Fungsi Tombol
     def klikHome(self):
         self.btnHome.disable()
         self.btnHome.hide()
@@ -927,6 +933,7 @@ class GAME:
         self.btnReset.hide()
         self.reset()
         self.go_nskor = 0
+        self.suara_latar_belakang.play()
         self.play()
 
     def btn_pengaturan(self):
@@ -961,6 +968,7 @@ class GAME:
         # self.fd_pos = Vector2(8, 12)
         self.reset()
         self.go_nskor = 0
+        self.suara_latar_belakang.play(-1)
         self.play()
 
     def setDefTheme(self):
