@@ -1,15 +1,32 @@
+# Friday, April - 15 - 2022 (15/4/22) [11:42:27,306 AM]  /  GMT+0700 || 15
+
+# /------------------------------/
+# / Pengaturan Untuk Game Cacing /
+# / @copyright 2022              /
+# /------------------------------/
+
 from pygame_widgets.button import Button
 from pathlib import Path
-import pygame_widgets
 import pygame
 
 
 def rgb(r: int, g: int, b: int, a: int = 255):
+    """Fungsi Membuat Warna
+
+    Args:
+        r (int): Warna merah
+        g (int): Warna hijau
+        b (int): Warna biru
+        a (int, optional): Tingkat transparannya warna dengan maksimal nilainya 225. Defaults to 255.
+
+    Returns:
+        Color: Menghasilkan warna
+    """
     return pygame.Color(r, g, b, a)
 
 
 # Variabel Ukuran Layar
-UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan, dll)
+UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan)
 BANYAK_KOTAK = 23
 UKURAN_WINDOWS = (UKURAN_GAMBAR*BANYAK_KOTAK, UKURAN_GAMBAR*BANYAK_KOTAK)
 
@@ -27,6 +44,9 @@ LOKASI_ULAR_TEMA_KE_4 = Path('./res/image/ular/tema3')
 LOKASI_SUARA = Path('./res/music')
 
 LOKASI_MAKANAN = Path('./res/image/makanan/')
+
+# Kecepatan Ular
+KECEPATAN_ULAR_BERGERAK = 160  # milisec
 
 # Penamaan dan Warna Tema
 JUDUL_PADA_WINDOWS = 'Game Cacing | Kelompok 1'

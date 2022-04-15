@@ -27,7 +27,7 @@ layar = display.set_mode(UKURAN_WINDOWS)
 
 # memuat judul dan ikon
 display.set_caption(JUDUL_PADA_WINDOWS)
-display.set_icon(image.load('./res/ikon/ikon.png'))
+display.set_icon(image.load('./res/ikon/ikon.png'))  # Ikon buat gamenya
 # endregion
 
 
@@ -590,7 +590,7 @@ class GAME:
 
     # endregion
 
-    # ! membuat Gamenya
+    # ! membuat Game Ularnya
     # region Game
 
     def drawElem(self):
@@ -718,7 +718,7 @@ class GAME:
 
     def play(self):
         UPDATE_LAYAR = USEREVENT
-        pygame.time.set_timer(UPDATE_LAYAR, 160)
+        pygame.time.set_timer(UPDATE_LAYAR, KECEPATAN_ULAR_BERGERAK)
         while self.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
@@ -820,9 +820,9 @@ class GAME:
             ular_rect = Rect(x_pos, y_pos,
                              imgSize, imgSize)
 
-            if i == 0:
+            if i == 0:  # index ke 0 jadi kepalanya
                 layar.blit(self.kepala, ular_rect)
-            elif i == len(self.badan)-1:
+            elif i == len(self.badan)-1:  # index terakhir dari list badan jadi ekornya
                 layar.blit(self.ekor, ular_rect)
             else:
                 blok_sebelum = self.badan[i+1]-blok
@@ -1381,7 +1381,6 @@ class GAME:
 
 
 if __name__ == "__main__":
-    import pygame_widgets
     from pygame_widgets.progressbar import ProgressBar
 
     tampilan_loading = ProgressBar(layar, 0, 0,
@@ -1407,7 +1406,7 @@ if __name__ == "__main__":
 
         layar.fill(rgb(12, 12, 12))
         layar.blit(teks, teks_rect)
-        pygame_widgets.update(ki)
+        pw.update(ki)
         display.update()
 
     tampilan_loading.disable()
