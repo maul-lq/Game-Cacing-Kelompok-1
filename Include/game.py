@@ -1262,7 +1262,7 @@ class GAME:
                            image.load(mkn/'nasgor_f2.png').convert_alpha(),
                            image.load(mkn/'nasgor_f1.png').convert_alpha(),
                            image.load(mkn/'nasgor_f0.png').convert_alpha()]
-        
+
         self.makanan = image.load(mkn/'nasgor.png').convert_alpha()
 
         self.btn_defaultT.enable()
@@ -1370,7 +1370,7 @@ class GAME:
                            image.load(mkn/'sate_f2.png').convert_alpha(),
                            image.load(mkn/'sate_f1.png').convert_alpha(),
                            image.load(mkn/'sate_f0.png').convert_alpha()]
-        
+
         self.makanan = image.load(mkn/'sate.png').convert_alpha()
 
         self.btn_defaultT.enable()
@@ -1478,7 +1478,7 @@ class GAME:
                            image.load(mkn/'jengkol_f2.png').convert_alpha(),
                            image.load(mkn/'jengkol_f1.png').convert_alpha(),
                            image.load(mkn/'jengkol_f0.png').convert_alpha()]
-        
+
         self.makanan = image.load(mkn/'jengkol.png').convert_alpha()
 
         self.btn_defaultT.enable()
@@ -1534,7 +1534,7 @@ if __name__ == "__main__":
         pw.update(ki)
         display.update()
 
-        index_teks += 0.025
+        index_teks += 0.015
 
     tampilan_loading.disable()
     tampilan_loading.hide()

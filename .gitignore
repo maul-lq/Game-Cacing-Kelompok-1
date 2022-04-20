@@ -165,3 +165,4 @@ test/
 Include/test.py
 build.bat
 bin/
+Include/setup.py
