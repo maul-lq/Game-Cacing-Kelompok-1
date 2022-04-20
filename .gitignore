@@ -163,3 +163,5 @@ cython_debug/
 *.ini
 test/
 Include/test.py
+build.bat
+bin/

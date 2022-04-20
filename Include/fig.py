@@ -42,6 +42,7 @@ LOKASI_ULAR_TEMA_KE_2 = Path('./res/image/ular/tema1')
 LOKASI_ULAR_TEMA_KE_3 = Path('./res/image/ular/tema2')
 LOKASI_ULAR_TEMA_KE_4 = Path('./res/image/ular/tema3')
 LOKASI_SUARA = Path('./res/music')
+LOKASI_GAMBAR_DAN_LAIN2 = Path('./res/image/misc')
 
 LOKASI_MAKANAN = Path('./res/image/makanan/')
 
@@ -50,7 +51,7 @@ KECEPATAN_ULAR_BERGERAK = 160  # milisec
 
 # Penamaan dan Warna Tema
 JUDUL_PADA_WINDOWS = 'Game Cacing | Kelompok 1'
-judul = 'Game Cacing'
+judul = 'Game Cacing';teks_di_pengaturan_h1="Pengaturan | Tema"
 nama_tombol_main = "Main"
 nama_tombol_pengaturan = 'Pengaturan'
 nama_tombol_keluar = 'Keluar'
@@ -111,6 +112,7 @@ tema3 = {
     'btnH': rgb(254, 187, 123),
     'btnP': rgb(255, 150, 51),
     'btnSh': rgb(49, 94, 73),
+    'wl': rgb(205, 65, 84),
     'skp': rgb(255, 233, 143),
     'brd': rgb(255, 225, 107),
     'rm': rgb(157, 210, 185)
