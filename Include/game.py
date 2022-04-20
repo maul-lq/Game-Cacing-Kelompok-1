@@ -421,6 +421,7 @@ class GAME:
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f0.png').convert_alpha()]
+        self.makanan = image.load(mkn/'pete.png').convert_alpha()
         # endregion
         pass
 
@@ -804,23 +805,23 @@ class GAME:
                 if ki.type == KEYDOWN:
 
                     # Kontrol si ular
-                    if ki.key == K_w or ki.key == K_UP and ditekan == True:
-                        if self.arah.y != 1:
+                    if ki.key == K_w or ki.key == K_UP:
+                        if self.arah.y != 1 and ditekan == True:
                             self.arah = Vector2(0, -1)
                             ditekan = False
 
-                    if ki.key == K_d or ki.key == K_RIGHT and ditekan == True:
-                        if self.arah.x != -1:
+                    if ki.key == K_d or ki.key == K_RIGHT:
+                        if self.arah.x != -1 and ditekan == True:
                             self.arah = Vector2(1, 0)
                             ditekan = False
 
-                    if ki.key == K_s or ki.key == K_DOWN and ditekan == True:
-                        if self.arah.y != -1:
+                    if ki.key == K_s or ki.key == K_DOWN:
+                        if self.arah.y != -1 and ditekan == True:
                             self.arah = Vector2(0, 1)
                             ditekan = False
 
-                    if ki.key == K_a or ki.key == K_LEFT and ditekan == True:
-                        if self.arah.x != 1:
+                    if ki.key == K_a or ki.key == K_LEFT:
+                        if self.arah.x != 1 and ditekan == True:
                             self.arah = Vector2(-1, 0)
                             ditekan = False
 
@@ -1153,6 +1154,7 @@ class GAME:
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f0.png').convert_alpha()]
+        self.makanan = image.load(mkn/'pete.png').convert_alpha()
 
         # region END
         self.btn_defaultT.disable()
@@ -1260,6 +1262,8 @@ class GAME:
                            image.load(mkn/'nasgor_f2.png').convert_alpha(),
                            image.load(mkn/'nasgor_f1.png').convert_alpha(),
                            image.load(mkn/'nasgor_f0.png').convert_alpha()]
+        
+        self.makanan = image.load(mkn/'nasgor.png').convert_alpha()
 
         self.btn_defaultT.enable()
         self.btn_theme1.disable()
@@ -1366,6 +1370,8 @@ class GAME:
                            image.load(mkn/'sate_f2.png').convert_alpha(),
                            image.load(mkn/'sate_f1.png').convert_alpha(),
                            image.load(mkn/'sate_f0.png').convert_alpha()]
+        
+        self.makanan = image.load(mkn/'sate.png').convert_alpha()
 
         self.btn_defaultT.enable()
         self.btn_theme1.enable()
@@ -1472,6 +1478,8 @@ class GAME:
                            image.load(mkn/'jengkol_f2.png').convert_alpha(),
                            image.load(mkn/'jengkol_f1.png').convert_alpha(),
                            image.load(mkn/'jengkol_f0.png').convert_alpha()]
+        
+        self.makanan = image.load(mkn/'jengkol.png').convert_alpha()
 
         self.btn_defaultT.enable()
         self.btn_theme1.enable()
