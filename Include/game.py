@@ -4,6 +4,7 @@ from random import randint
 from sys import exit
 
 import pygame_widgets as pw
+from pygame_widgets.progressbar import ProgressBar
 from pygame import *
 
 from fig import *
@@ -1493,51 +1494,99 @@ class GAME:
 
 if __name__ == "__main__":
     m = GAME()
-    from pygame_widgets.progressbar import ProgressBar
 
-    tampilan_loading = ProgressBar(layar, 0, 0,
-                                   UKURAN_WINDOWS[0]-200, 80, lambda: 1 - (tm.time() - waktu_mulai) / 10)
-    tampilan_loading.incompletedColour = rgb(54, 152, 12)
-    tampilan_loading.completedColour = rgb(53, 53, 53)
-    tampilan_loading.setX(100)
-    tampilan_loading.setY(
-        int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2))
+    def loading_frame():
+        global waktu
+        tampilan_loading = ProgressBar(layar, 0, 0,
+                                       UKURAN_WINDOWS[0]-200, 80, lambda: 1 - (tm.time() - waktu_mulai) / 10)
+        tampilan_loading.incompletedColour = rgb(54, 152, 12)
+        tampilan_loading.completedColour = rgb(53, 53, 53)
+        tampilan_loading.setX(100)
+        tampilan_loading.setY(
+            int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2))
 
-    waktu = 1 - (tm.time() - waktu_mulai) / 10
+        waktu = 1 - (tm.time() - waktu_mulai) / 10
 
-    fr_teks = [m.font_h1.render('Loading.', True, rgb(199, 199, 199)),
-               m.font_h1.render('Loading..', True, rgb(199, 199, 199)),
-               m.font_h1.render('Loading...', True, rgb(199, 199, 199))]
+        string_teks = 'Loading'
+        fr_teks = [m.font_h1.render(string_teks[0:2], True, tema0['btnA']),
+                   m.font_h1.render(string_teks[2:4], True, tema1['btnA']),
+                   m.font_h1.render(string_teks[4:6], True, tema2['btnA']),
+                   m.font_h1.render(string_teks, True, tema3['btnA']),
+                   m.font_h1.render(string_teks, True, rgb(53, 53, 53))]
 
-    teks_rect = fr_teks[0].get_rect(center=(
-        UKURAN_WINDOWS[0]/2, int((UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)-50)))
-    index_teks = 0
+        teks_koordinat = (
+            UKURAN_WINDOWS[0]/2, int((UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)-50))
+        teks_rect = fr_teks[4].get_rect(center=teks_koordinat)
 
-    m.btn_play.disable()
-    m.btn_peng.disable()
-    m.btn_keluar.disable()
+        # region frame - teks rect
+        # kasih posisi tiap teks di dalam framenya
+        f_teks_rect0 = fr_teks[0].get_rect(
+            topleft=teks_rect.topleft)  # untuk posisi tuliasn "Lo"
+        f_teks_rect1 = fr_teks[1].get_rect(
+            midleft=f_teks_rect0.midright)  # untuk posisi tuliasn "ad"
+        f_teks_rect2 = fr_teks[2].get_rect(
+            midleft=f_teks_rect1.midright)  # untuk posisi tuliasn "in"
+        # untuk posisi tuliasn "Loading"
+        f_teks_rect3 = fr_teks[3].get_rect(midleft=f_teks_rect0.midleft)
+        # endregion
 
-    while tampilan_loading.percent != 0:
-        ki = event.get()
-        for ki in ki:
-            if ki.type == QUIT:
-                quit()
-                exit()
+        frame_teks_rect = [f_teks_rect0,
+                           f_teks_rect1, f_teks_rect2, f_teks_rect3]
 
-        if index_teks >= len(fr_teks):
-            index_teks = 0
+        fr_teks_dot = [m.font_h1.render('.', True, tema0['btnA']),
+                       m.font_h1.render('..', True, tema1['btnA']),
+                       m.font_h1.render('...', True, tema2['btnA']),
+                       m.font_h1.render('....', True, tema3['btnA'])]
+        teks_dot_rect = fr_teks_dot[0].get_rect(midleft=teks_rect.midright)
 
-        teks = fr_teks[int(index_teks)]
+        # region Variabel Index dari frame teks, teks_rect, dll.
+        frame_index_teks = 0
+        frame_index_teks_rect = 0
+        frame_index_teks_dot = 0
+        frame_index_loading_icColour = 0
+        # endregion
 
-        layar.fill(rgb(12, 12, 12))
-        layar.blit(teks, teks_rect)
-        pw.update(ki)
-        display.update()
+        m.btn_play.disable()
+        m.btn_peng.disable()
+        m.btn_keluar.disable()
 
-        index_teks += 0.015
+        while (tampilan_loading.percent != 0 and frame_index_loading_icColour != 4):
+            ki = event.get()
+            for ki in ki:
+                if ki.type == QUIT:
+                    quit()
+                    exit()
 
-    tampilan_loading.disable()
-    tampilan_loading.hide()
+            if frame_index_teks_rect >= len(frame_teks_rect):
+                frame_index_teks_rect = 0
+            if frame_index_teks >= len(fr_teks)-1:
+                frame_index_teks = 0
+            if frame_index_teks_dot >= len(fr_teks_dot):
+                frame_index_teks_dot = 0
+            if frame_index_loading_icColour >= len(frame_warna_loading):
+                frame_index_loading_icColour = 0
+
+            fr_teks_rect = frame_teks_rect[int(frame_index_teks_rect)]
+            teks = fr_teks[int(frame_index_teks)]
+            teks_dot = fr_teks_dot[int(frame_index_teks_dot)]
+            tampilan_loading.incompletedColour = frame_warna_loading[int(
+                frame_index_loading_icColour)]
+
+            layar.fill(rgb(12, 12, 12))
+            layar.blits([(teks_dot, teks_dot_rect),
+                        (fr_teks[4], teks_rect), (teks, fr_teks_rect)])
+            pw.update(ki)
+            display.update()
+
+            frame_index_teks_rect += 0.015
+            frame_index_teks += 0.015
+            frame_index_teks_dot += 0.015
+            frame_index_loading_icColour += 0.015
+
+        tampilan_loading.disable()
+        tampilan_loading.hide()
+
+    loading_frame()
     m.btn_play.enable()
     m.btn_peng.enable()
     m.btn_keluar.enable()

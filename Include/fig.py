@@ -51,7 +51,8 @@ KECEPATAN_ULAR_BERGERAK = 160  # milisec
 
 # Penamaan dan Warna Tema
 JUDUL_PADA_WINDOWS = 'Game Cacing | Kelompok 1'
-judul = 'Game Cacing';teks_di_pengaturan_h1="Pengaturan | Tema"
+judul = 'Game Cacing'
+teks_di_pengaturan_h1 = "Pengaturan | Tema"
 nama_tombol_main = "Main"
 nama_tombol_pengaturan = 'Pengaturan'
 nama_tombol_keluar = 'Keluar'
@@ -59,7 +60,7 @@ nama_tombol_kembali_ke_menu_utama = 'Kembali'
 nama_tombol_kembali = 'Kembali'
 nama_tombol_ulang_game = 'Ulang'
 nama_tombol_default = 'Default'
-# region Theme Colour
+# region Warna Tema / Warna - Warna
 # ulet buah
 tema0 = {
     'bg': rgb(180, 204, 73),
@@ -117,6 +118,9 @@ tema3 = {
     'brd': rgb(255, 225, 107),
     'rm': rgb(157, 210, 185)
 }
+
+frame_warna_loading = [tema0['btnA'],
+                       tema1['btnA'], tema2['btnA'], tema3['btnA']]
 # endregion
 
 # region Default Var
@@ -156,3 +160,7 @@ def Tombol(win: pygame.Surface,
                   inactiveColour=warnaAktif, hoverColour=warnaHover, pressedColour=warnaDitekan,
                   radius=sudutRad, onClick=onClick, textColour=warnaTeks, shadowDistance=shadowDistance,
                   shadowColour=shadowColour, font=font, onRelease=onRelease)
+
+
+if __name__ == "__main__":
+    print(len(frame_warna_loading))
