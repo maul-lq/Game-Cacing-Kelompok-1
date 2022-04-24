@@ -8,6 +8,9 @@
 from pygame_widgets.button import Button
 from pathlib import Path
 import pygame
+from typing import Callable
+import pygame
+from pygame_widgets.widget import WidgetBase
 
 
 def rgb(r: int, g: int, b: int, a: int = 255):
@@ -25,7 +28,9 @@ def rgb(r: int, g: int, b: int, a: int = 255):
     return pygame.Color(r, g, b, a)
 
 
-# Variabel Ukuran Layar
+# Konstant
+KONST_ANI = 0.015
+
 UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan)
 BANYAK_KOTAK = 23
 UKURAN_WINDOWS = (UKURAN_GAMBAR*BANYAK_KOTAK, UKURAN_GAMBAR*BANYAK_KOTAK)
@@ -123,7 +128,7 @@ frame_warna_loading = [tema0['btnA'],
                        tema1['btnA'], tema2['btnA'], tema3['btnA']]
 # endregion
 
-# region Default Var
+# region Default
 wLine = tema0['wl']
 bg = tema0['bg']
 pn1 = tema0['pn1']
@@ -153,13 +158,45 @@ def Tombol(win: pygame.Surface,
            sudutRad: int = 0,
            shadowDistance: int = 0,
            shadowColour: tuple = (210, 210, 180),
-           onClick=lambda: print(True, 0),
+           onClick=lambda: None,
            onRelease=lambda: print(True, 1)):
 
     return Button(win, x_pos, y_pos, lebar, tinggi, text=teks, fontSize=fontSize, margin=margin,
                   inactiveColour=warnaAktif, hoverColour=warnaHover, pressedColour=warnaDitekan,
                   radius=sudutRad, onClick=onClick, textColour=warnaTeks, shadowDistance=shadowDistance,
                   shadowColour=shadowColour, font=font, onRelease=onRelease)
+
+
+class ProgressBar(WidgetBase):
+    def __init__(self, win, x, y, width, height, progress: Callable[[], float], **kwargs):
+        super().__init__(win, x, y, width, height)
+        self.progress = progress
+
+        self.curved = kwargs.get('curved', False)
+
+        self.completedColour = kwargs.get('completedColour', (0, 200, 0))
+        self.incompletedColour = kwargs.get(
+            'incompletedColour', (100, 100, 100))
+
+        self.percent = self.progress()
+
+        self.radius = self._height / 2 if self.curved else 0
+
+        self.disable()
+
+    def listen(self, events):
+        pass
+
+    def draw(self):
+        """ Display to surface """
+        self.percent = min(max(self.progress(), 0), 1)
+
+        if not self._hidden:
+            pygame.draw.rect(self.win, self.incompletedColour,
+                             ((self._x, self._y, self._width, self._height)), border_radius=2)
+            pygame.draw.rect(self.win, self.completedColour,
+                             (self._x, self._y,
+                              int(self._width * (1 - self.percent)), self._height), border_radius=2)
 
 
 if __name__ == "__main__":

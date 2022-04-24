@@ -4,7 +4,6 @@ from random import randint
 from sys import exit
 
 import pygame_widgets as pw
-from pygame_widgets.progressbar import ProgressBar
 from pygame import *
 
 from fig import *
@@ -32,8 +31,151 @@ display.set_icon(image.load('./res/ikon/ikon.png'))  # Ikon buat gamenya
 # endregion
 
 
-class GAME:
-    def __init__(self):
+class Makanan:
+    def __init__(self) -> None:
+        self.acakPos()
+        self.index_makanan = 0
+        self.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
+                           image.load(mkn/'pete_f1.png').convert_alpha(),
+                           image.load(mkn/'pete_f2.png').convert_alpha(),
+                           image.load(mkn/'pete_f2.png').convert_alpha(),
+                           image.load(mkn/'pete_f1.png').convert_alpha(),
+                           image.load(mkn/'pete_f0.png').convert_alpha()]
+        self.makanan = image.load(mkn/'pete.png').convert_alpha()
+        pass
+
+    def acakPos(self):
+        self.fd_xPos = randint(1, celln-2)
+        self.fd_yPos = randint(3, celln-2)
+        self.fd_pos = Vector2(self.fd_xPos, self.fd_yPos)
+
+        pass
+
+    def gambar_makanan(self):
+        fdrect = Rect(int(self.fd_pos.x)*imgSize,
+                      int(self.fd_pos.y)*imgSize,
+                      imgSize, imgSize)
+
+        layar.blit(self.fr_makanan[int(self.index_makanan)], fdrect)
+        pass
+
+
+class Cacing(Makanan):
+    def __init__(self) -> None:
+        super().__init__()
+        self.badan = [Vector2(5, 12), Vector2(
+            4, 12), Vector2(3, 12), Vector2(2, 12)]
+        self.arah = Vector2(0, 0)
+        self.newblok = False
+
+        self.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
+        self.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
+        self.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
+        self.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
+
+        self.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
+        self.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
+        self.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
+        self.b_br = image.load(thp1/'badan_br.png').convert_alpha()
+
+        self.b_v = image.load(thp1/'badan_v.png').convert_alpha()
+        self.b_h = image.load(thp1/'badan_h.png').convert_alpha()
+
+        self.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
+        self.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
+        self.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
+        self.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
+
+        pass
+
+    def gambar_ular(self):
+        self.update_hg()
+        self.update_eg()
+
+        for i, blok in enumerate(self.badan):
+            x_pos = int(blok.x)*imgSize
+            y_pos = int(blok.y)*imgSize
+            ular_rect = Rect(x_pos, y_pos,
+                             imgSize, imgSize)
+
+            if i == 0:  # index ke 0 jadi kepalanya
+                layar.blit(self.kepala, ular_rect)
+            elif i == len(self.badan)-1:  # index terakhir dari list badan jadi ekornya
+                layar.blit(self.ekor, ular_rect)
+            else:
+                blok_sebelum = self.badan[i+1]-blok
+                blok_selanjutnya = self.badan[i-1]-blok
+
+                if blok_sebelum.x == blok_selanjutnya.x:
+                    layar.blit(self.b_v, ular_rect)
+                elif blok_sebelum.y == blok_selanjutnya.y:
+                    layar.blit(self.b_h, ular_rect)
+                else:
+                    if blok_sebelum.x == -1 and blok_selanjutnya.y == -1 \
+                            or blok_sebelum.y == -1 and blok_selanjutnya.x == -1:
+                        layar.blit(self.b_tl, ular_rect)
+                    if blok_sebelum.x == -1 and blok_selanjutnya.y == 1 \
+                            or blok_sebelum.y == 1 and blok_selanjutnya.x == -1:
+                        layar.blit(self.b_bl, ular_rect)
+                    if blok_sebelum.x == 1 and blok_selanjutnya.y == -1 \
+                            or blok_sebelum.y == -1 and blok_selanjutnya.x == 1:
+                        layar.blit(self.b_tr, ular_rect)
+                    if blok_sebelum.x == 1 and blok_selanjutnya.y == 1 \
+                            or blok_sebelum.y == 1 and blok_selanjutnya.x == 1:
+                        layar.blit(self.b_br, ular_rect)
+
+        pass
+
+    def update_hg(self):
+        # baagian kepla
+        rKepala = self.badan[1]-self.badan[0]
+        if rKepala == Vector2(1, 0):
+            self.kepala = self.h_left
+        elif rKepala == Vector2(-1, 0):
+            self.kepala = self.h_right
+        elif rKepala == Vector2(0, 1):
+            self.kepala = self.h_down
+        elif rKepala == Vector2(0, -1):
+            self.kepala = self.h_up
+
+    def update_eg(self):
+        # baagian kepla
+        rEkor = self.badan[-2]-self.badan[-1]
+        if rEkor == Vector2(1, 0):
+            self.ekor = self.t_left
+        elif rEkor == Vector2(-1, 0):
+            self.ekor = self.t_right
+        elif rEkor == Vector2(0, 1):
+            self.ekor = self.t_down
+        elif rEkor == Vector2(0, -1):
+            self.ekor = self.t_up
+
+    def gerakSiular(self):
+        if self.newblok == True:
+            # copy badan
+            badanC = self.badan[:]
+            badanC.insert(0, badanC[0]+self.arah)
+            self.badan = badanC[:]
+            self.newblok = False
+        else:
+            if self.arah != Vector2(0, 0):
+                badanC = self.badan[:-1]
+                badanC.insert(0, badanC[0]+self.arah)
+                self.badan = badanC[:]
+
+    def tambah_blok(self):
+        self.newblok = True
+
+    def reset(self):
+        self.badan = [Vector2(5, 12), Vector2(
+            4, 12), Vector2(3, 12), Vector2(2, 12)]
+        self.arah = Vector2(0, 0)
+        self.fd_pos = Vector2(8, 12)
+
+
+class GAME(Cacing):
+    def __init__(self) -> None:
+        super().__init__()
         # region Menu Utama
         # inisialisasi menu utama
         self.aktif = True
@@ -387,43 +529,6 @@ class GAME:
         self.btnReset.hide()
         # endregion
 
-        # region Ular
-        # inisialisasi ular
-        self.badan = [Vector2(5, 12), Vector2(
-            4, 12), Vector2(3, 12), Vector2(2, 12)]
-        self.arah = Vector2(0, 0)
-        self.newblok = False
-
-        self.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
-
-        self.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp1/'badan_br.png').convert_alpha()
-
-        self.b_v = image.load(thp1/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp1/'badan_h.png').convert_alpha()
-
-        self.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
-        # endregion
-
-        # region Makanan
-        self.acakPos()
-        self.index_makanan = 0
-        self.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
-                           image.load(mkn/'pete_f1.png').convert_alpha(),
-                           image.load(mkn/'pete_f2.png').convert_alpha(),
-                           image.load(mkn/'pete_f2.png').convert_alpha(),
-                           image.load(mkn/'pete_f1.png').convert_alpha(),
-                           image.load(mkn/'pete_f0.png').convert_alpha()]
-        self.makanan = image.load(mkn/'pete.png').convert_alpha()
-        # endregion
         pass
 
     # ! Membuat menu Utama
@@ -664,7 +769,7 @@ class GAME:
 
     # endregion
 
-    # ! membuat Game Ularnya
+    # ! membuat Game Cacingnya
     # region Game
 
     def drawElem(self):
@@ -692,7 +797,7 @@ class GAME:
             self.acakPos()
             self.tambah_blok()
             self.go_nskor += 1
-            # print(self.newblok)
+            # print('The snake eat the gawd damm food!\nSkor: ', self.go_nskor)
             self.suara_makan.play()
             pass
 
@@ -728,7 +833,7 @@ class GAME:
         self.tkgmoverRect = self.tkgmover.get_rect(midtop=(self.pngmRect.midtop[0],
                                                            self.pngmRect.midtop[1]+10))
 
-        self.pngmRect.center = self.boardRect.center
+        # self.pngmRect.center = self.boardRect.center
 
         # region Skor dan HighSkor
         self.display_makanan2x = transform.smoothscale(
@@ -760,7 +865,7 @@ class GAME:
         pass
 
     def gameOver(self):
-        # region Disable & Enable Tombol
+        # region 'Disable' & 'Enable' Tombol
         self.btnHome.enable()
         self.btnHome.show()
         self.btnReset.enable()
@@ -772,7 +877,6 @@ class GAME:
         self.btn_keluar.hide()
         self.btn_peng.hide()
         # endregion
-
         while self.plgAktif:
             ki = event.get()
             for ki in ki:
@@ -785,6 +889,7 @@ class GAME:
                 if ki.type == KEYDOWN:
                     if ki.key == K_SPACE:
                         self.klikHome()
+
             self.drawGameOver()
             pw.update(ki)
             display.update()
@@ -834,7 +939,7 @@ class GAME:
             self.drawElem()
             display.update()
             fps.tick(FPS)
-            self.index_makanan += 0.1
+            self.index_makanan += (KONST_ANI*10)
 
     def skor(self):
         # membuat tulisan skor
@@ -875,6 +980,7 @@ class GAME:
         pass
 
     def rumput(self):
+        # Gambar Rumput / Kotak2
         for i in range(celln):
             if i % 2 == 0:
                 for j in range(celln):
@@ -889,110 +995,6 @@ class GAME:
                                           imgSize, imgSize)
                         draw.rect(layar, self.warnaRumput, rumputRect)
                 pass
-        pass
-
-    # endregion
-
-    # region Ular
-    def gambar_ular(self):
-        self.update_hg()
-        self.update_eg()
-
-        for i, blok in enumerate(self.badan):
-            x_pos = int(blok.x)*imgSize
-            y_pos = int(blok.y)*imgSize
-            ular_rect = Rect(x_pos, y_pos,
-                             imgSize, imgSize)
-
-            if i == 0:  # index ke 0 jadi kepalanya
-                layar.blit(self.kepala, ular_rect)
-            elif i == len(self.badan)-1:  # index terakhir dari list badan jadi ekornya
-                layar.blit(self.ekor, ular_rect)
-            else:
-                blok_sebelum = self.badan[i+1]-blok
-                blok_selanjutnya = self.badan[i-1]-blok
-
-                if blok_sebelum.x == blok_selanjutnya.x:
-                    layar.blit(self.b_v, ular_rect)
-                elif blok_sebelum.y == blok_selanjutnya.y:
-                    layar.blit(self.b_h, ular_rect)
-                else:
-                    if blok_sebelum.x == -1 and blok_selanjutnya.y == -1 \
-                            or blok_sebelum.y == -1 and blok_selanjutnya.x == -1:
-                        layar.blit(self.b_tl, ular_rect)
-                    if blok_sebelum.x == -1 and blok_selanjutnya.y == 1 \
-                            or blok_sebelum.y == 1 and blok_selanjutnya.x == -1:
-                        layar.blit(self.b_bl, ular_rect)
-                    if blok_sebelum.x == 1 and blok_selanjutnya.y == -1 \
-                            or blok_sebelum.y == -1 and blok_selanjutnya.x == 1:
-                        layar.blit(self.b_tr, ular_rect)
-                    if blok_sebelum.x == 1 and blok_selanjutnya.y == 1 \
-                            or blok_sebelum.y == 1 and blok_selanjutnya.x == 1:
-                        layar.blit(self.b_br, ular_rect)
-
-        pass
-
-    def update_hg(self):
-        # baagian kepla
-        rKepala = self.badan[1]-self.badan[0]
-        if rKepala == Vector2(1, 0):
-            self.kepala = self.h_left
-        elif rKepala == Vector2(-1, 0):
-            self.kepala = self.h_right
-        elif rKepala == Vector2(0, 1):
-            self.kepala = self.h_down
-        elif rKepala == Vector2(0, -1):
-            self.kepala = self.h_up
-
-    def update_eg(self):
-        # baagian kepla
-        rEkor = self.badan[-2]-self.badan[-1]
-        if rEkor == Vector2(1, 0):
-            self.ekor = self.t_left
-        elif rEkor == Vector2(-1, 0):
-            self.ekor = self.t_right
-        elif rEkor == Vector2(0, 1):
-            self.ekor = self.t_down
-        elif rEkor == Vector2(0, -1):
-            self.ekor = self.t_up
-
-    def gerakSiular(self):
-        if self.newblok == True:
-            # copy badan
-            badanC = self.badan[:]
-            badanC.insert(0, badanC[0]+self.arah)
-            self.badan = badanC[:]
-            self.newblok = False
-        else:
-            if self.arah != Vector2(0, 0):
-                badanC = self.badan[:-1]
-                badanC.insert(0, badanC[0]+self.arah)
-                self.badan = badanC[:]
-
-    def tambah_blok(self):
-        self.newblok = True
-
-    def reset(self):
-        self.badan = [Vector2(5, 12), Vector2(
-            4, 12), Vector2(3, 12), Vector2(2, 12)]
-        self.arah = Vector2(0, 0)
-        self.fd_pos = Vector2(8, 12)
-    # endregion
-
-    # region Makanan
-    def acakPos(self):
-        self.fd_xPos = randint(1, celln-2)
-        self.fd_yPos = randint(3, celln-2)
-        self.fd_pos = Vector2(self.fd_xPos, self.fd_yPos)
-
-        pass
-
-    def gambar_makanan(self):
-        fdrect = Rect(int(self.fd_pos.x)*imgSize,
-                      int(self.fd_pos.y)*imgSize,
-                      imgSize, imgSize)
-
-        layar.blit(self.fr_makanan[int(self.index_makanan)], fdrect)
         pass
 
     # endregion
@@ -1488,34 +1490,33 @@ class GAME:
         self.btn_theme3.disable()
 
         pass
-
     # endregion
 
 
 if __name__ == "__main__":
     m = GAME()
+    looping = False
 
     def loading_frame():
         global waktu
         tampilan_loading = ProgressBar(layar, 0, 0,
-                                       UKURAN_WINDOWS[0]-200, 80, lambda: 1 - (tm.time() - waktu_mulai) / 10)
-        tampilan_loading.incompletedColour = rgb(54, 152, 12)
-        tampilan_loading.completedColour = rgb(53, 53, 53)
+                                       UKURAN_WINDOWS[0]-200, 75, lambda: 1 - (tm.time() - waktu_mulai) / 10)
+        tampilan_loading.incompletedColour = rgb(53, 53, 53)
         tampilan_loading.setX(100)
         tampilan_loading.setY(
-            int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2))
+            int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)+10)
 
         waktu = 1 - (tm.time() - waktu_mulai) / 10
 
-        string_teks = 'Loading'
+        string_teks = 'Memuat'
         fr_teks = [m.font_h1.render(string_teks[0:2], True, tema0['btnA']),
                    m.font_h1.render(string_teks[2:4], True, tema1['btnA']),
                    m.font_h1.render(string_teks[4:6], True, tema2['btnA']),
                    m.font_h1.render(string_teks, True, tema3['btnA']),
-                   m.font_h1.render(string_teks, True, rgb(53, 53, 53))]
+                   m.font_h1.render(string_teks, True, rgb(150, 150, 150))]
 
         teks_koordinat = (
-            UKURAN_WINDOWS[0]/2, int((UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)-50))
+            UKURAN_WINDOWS[0]/2, int((UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)-20))
         teks_rect = fr_teks[4].get_rect(center=teks_koordinat)
 
         # region frame - teks rect
@@ -1550,7 +1551,7 @@ if __name__ == "__main__":
         m.btn_peng.disable()
         m.btn_keluar.disable()
 
-        while (tampilan_loading.percent != 0 and frame_index_loading_icColour != 4):
+        while (tampilan_loading.percent != 0 and frame_index_loading_icColour != 4) or looping:
             ki = event.get()
             for ki in ki:
                 if ki.type == QUIT:
@@ -1569,22 +1570,25 @@ if __name__ == "__main__":
             fr_teks_rect = frame_teks_rect[int(frame_index_teks_rect)]
             teks = fr_teks[int(frame_index_teks)]
             teks_dot = fr_teks_dot[int(frame_index_teks_dot)]
-            tampilan_loading.incompletedColour = frame_warna_loading[int(
+            tampilan_loading.completedColour = frame_warna_loading[int(
                 frame_index_loading_icColour)]
 
             layar.fill(rgb(12, 12, 12))
-            layar.blits([(teks_dot, teks_dot_rect),
-                        (fr_teks[4], teks_rect), (teks, fr_teks_rect)])
+            # layar.blits([(teks_dot, teks_dot_rect),
+            #             (fr_teks[4], teks_rect), (teks, fr_teks_rect)])
+            layar.blits([(teks_dot, teks_dot_rect), (fr_teks[4], teks_rect)])
             pw.update(ki)
             display.update()
 
-            frame_index_teks_rect += 0.015
-            frame_index_teks += 0.015
-            frame_index_teks_dot += 0.015
-            frame_index_loading_icColour += 0.015
+            frame_index_teks_rect += KONST_ANI
+            frame_index_teks += KONST_ANI
+            frame_index_teks_dot += KONST_ANI
+            frame_index_loading_icColour += KONST_ANI
 
         tampilan_loading.disable()
         tampilan_loading.hide()
+
+        return 0
 
     loading_frame()
     m.btn_play.enable()

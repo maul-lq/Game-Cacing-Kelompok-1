@@ -161,7 +161,7 @@ cython_debug/
 
 # Windows & Shit....
 *.ini
-test/
+_test/
 Include/test.py
 build.bat
 bin/
