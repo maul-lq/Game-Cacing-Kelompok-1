@@ -1,6 +1,6 @@
 # Terakhir Di Edit: Monday, February - 28 - 2022 (28/2/22) [22:57:04,954 PM]  /  GMT+0700 || 9
 import time as tm
-from random import randint
+from random import choice, randint
 from sys import exit
 
 import pygame_widgets as pw
@@ -41,7 +41,33 @@ class Makanan:
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f0.png').convert_alpha()]
+        self.fr_makanan0 = [image.load(mkn/'pete_f0.png').convert_alpha(),
+                            image.load(mkn/'pete_f1.png').convert_alpha(),
+                            image.load(mkn/'pete_f2.png').convert_alpha(),
+                            image.load(mkn/'pete_f2.png').convert_alpha(),
+                            image.load(mkn/'pete_f1.png').convert_alpha(),
+                            image.load(mkn/'pete_f0.png').convert_alpha()]
+        self.fr_makanan1 = [image.load(mkn/'jengkol_f0.png').convert_alpha(),
+                            image.load(mkn/'jengkol_f1.png').convert_alpha(),
+                            image.load(mkn/'jengkol_f2.png').convert_alpha(),
+                            image.load(mkn/'jengkol_f2.png').convert_alpha(),
+                            image.load(mkn/'jengkol_f1.png').convert_alpha(),
+                            image.load(mkn/'jengkol_f0.png').convert_alpha()]
+        self.fr_makanan2 = [image.load(mkn/'nasgor_f0.png').convert_alpha(),
+                            image.load(mkn/'nasgor_f1.png').convert_alpha(),
+                            image.load(mkn/'nasgor_f2.png').convert_alpha(),
+                            image.load(mkn/'nasgor_f2.png').convert_alpha(),
+                            image.load(mkn/'nasgor_f1.png').convert_alpha(),
+                            image.load(mkn/'nasgor_f0.png').convert_alpha()]
+        self.fr_makanan3 = [image.load(mkn/'sate_f0.png').convert_alpha(),
+                            image.load(mkn/'sate_f1.png').convert_alpha(),
+                            image.load(mkn/'sate_f2.png').convert_alpha(),
+                            image.load(mkn/'sate_f2.png').convert_alpha(),
+                            image.load(mkn/'sate_f1.png').convert_alpha(),
+                            image.load(mkn/'sate_f0.png').convert_alpha()]
         self.makanan = image.load(mkn/'pete.png').convert_alpha()
+
+        self.display_makananAktif = 0
         pass
 
     def acakPos(self):
@@ -51,12 +77,42 @@ class Makanan:
 
         pass
 
-    def gambar_makanan(self):
-        fdrect = Rect(int(self.fd_pos.x)*imgSize,
-                      int(self.fd_pos.y)*imgSize,
-                      imgSize, imgSize)
+    def gambar_makanan(self, display=False):
+        if not display:
+            fdrect = Rect(int(self.fd_pos.x)*imgSize,
+                          int(self.fd_pos.y)*imgSize,
+                          imgSize, imgSize)
 
-        layar.blit(self.fr_makanan[int(self.index_makanan)], fdrect)
+            layar.blit(self.fr_makanan[int(self.index_makanan)], fdrect)
+        else:
+            if self.display_makananAktif == 0:
+                layar.blits([(self.fr_makanan0[int(self.index_makanan)], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan1[2], Rect(
+                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan2[2], Rect(
+                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+            if self.display_makananAktif == 1:
+                layar.blits([(self.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan1[2], Rect(
+                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan2[int(self.index_makanan)], Rect(
+                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+            if self.display_makananAktif == 2:
+                layar.blits([(self.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan1[2], Rect(
+                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan2[2], Rect(
+                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan3[int(self.index_makanan)], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+            if self.display_makananAktif == 3:
+                layar.blits([(self.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan1[int(self.index_makanan)], Rect(
+                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan2[2], Rect(
+                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (self.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
         pass
 
 
@@ -206,7 +262,7 @@ class GAME(Cacing):
         self.btn_playRect = Rect((self.panel_11Rect.topleft[0]+10,
                                   self.panel_11Rect.topleft[1]+10),
                                  (self.panel_11Rect.width, 100))
-        self.btn_play = Tombol(self.bg1,
+        self.btn_play = Tombol(layar,
                                self.btn_playRect.x,
                                self.btn_playRect.y,
                                self.btn_playRect.width-20,
@@ -226,7 +282,7 @@ class GAME(Cacing):
         self.btn_pengRect = Rect((self.panel_11Rect.topleft[0]+10,
                                   self.btn_playRect.midbottom[1]+20),
                                  (self.panel_11Rect.width, 100))
-        self.btn_peng = Tombol(self.bg1,
+        self.btn_peng = Tombol(layar,
                                self.btn_pengRect.x,
                                self.btn_pengRect.y,
                                self.btn_pengRect.width-20,
@@ -247,7 +303,7 @@ class GAME(Cacing):
                                     self.btn_pengRect.midbottom[1]+20),
                                    (self.panel_11Rect.width, 100))
 
-        self.btn_keluar = Tombol(self.bg1,
+        self.btn_keluar = Tombol(layar,
                                  self.btn_keluarRect.x,
                                  self.btn_keluarRect.y,
                                  self.btn_pengRect.width-20,
@@ -297,7 +353,7 @@ class GAME(Cacing):
 
         self.tt_rect = self.tampilan_tema_default.get_rect(
             midtop=(self.panel_1Rect.midbottom[0]+(self.panel_1Rect.midbottom[0]//2)-23,
-                    self.panel_1Rect.midbottom[1]+10))
+                    self.panel_1Rect.midbottom[1]+30))
 
         # membuat tulisan Pengaturan
         self.teksH1 = self.font_h1.render(
@@ -535,6 +591,7 @@ class GAME(Cacing):
     # region Menu Utama
     def draw(self):
         layar.blit(self.bg1, self.bg1_rect)
+        self.rumput()
         layar.blit(self.judul, self.judul_rect)
         # mebuat garis bawah pada judul
 
@@ -564,18 +621,38 @@ class GAME(Cacing):
         pass
 
     def run(self):
+        UPDATE_GAMBAR_CACING = USEREVENT+1
+        time.set_timer(UPDATE_GAMBAR_CACING, KECEPATAN_ULAR_BERGERAK)
+        arah_si_cacing = None
         while self.aktif:
             ki = event.get()
             for ki in ki:
                 if ki.type == QUIT:
                     quit()
                     exit()
+                if ki.type == UPDATE_GAMBAR_CACING:
+                    self.update()
+                    if arah_si_cacing == 'atas' and self.arah.y != 1:
+                        self.arah = Vector2(0, -1)
+                    if arah_si_cacing == 'bawah' and self.arah.y != -1:
+                        self.arah = Vector2(0, 1)
+                    if arah_si_cacing == 'kanan' and self.arah.x != -1:
+                        self.arah = Vector2(1, 0)
+                    if arah_si_cacing == 'kiri' and self.arah.x != 1:
+                        self.arah = Vector2(-1, 0)
+                    if arah_si_cacing == None:
+                        self.arah = Vector2(0, 0)
+
+            if self.index_makanan >= len(self.fr_makanan):
+                self.index_makanan = 0
 
             self.draw()
 
             pw.update(ki)
             display.update()
             fps.tick(FPS)
+
+            self.index_makanan += KONST_ANI*10
 
         pass
     # endregion
@@ -751,9 +828,14 @@ class GAME(Cacing):
                        self.btn_defaultRect.topright[1]-10),
                       (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
         # endregion
+
+        self.gambar_makanan(display=True)
+        self.gambar_ular()
         pass
 
     def pengaturan(self):
+        self.badan = [Vector2(15, 17), Vector2(
+            14, 17), Vector2(13, 17), Vector2(12, 17)]
         while self.paktif:
             ki = event.get()
             for ki in ki:
@@ -761,17 +843,20 @@ class GAME(Cacing):
                     quit()
                     exit()
 
+            if self.index_makanan >= len(self.fr_makanan):
+                self.index_makanan = 0
+
             self.pengDraw()
 
             pw.update(ki)
             display.update()
             fps.tick(FPS)
+            self.index_makanan += KONST_ANI*10
 
     # endregion
 
     # ! membuat Game Cacingnya
     # region Game
-
     def drawElem(self):
         layar.blit(self.pbg, self.pbg_rect)
         self.rumput()
@@ -799,8 +884,6 @@ class GAME(Cacing):
             self.go_nskor += 1
             # print('The snake eat the gawd damm food!\nSkor: ', self.go_nskor)
             self.suara_makan.play()
-            pass
-
         for blok in self.badan[1:]:
             if blok == self.fd_pos:
                 self.acakPos()
@@ -810,13 +893,11 @@ class GAME(Cacing):
             self.suara_latar_belakang.stop()
             self.suara_nabrak.play()
             self.gameOver()
-
         for blok in self.badan[1:]:
             if blok == self.badan[0] and self.arah != Vector2(0, 0):
                 self.suara_latar_belakang.stop()
                 self.suara_nabrak.play()
                 self.gameOver()
-
         pass
 
     def drawGameOver(self):
@@ -896,15 +977,15 @@ class GAME(Cacing):
             fps.tick(FPS)
 
     def play(self):
-        UPDATE_LAYAR = USEREVENT
-        pygame.time.set_timer(UPDATE_LAYAR, KECEPATAN_ULAR_BERGERAK)
+        UPDATE_CACING = USEREVENT
+        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
         ditekan = False
         while self.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
                     quit()
                     exit()
-                if ki.type == UPDATE_LAYAR:
+                if ki.type == UPDATE_CACING:
                     self.update()
                     ditekan = True
 
@@ -1064,6 +1145,7 @@ class GAME(Cacing):
         self.bg.fill(tema0['bg'])
         self.panel_1.fill(tema0['pn1'])
         warnaTeks = tema0['tk']
+        self.display_makananAktif = 0
 
         # region Pengaturan
         # self.teks1 = self.font_h2.render('Theme: Default', True, warnaTeks)
@@ -1173,6 +1255,7 @@ class GAME(Cacing):
         self.bg.fill(tema1['bg'])
         self.panel_1.fill(tema1['pn1'])
         warnaTeks = tema1['tk']
+        self.display_makananAktif = 1
 
         # region pengaturan
         # self.teks1 = self.font_h2.render('Theme: ', True, warnaTeks)
@@ -1280,6 +1363,7 @@ class GAME(Cacing):
         self.panel_1.fill(tema2['pn1'])
         warnaTeks = tema2['tk']
         self.wline = 2
+        self.display_makananAktif = 2
 
         # region pengaturan
         # self.teks1 = self.font_h2.render('Theme: Snowy Time', True, warnaTeks)
@@ -1388,6 +1472,7 @@ class GAME(Cacing):
         self.panel_1.fill(tema3['pn1'])
         warnaTeks = tema3['tk']
         self.wline = 3
+        self.display_makananAktif = 3
 
         # region pengaturan
         # self.teks1 = self.font_h2.render('Theme: Pastel', True, warnaTeks)
@@ -1533,11 +1618,11 @@ if __name__ == "__main__":
 
         frame_teks_rect = [f_teks_rect0,
                            f_teks_rect1, f_teks_rect2, f_teks_rect3]
+        fr_teks_dot = [m.font_h1.render('.', True, rgb(150, 150, 150)),
+                       m.font_h1.render('..', True, rgb(150, 150, 150)),
+                       m.font_h1.render('...', True, rgb(150, 150, 150)),
+                       m.font_h1.render('....', True, rgb(150, 150, 150))]
 
-        fr_teks_dot = [m.font_h1.render('.', True, tema0['btnA']),
-                       m.font_h1.render('..', True, tema1['btnA']),
-                       m.font_h1.render('...', True, tema2['btnA']),
-                       m.font_h1.render('....', True, tema3['btnA'])]
         teks_dot_rect = fr_teks_dot[0].get_rect(midleft=teks_rect.midright)
 
         # region Variabel Index dari frame teks, teks_rect, dll.
@@ -1547,6 +1632,9 @@ if __name__ == "__main__":
         frame_index_loading_icColour = 0
         # endregion
 
+        m.btn_play.hide()
+        m.btn_peng.hide()
+        m.btn_keluar.hide()
         m.btn_play.disable()
         m.btn_peng.disable()
         m.btn_keluar.disable()
@@ -1590,7 +1678,10 @@ if __name__ == "__main__":
 
         return 0
 
-    loading_frame()
+    # loading_frame()
+    m.btn_play.show()
+    m.btn_peng.show()
+    m.btn_keluar.show()
     m.btn_play.enable()
     m.btn_peng.enable()
     m.btn_keluar.enable()
