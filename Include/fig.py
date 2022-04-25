@@ -97,7 +97,7 @@ tema1 = {
 }
 nama_tema_ke_2 = 'Cacing Kutub'
 tema2 = {
-    'bg': rgb(255, 255, 255),
+    'bg': rgb(252, 252, 252),
     'pn1': rgb(139, 202, 221),
     'tk': rgb(44, 74, 120),
     'btnA': rgb(167, 188, 201),
@@ -107,7 +107,7 @@ tema2 = {
     'wl': rgb(115, 141, 157),
     'skp': rgb(110, 188, 212),
     'brd': rgb(130, 196, 217),
-    'rm': rgb(250, 250, 250)
+    'rm': rgb(242, 242, 242)
 }
 nama_tema_ke_3 = 'Cacing Emas'
 tema3 = {

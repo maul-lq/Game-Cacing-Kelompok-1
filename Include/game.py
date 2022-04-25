@@ -27,7 +27,8 @@ layar = display.set_mode(UKURAN_WINDOWS)
 
 # memuat judul dan ikon
 display.set_caption(JUDUL_PADA_WINDOWS)
-display.set_icon(image.load('./res/ikon/ikon.png'))  # Ikon buat gamenya
+display.set_icon(image.load('./res/ikon/ikon.png', 'Ikon')
+                 )  # Ikon buat gamenya
 # endregion
 
 
@@ -621,38 +622,18 @@ class GAME(Cacing):
         pass
 
     def run(self):
-        UPDATE_GAMBAR_CACING = USEREVENT+1
-        time.set_timer(UPDATE_GAMBAR_CACING, KECEPATAN_ULAR_BERGERAK)
-        arah_si_cacing = None
         while self.aktif:
             ki = event.get()
             for ki in ki:
                 if ki.type == QUIT:
                     quit()
                     exit()
-                if ki.type == UPDATE_GAMBAR_CACING:
-                    self.update()
-                    if arah_si_cacing == 'atas' and self.arah.y != 1:
-                        self.arah = Vector2(0, -1)
-                    if arah_si_cacing == 'bawah' and self.arah.y != -1:
-                        self.arah = Vector2(0, 1)
-                    if arah_si_cacing == 'kanan' and self.arah.x != -1:
-                        self.arah = Vector2(1, 0)
-                    if arah_si_cacing == 'kiri' and self.arah.x != 1:
-                        self.arah = Vector2(-1, 0)
-                    if arah_si_cacing == None:
-                        self.arah = Vector2(0, 0)
-
-            if self.index_makanan >= len(self.fr_makanan):
-                self.index_makanan = 0
 
             self.draw()
 
             pw.update(ki)
             display.update()
             fps.tick(FPS)
-
-            self.index_makanan += KONST_ANI*10
 
         pass
     # endregion
@@ -878,6 +859,7 @@ class GAME(Cacing):
         self.cek_gagal()
 
     def cek_tabrakan(self):
+        """Cek si cacing jika nabrak makanan."""
         if self.fd_pos.distance_to(self.badan[0]) == 0.0:
             self.acakPos()
             self.tambah_blok()
@@ -889,6 +871,7 @@ class GAME(Cacing):
                 self.acakPos()
 
     def cek_gagal(self):
+        """Cek si cacing jika nabrak tembok atau badannya sendiri."""
         if not 1 <= self.badan[0].x < celln-1 or not 3 <= self.badan[0].y < celln-1:
             self.suara_latar_belakang.stop()
             self.suara_nabrak.play()
@@ -979,7 +962,6 @@ class GAME(Cacing):
     def play(self):
         UPDATE_CACING = USEREVENT
         pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
-        ditekan = False
         while self.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
@@ -995,22 +977,18 @@ class GAME(Cacing):
                     if ki.key == K_w or ki.key == K_UP:
                         if self.arah.y != 1 and ditekan == True:
                             self.arah = Vector2(0, -1)
-                            ditekan = False
 
                     if ki.key == K_d or ki.key == K_RIGHT:
                         if self.arah.x != -1 and ditekan == True:
                             self.arah = Vector2(1, 0)
-                            ditekan = False
 
                     if ki.key == K_s or ki.key == K_DOWN:
                         if self.arah.y != -1 and ditekan == True:
                             self.arah = Vector2(0, 1)
-                            ditekan = False
 
                     if ki.key == K_a or ki.key == K_LEFT:
                         if self.arah.x != 1 and ditekan == True:
                             self.arah = Vector2(-1, 0)
-                            ditekan = False
 
                 pass
 
@@ -1099,8 +1077,8 @@ class GAME(Cacing):
         self.btnHome.hide()
         self.btnReset.disable()
         self.btnReset.hide()
-        self.reset()
         self.go_nskor = 0
+        self.reset()
         self.suara_latar_belakang.play()
         self.play()
 
@@ -1678,7 +1656,7 @@ if __name__ == "__main__":
 
         return 0
 
-    # loading_frame()
+    loading_frame()
     m.btn_play.show()
     m.btn_peng.show()
     m.btn_keluar.show()
