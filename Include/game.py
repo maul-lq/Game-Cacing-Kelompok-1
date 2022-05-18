@@ -386,7 +386,7 @@ class GAME(Cacing):
         self.teksh2 = self.font_h2.render(
             teks_di_pengaturan_h2, True, warnaTeks)
         self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y =  540-self.teksh2_rect.height-33
+        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
 
         # region Tombol
         # membuat tombol kembali
@@ -837,10 +837,11 @@ class GAME(Cacing):
                       (self.btn_defaultRect.midtop[0]+30,
                        self.btn_defaultRect.topright[1]-10),
                       (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
-            
+
             draw.line(layar,
                       wLine,
-                      (self.btn_defaultRect.midtop[0]+30, self.teksh2_rect.y-30),
+                      (self.btn_defaultRect.midtop[0] +
+                       30, self.teksh2_rect.y-30),
                       (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
 
         if self.wline == 1:
@@ -882,10 +883,11 @@ class GAME(Cacing):
                       (self.btn_defaultRect.midtop[0]+30,
                        self.btn_defaultRect.topright[1]-10),
                       (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
-            
+
             draw.line(layar,
                       tema1['wl'],
-                      (self.btn_defaultRect.midtop[0]+30, self.teksh2_rect.y-30),
+                      (self.btn_defaultRect.midtop[0] +
+                       30, self.teksh2_rect.y-30),
                       (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
 
         if self.wline == 2:
@@ -927,10 +929,11 @@ class GAME(Cacing):
                       (self.btn_defaultRect.midtop[0]+30,
                        self.btn_defaultRect.topright[1]-10),
                       (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
-            
+
             draw.line(layar,
                       tema2['wl'],
-                      (self.btn_defaultRect.midtop[0]+30, self.teksh2_rect.y-30),
+                      (self.btn_defaultRect.midtop[0] +
+                       30, self.teksh2_rect.y-30),
                       (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
 
         if self.wline == 3:
@@ -972,10 +975,11 @@ class GAME(Cacing):
                       (self.btn_defaultRect.midtop[0]+30,
                        self.btn_defaultRect.topright[1]-10),
                       (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
-            
+
             draw.line(layar,
                       tema3['wl'],
-                      (self.btn_defaultRect.midtop[0]+30, self.teksh2_rect.y-30),
+                      (self.btn_defaultRect.midtop[0] +
+                       30, self.teksh2_rect.y-30),
                       (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
         # endregion
 
@@ -1355,7 +1359,7 @@ class GAME(Cacing):
         self.btn_theme3.hoverColour = tema0['btnH']
         self.btn_theme3.pressedColour = tema0['btnP']
         self.btn_theme3.textColour = warnaTeks
-        
+
         self.teksh2 = self.font_h2.render(
             teks_di_pengaturan_h2, True, tema0['tk'])
         self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
@@ -1470,11 +1474,11 @@ class GAME(Cacing):
         self.btn_theme3.hoverColour = tema1['btnH']
         self.btn_theme3.pressedColour = tema1['btnP']
         self.btn_theme3.textColour = warnaTeks
-        
+
         self.teksh2 = self.font_h2.render(
             teks_di_pengaturan_h2, True, tema1['tk'])
         self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y =  540-self.teksh2_rect.height-33
+        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
         # endregion
 
         # region menu utama
@@ -1583,11 +1587,11 @@ class GAME(Cacing):
         self.btn_theme3.hoverColour = tema2['btnH']
         self.btn_theme3.pressedColour = tema2['btnP']
         self.btn_theme3.textColour = warnaTeks
-        
+
         self.teksh2 = self.font_h2.render(
             teks_di_pengaturan_h2, True, tema2['tk'])
         self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y =  540-self.teksh2_rect.height-33
+        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
         # endregion
 
         # region menu utama
@@ -1720,7 +1724,7 @@ class GAME(Cacing):
         self.judul_rect = self.judul_rect
         self.judul = self.title_font.render(
             judul, True, warnaTeks)
-        
+
         self.teksh2 = self.font_h2.render(
             teks_di_pengaturan_h2, True, tema3['tk'])
         self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
@@ -1885,7 +1889,7 @@ if __name__ == "__main__":
 
         return 0
 
-    # loading_frame()
+    loading_frame()
     m.btn_play.show()
     m.btn_peng.show()
     m.btn_keluar.show()
