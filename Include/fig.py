@@ -59,6 +59,7 @@ KECEPATAN_ULAR_BERGERAK = 160  # milisekon
 JUDUL_PADA_WINDOWS = 'Game Cacing | Kelompok 1'
 judul = 'Game Cacing'
 teks_di_pengaturan_h1 = "Pengaturan - Tema"
+teks_di_pengaturan_h2 = 'Cacing dan Makanan'
 nama_tombol_main = "Main"
 nama_tombol_pengaturan = 'Pengaturan'
 nama_tombol_keluar = 'Keluar'
