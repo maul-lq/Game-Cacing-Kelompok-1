@@ -1,15 +1,19 @@
-# Terakhir Di Edit: Monday, February - 28 - 2022 (28/2/22) [22:57:04,954 PM]  /  GMT+0700 || 9
+# Terakhir Di Edit: Wednesday, May - 11 - 2022 (11/5/22) [23:23:57,775 PM]  /  GMT+0700 || 19
 import time as tm
+from os import system
 from random import choice, randint
 from sys import exit
 
 import pygame_widgets as pw
 from pygame import *
+from rich.console import Console
 
 from fig import *
 
-waktu_mulai = tm.time()
+konsol = Console()
+konsol.print('Memuat import Selesai!', highlight=True)
 
+waktu_mulai = tm.time()
 
 # region
 # inisialisasi pygame
@@ -29,11 +33,13 @@ layar = display.set_mode(UKURAN_WINDOWS)
 display.set_caption(JUDUL_PADA_WINDOWS)
 display.set_icon(image.load('./res/ikon/ikon.png', 'Ikon')
                  )  # Ikon buat gamenya
+konsol.print('Memuat judul dan ikon Selesai!', highlight=True)
 # endregion
 
 
 class Makanan:
     def __init__(self) -> None:
+        konsol.print('Memuat Makanan...', highlight=True)
         self.acakPos()
         self.index_makanan = 0
         self.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
@@ -119,6 +125,7 @@ class Makanan:
 
 class Cacing(Makanan):
     def __init__(self) -> None:
+        konsol.print('Memuat cacing..', highlight=True)
         super().__init__()
         self.badan = [Vector2(5, 12), Vector2(
             4, 12), Vector2(3, 12), Vector2(2, 12)]
@@ -229,9 +236,13 @@ class Cacing(Makanan):
         self.arah = Vector2(0, 0)
         self.fd_pos = Vector2(8, 12)
 
+    def len(self):
+        return len(self.badan)
+
 
 class GAME(Cacing):
     def __init__(self) -> None:
+        konsol.print('Memuat game.', highlight=True)
         super().__init__()
         # region Menu Utama
         # inisialisasi menu utama
@@ -240,6 +251,17 @@ class GAME(Cacing):
             LOKASI_FONT_UNTUK_TULISAN / 'StudioGrotesk-Regular.ttf', 70)
         self.btn_font1 = font.Font(None, 40)
         self.wline = 0
+
+        self.makanan_ke1 = self.fr_makanan0
+        self.makanan_ke2 = self.fr_makanan0
+        self.makanan_ke3 = self.fr_makanan0
+
+        self.def_fdPos1 = Vector2(20, 13)
+        self.def_fdPos2 = Vector2(11, 20)
+        self.def_fdPos3 = Vector2(2, 13)
+        self.fd_pos1 = self.def_fdPos1
+        self.fd_pos2 = self.def_fdPos2
+        self.fd_pos3 = self.def_fdPos3
 
         # membuat background
         self.bg1 = Surface(UKURAN_WINDOWS)
@@ -477,13 +499,14 @@ class GAME(Cacing):
         # endregion
 
         # region Play
-        # inisialisasi si ular dan makanannya
+        # membuat si ular, suara, makanannya, dll.
         self.plAktif = True
         self.reset()
         self.go_nskor = 0
         self.go_high_skor = 0
         self.nths = 0
         self.isreset = False
+        self.apakahGameOver = False
 
         # suara
         self.suara_makan = mixer.Sound(LOKASI_SUARA / "suara_makan.mp3")
@@ -590,9 +613,53 @@ class GAME(Cacing):
 
     # ! Membuat menu Utama
     # region Menu Utama
+
+    # gambar makanan pada menu utama!
+    def gambar_makanan_MU(self):
+        """Gambar makanan pada menu utama."""
+        if self.wline == 0:
+            self.makanan_ke1 = self.fr_makanan0
+            self.makanan_ke2 = self.fr_makanan0
+            self.makanan_ke3 = self.fr_makanan0
+        elif self.wline == 1:
+            self.makanan_ke1 = self.fr_makanan1
+            self.makanan_ke2 = self.fr_makanan1
+            self.makanan_ke3 = self.fr_makanan1
+        elif self.wline == 2:
+            self.makanan_ke1 = self.fr_makanan2
+            self.makanan_ke2 = self.fr_makanan2
+            self.makanan_ke3 = self.fr_makanan2
+        elif self.wline == 3:
+            self.makanan_ke1 = self.fr_makanan3
+            self.makanan_ke2 = self.fr_makanan3
+            self.makanan_ke3 = self.fr_makanan3
+
+        fdrect1 = Rect(
+            (self.fd_pos1.x*imgSize, self.fd_pos1.y*imgSize), (imgSize, imgSize))
+        fdrect2 = Rect(
+            (self.fd_pos2.x*imgSize, self.fd_pos2.y*imgSize), (imgSize, imgSize))
+        fdrect3 = Rect(
+            (self.fd_pos3.x*imgSize, self.fd_pos3.y*imgSize), (imgSize, imgSize))
+
+        layar.blit(self.makanan_ke1[int(self.index_makanan)], fdrect1)
+        layar.blit(self.makanan_ke2[int(self.index_makanan)], fdrect2)
+        layar.blit(self.makanan_ke3[int(self.index_makanan)], fdrect3)
+
+        pass
+    # posisi ke 3 makanan pada menu utama!
+
+    def gambar(self):
+        """Gambar si ular dan makanannya"""
+        self.gambar_makanan_MU()
+        self.gambar_ular()
+        pass
+
     def draw(self):
         layar.blit(self.bg1, self.bg1_rect)
         self.rumput()
+
+        self.gambar()
+
         layar.blit(self.judul, self.judul_rect)
         # mebuat garis bawah pada judul
 
@@ -622,18 +689,94 @@ class GAME(Cacing):
         pass
 
     def run(self):
+        self.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
+            11, 5), Vector2(10, 5), Vector2(9, 5)]
+        UPDATE_CACING = USEREVENT+1
+        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
+        bisagerak = False
+        self.arah = Vector2(0, 0)
+        self.fd_pos1 = self.def_fdPos1
+        self.fd_pos2 = self.def_fdPos2
+        self.fd_pos3 = self.def_fdPos3
         while self.aktif:
             ki = event.get()
+            if len(self.badan) == 66 and bisagerak == False:
+                self.arah = Vector2(0, 0)
+                bisagerak = True
+
+            if self.index_makanan >= len(self.makanan_ke1):
+                self.index_makanan = 0
+
             for ki in ki:
                 if ki.type == QUIT:
                     quit()
                     exit()
+                if ki.type == UPDATE_CACING:
+                    self.update(untukMenuUtama=True)
+
+                if ki.type == KEYDOWN and len(self.badan) >= 66 and bisagerak == True:
+                    if ki.key == K_w or ki.key == K_UP:
+                        if self.arah.y != 1:
+                            self.arah = Vector2(0, -1)
+
+                    if ki.key == K_d or ki.key == K_RIGHT:
+                        if self.arah.x != -1:
+                            self.arah = Vector2(1, 0)
+
+                    if ki.key == K_s or ki.key == K_DOWN:
+                        if self.arah.y != -1:
+                            self.arah = Vector2(0, 1)
+
+                    if ki.key == K_a or ki.key == K_LEFT:
+                        if self.arah.x != 1:
+                            self.arah = Vector2(-1, 0)
+            if len(self.badan) < 66:
+                if self.badan[0] == self.fd_pos1:
+                    self.fd_pos1 = Vector2(-1, -1)
+                else:
+                    if self.badan[-1] == self.def_fdPos1:
+                        self.fd_pos1 = self.def_fdPos1
+
+                if self.badan[0] == self.fd_pos2:
+                    self.fd_pos2 = Vector2(-1, -1)
+                else:
+                    if self.badan[-1] == self.def_fdPos2:
+                        self.fd_pos2 = self.def_fdPos2
+
+                if self.badan[0] == self.fd_pos3:
+                    self.fd_pos3 = Vector2(-1, -1)
+                else:
+                    if self.badan[-1] == self.def_fdPos3:
+                        self.fd_pos3 = self.def_fdPos3
+
+            else:
+                self.fd_pos1, self.fd_pos2, self.fd_pos3 = Vector2(
+                    -1, -1), Vector2(-1, -1), Vector2(-1, -1)
+
+            if len(self.badan) < 66:
+                if self.arah == Vector2(0, 0):
+                    self.arah = Vector2(1, 0)
+
+                # ular bergerak berputar se arah jarum jam
+                # jika kepala ular koordinatnya di 20,5
+                if self.badan[0].distance_to(Vector2(20, 5)) == 0.0:
+                    self.arah = Vector2(0, 1)
+                # jika kepala ular koordinatnya di 20,20
+                if self.badan[0].distance_to(Vector2(20, 20)) == 0.0:
+                    self.arah = Vector2(-1, 0)
+                # jika kepala ular koordinatnya di 2,20
+                if self.badan[0].distance_to(Vector2(2, 20)) == 0.0:
+                    self.arah = Vector2(0, -1)
+                # jika kepala ular koordinatnya di 2,5
+                if self.badan[0].distance_to(Vector2(2, 5)) == 0.0:
+                    self.arah = Vector2(1, 0)
 
             self.draw()
 
             pw.update(ki)
             display.update()
             fps.tick(FPS)
+            self.index_makanan += KONST_ANI*10
 
         pass
     # endregion
@@ -853,31 +996,62 @@ class GAME(Cacing):
 
         self.skor()
 
-    def update(self):
-        self.gerakSiular()
-        self.cek_tabrakan()
-        self.cek_gagal()
+    def update(self, untukMenuUtama=False):
+        if not untukMenuUtama:
+            self.gerakSiular()
+            self.cek_tabrakan()
+            self.cek_gagal()
+        else:
+            self.gerakSiular()
+            self.cek_tabrakan(untukMenuUtama=True)
 
-    def cek_tabrakan(self):
+    def cek_tabrakan(self, untukMenuUtama=False):
         """Cek si cacing jika nabrak makanan."""
-        if self.fd_pos.distance_to(self.badan[0]) == 0.0:
-            self.acakPos()
-            self.tambah_blok()
-            self.go_nskor += 1
-            # print('The snake eat the gawd damm food!\nSkor: ', self.go_nskor)
-            self.suara_makan.play()
-        for blok in self.badan[1:]:
-            if blok == self.fd_pos:
+        if not untukMenuUtama:
+            if self.fd_pos.distance_to(self.badan[0]) == 0.0:
                 self.acakPos()
+                if not self.apakahGameOver:
+                    self.tambah_blok()
+                    self.go_nskor += 1
+                self.suara_makan.play()
+            for blok in self.badan[1:]:
+                if blok == self.fd_pos:
+                    self.acakPos()
+        else:
+            if self.badan[0].x == -1:
+                self.badan[0].x = celln
+            if self.badan[0].x == celln+1:
+                self.badan[0].x = 0
+            if self.badan[0].y == -1:
+                self.badan[0].y = celln
+            if self.badan[0].y == celln+1:
+                self.badan[0].y = 0
+            pass
+
+            if self.fd_pos1.distance_to(self.badan[0]) == 0.0:
+                self.tambah_blok()
+                # self.suara_makan.play()
+            if self.fd_pos2.distance_to(self.badan[0]) == 0.0:
+                self.tambah_blok()
+
+            if self.fd_pos2.distance_to(self.badan[0]) == 0.0:
+                self.tambah_blok()
+            pass
 
     def cek_gagal(self):
         """Cek si cacing jika nabrak tembok atau badannya sendiri."""
         if not 1 <= self.badan[0].x < celln-1 or not 3 <= self.badan[0].y < celln-1:
+            self.apakahGameOver = True
             self.suara_latar_belakang.stop()
             self.suara_nabrak.play()
             self.gameOver()
+            pass
+        else:
+            self.apakahGameOver = False
+
         for blok in self.badan[1:]:
             if blok == self.badan[0] and self.arah != Vector2(0, 0):
+                self.apakahGameOver = True
                 self.suara_latar_belakang.stop()
                 self.suara_nabrak.play()
                 self.gameOver()
@@ -975,7 +1149,7 @@ class GAME(Cacing):
 
                     # Kontrol si ular
                     if ki.key == K_w or ki.key == K_UP:
-                        if self.arah.y != 1 and ditekan == True:
+                        if self.arah.y != 1:
                             self.arah = Vector2(0, -1)
 
                     if ki.key == K_d or ki.key == K_RIGHT:
@@ -1105,6 +1279,12 @@ class GAME(Cacing):
         self.btn_keluar.show()
         self.btn_play.show()
         self.btn_peng.show()
+        self.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
+            11, 5), Vector2(10, 5), Vector2(9, 5)]
+        self.arah = Vector2(0, 0)
+        self.fd_pos1 = self.def_fdPos1
+        self.fd_pos2 = self.def_fdPos2
+        self.fd_pos3 = self.def_fdPos3
         self.run()
 
     def fbtn_play(self):
@@ -1558,9 +1738,11 @@ class GAME(Cacing):
 
 if __name__ == "__main__":
     m = GAME()
+    konsol.print('Memuat game, cacing, dan makanan selesai!', highlight=True)
     looping = False
 
     def loading_frame():
+        konsol.print('Hampir selesai!!!', highlight=True)
         global waktu
         tampilan_loading = ProgressBar(layar, 0, 0,
                                        UKURAN_WINDOWS[0]-200, 75, lambda: 1 - (tm.time() - waktu_mulai) / 10)
@@ -1617,6 +1799,7 @@ if __name__ == "__main__":
         m.btn_peng.disable()
         m.btn_keluar.disable()
 
+        # loading
         while (tampilan_loading.percent != 0 and frame_index_loading_icColour != 4) or looping:
             ki = event.get()
             for ki in ki:
@@ -1663,4 +1846,5 @@ if __name__ == "__main__":
     m.btn_play.enable()
     m.btn_peng.enable()
     m.btn_keluar.enable()
+    konsol.print('Game dimulai!', highlight=True)
     m.run()
