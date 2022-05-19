@@ -21,7 +21,7 @@ def rgb(r: int, g: int, b: int, a: int = 255):
         r (int): Warna merah
         g (int): Warna hijau
         b (int): Warna biru
-        a (int, optional): Tingkat transparannya warna dengan maksimal nilainya 225. Defaults to 255.
+        a (int, optional): Tingkat transparannya warna dengan maksimal nilainya 255. Defaults to 255.
 
     Returns:
         Color: Menghasilkan warna
@@ -31,6 +31,7 @@ def rgb(r: int, g: int, b: int, a: int = 255):
 
 # Konstant
 KONST_ANI = 0.015
+TMFB = 0.6
 
 UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan)
 BANYAK_KOTAK = 23
@@ -66,9 +67,12 @@ nama_tombol_keluar = 'Keluar'
 nama_tombol_kembali_ke_menu_utama = 'Kembali'
 nama_tombol_kembali = 'Kembali'
 nama_tombol_ulang_game = 'Ulang'
-nama_tombol_default = 'Default'
+nama_tombol_suara_ON = 'Suara ON'
+nama_tombol_suara_OFF = 'Suara OFF'
+
 # region Warna Tema / Warna - Warna
 # ulet buah
+nama_tombol_default = 'Cacing Hutan'
 tema0 = {
     'bg': rgb(180, 204, 73),
     'pn1': rgb(122, 153, 104),
