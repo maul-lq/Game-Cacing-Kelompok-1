@@ -727,9 +727,8 @@ class GAME(Cacing):
         # layar.blit(game.panel_1, game.panel_11Rect)
 
         pass
-    
-    # membuat cacing jalan sendiri
-    # dan menampilkan gambar-gambar di menu utamanya.
+
+    # menampilkan gambar-gambar di menu utamanya.
     def run(game):
         game.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(11, 5), Vector2(10, 5), Vector2(9, 5)]
         UPDATE_CACING = USEREVENT+1
@@ -782,7 +781,7 @@ class GAME(Cacing):
             if len(game.badan) < 66:
                 # jika makanan sudah 
                 # dimakan (posisi kepala == posisi makanan)
-                # posisi makanan akan pindah -1,-1.
+                # posisi makanan akan pindah ke -1,-1.
                 if game.badan[0] == game.fd_pos1:
                     game.fd_pos1 = Vector2(-1, -1)
                 else:
@@ -808,6 +807,7 @@ class GAME(Cacing):
                 # makanan pindah posisinya ke -1,-1
                 game.fd_pos1, game.fd_pos2, game.fd_pos3 = Vector2(-1, -1), Vector2(-1, -1), Vector2(-1, -1)
 
+            # membuat cacing jalan sendiri.
             if len(game.badan) < 66:
                 if game.arah == Vector2(0, 0):
                     game.arah = Vector2(1, 0)
