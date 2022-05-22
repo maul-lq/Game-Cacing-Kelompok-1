@@ -1,4 +1,4 @@
-#ffffff# /------------------------------/
+# /------------------------------/
 # / Pengaturan Untuk Game Cacing /
 # / @copyright 2022              /
 # /------------------------------/
@@ -11,19 +11,22 @@ from pygame_widgets.button import Button
 from pygame_widgets.widget import WidgetBase
 
 
-def rgb(r: int, g: int, b: int, a: int = 255):
+def rgb(*args, a: int = 255):
     """Fungsi Membuat Warna
 
     Args:
-        r (int): Warna merah
-        g (int): Warna hijau
-        b (int): Warna biru
+        r (int): Warna merah maksimal 255
+        g (int): Warna hijau maksimal 255
+        b (int): Warna biru maksimal 255
         a (int, optional): Tingkat transparannya warna dengan maksimal nilainya 255. Defaults to 255.
 
     Returns:
         Color: Menghasilkan warna
     """
-    return pygame.Color(r, g, b, a)
+    if len(args) == 3:
+        return pygame.Color(args[0], args[1], args[2], a)
+    elif len(args) == 1:
+        return pygame.Color(args[0],args[0],args[0], a)
 
 
 # Konstant

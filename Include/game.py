@@ -149,10 +149,10 @@ class Cacing(Makanan):
         pass
 
     def gambar_cacing(cacing):
+        # gambar kepala, badan, ekor cacing sesuai arah dia bergerak.
         cacing.update_hg() # gambar kepala.
         cacing.update_eg() # gambar ekor.
 
-        # gambar kepala, badan, ekor cacing sesuai arah dia bergerak.
         for index, blok in enumerate(cacing.badan): # mengambil isi dari list(badan) serta indexnya.
             x_pos = int(blok.x)*imgSize
             y_pos = int(blok.y)*imgSize
@@ -248,7 +248,7 @@ class Cacing(Makanan):
         cacing.blok_baru = True
 
     def reset(cacing):
-        """Reset posis cacing, arah geraknya, dan posisi makanannya."""
+        """Reset posisi cacing, arah geraknya, dan posisi makanannya."""
         cacing.badan = [Vector2(5, 12), Vector2(
             4, 12), Vector2(3, 12), Vector2(2, 12)]
         cacing.arah = Vector2(0, 0)
