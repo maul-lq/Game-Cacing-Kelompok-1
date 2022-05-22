@@ -36,261 +36,261 @@ display.set_icon(image.load('./res/ikon/ikon.png', 'Ikon')
 
 
 class Makanan:
-    def __init__(self) -> None:
-        self.acakPos()
-        self.index_makanan = 0
-        self.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
+    def __init__(makanan) -> None:
+        makanan.acakPos()
+        makanan.index_makanan = 0
+        makanan.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f0.png').convert_alpha()]
-        self.fr_makanan0 = [image.load(mkn/'pete_f0.png').convert_alpha(),
+        makanan.fr_makanan0 = [image.load(mkn/'pete_f0.png').convert_alpha(),
                             image.load(mkn/'pete_f1.png').convert_alpha(),
                             image.load(mkn/'pete_f2.png').convert_alpha(),
                             image.load(mkn/'pete_f2.png').convert_alpha(),
                             image.load(mkn/'pete_f1.png').convert_alpha(),
                             image.load(mkn/'pete_f0.png').convert_alpha()]
-        self.fr_makanan1 = [image.load(mkn/'jengkol_f0.png').convert_alpha(),
+        makanan.fr_makanan1 = [image.load(mkn/'jengkol_f0.png').convert_alpha(),
                             image.load(mkn/'jengkol_f1.png').convert_alpha(),
                             image.load(mkn/'jengkol_f2.png').convert_alpha(),
                             image.load(mkn/'jengkol_f2.png').convert_alpha(),
                             image.load(mkn/'jengkol_f1.png').convert_alpha(),
                             image.load(mkn/'jengkol_f0.png').convert_alpha()]
-        self.fr_makanan2 = [image.load(mkn/'nasgor_f0.png').convert_alpha(),
+        makanan.fr_makanan2 = [image.load(mkn/'nasgor_f0.png').convert_alpha(),
                             image.load(mkn/'nasgor_f1.png').convert_alpha(),
                             image.load(mkn/'nasgor_f2.png').convert_alpha(),
                             image.load(mkn/'nasgor_f2.png').convert_alpha(),
                             image.load(mkn/'nasgor_f1.png').convert_alpha(),
                             image.load(mkn/'nasgor_f0.png').convert_alpha()]
-        self.fr_makanan3 = [image.load(mkn/'sate_f0.png').convert_alpha(),
+        makanan.fr_makanan3 = [image.load(mkn/'sate_f0.png').convert_alpha(),
                             image.load(mkn/'sate_f1.png').convert_alpha(),
                             image.load(mkn/'sate_f2.png').convert_alpha(),
                             image.load(mkn/'sate_f2.png').convert_alpha(),
                             image.load(mkn/'sate_f1.png').convert_alpha(),
                             image.load(mkn/'sate_f0.png').convert_alpha()]
-        self.makanan = image.load(mkn/'pete.png').convert_alpha()
+        makanan.makanan = image.load(mkn/'pete.png').convert_alpha()
 
-        self.display_makananAktif = 0
+        makanan.display_makananAktif = 0
         pass
 
-    def acakPos(self):
-        self.fd_xPos = randint(1, celln-2)
-        self.fd_yPos = randint(3, celln-2)
-        self.fd_pos = Vector2(self.fd_xPos, self.fd_yPos)
+    def acakPos(makanan):
+        makanan.fd_xPos = randint(1, celln-2)
+        makanan.fd_yPos = randint(3, celln-2)
+        makanan.fd_pos = Vector2(makanan.fd_xPos, makanan.fd_yPos)
 
         pass
 
-    def gambar_makanan(self, display=False):
+    def gambar_makanan(makanan, display=False):
         if not display:
-            fdrect = Rect(int(self.fd_pos.x)*imgSize,
-                          int(self.fd_pos.y)*imgSize,
+            fdrect = Rect(int(makanan.fd_pos.x)*imgSize,
+                          int(makanan.fd_pos.y)*imgSize,
                           imgSize, imgSize)
 
-            layar.blit(self.fr_makanan[int(self.index_makanan)], fdrect)
+            layar.blit(makanan.fr_makanan[int(makanan.index_makanan)], fdrect)
         else:
-            if self.display_makananAktif == 0:
-                layar.blits([(self.fr_makanan0[int(self.index_makanan)], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan1[2], Rect(
+            if makanan.display_makananAktif == 0:
+                layar.blits([(makanan.fr_makanan0[int(makanan.index_makanan)], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[2], Rect(
                                  (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan2[2], Rect(
+                             (makanan.fr_makanan2[2], Rect(
                                  (19*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
-            if self.display_makananAktif == 1:
-                layar.blits([(self.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan1[2], Rect(
+                             (makanan.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+            if makanan.display_makananAktif == 1:
+                layar.blits([(makanan.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[2], Rect(
                                  (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan2[int(self.index_makanan)], Rect(
+                             (makanan.fr_makanan2[int(makanan.index_makanan)], Rect(
                                  (19*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
-            if self.display_makananAktif == 2:
-                layar.blits([(self.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan1[2], Rect(
+                             (makanan.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+            if makanan.display_makananAktif == 2:
+                layar.blits([(makanan.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[2], Rect(
                                  (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan2[2], Rect(
+                             (makanan.fr_makanan2[2], Rect(
                                  (19*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan3[int(self.index_makanan)], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
-            if self.display_makananAktif == 3:
-                layar.blits([(self.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan1[int(self.index_makanan)], Rect(
+                             (makanan.fr_makanan3[int(makanan.index_makanan)], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+            if makanan.display_makananAktif == 3:
+                layar.blits([(makanan.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[int(makanan.index_makanan)], Rect(
                                  (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan2[2], Rect(
+                             (makanan.fr_makanan2[2], Rect(
                                  (19*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (self.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
+                             (makanan.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
         pass
 
 
 class Cacing(Makanan):
-    def __init__(self) -> None:
+    def __init__(cacing) -> None:
         super().__init__()
-        self.badan = [Vector2(5, 12), Vector2(
+        cacing.badan = [Vector2(5, 12), Vector2(
             4, 12), Vector2(3, 12), Vector2(2, 12)]
-        self.arah = Vector2(0, 0)
-        self.newblok = False
+        cacing.arah = Vector2(0, 0)
+        cacing.newblok = False
 
-        self.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
+        cacing.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
+        cacing.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
+        cacing.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
+        cacing.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
 
-        self.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp1/'badan_br.png').convert_alpha()
+        cacing.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
+        cacing.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
+        cacing.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
+        cacing.b_br = image.load(thp1/'badan_br.png').convert_alpha()
 
-        self.b_v = image.load(thp1/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp1/'badan_h.png').convert_alpha()
+        cacing.b_v = image.load(thp1/'badan_v.png').convert_alpha()
+        cacing.b_h = image.load(thp1/'badan_h.png').convert_alpha()
 
-        self.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
+        cacing.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
+        cacing.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
+        cacing.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
+        cacing.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
 
         pass
 
-    def gambar_ular(self):
-        self.update_hg()
-        self.update_eg()
+    def gambar_ular(cacing):
+        cacing.update_hg()
+        cacing.update_eg()
 
-        for index, blok in enumerate(self.badan):
+        for index, blok in enumerate(cacing.badan):
             x_pos = int(blok.x)*imgSize
             y_pos = int(blok.y)*imgSize
             ular_rect = Rect(x_pos, y_pos,
                              imgSize, imgSize)
 
             if index == 0:  # index ke 0 jadi kepalanya
-                layar.blit(self.kepala, ular_rect)
+                layar.blit(cacing.kepala, ular_rect)
             # index terakhir dari list badan jadi ekornya
-            elif index == len(self.badan)-1:
-                layar.blit(self.ekor, ular_rect)
+            elif index == len(cacing.badan)-1:
+                layar.blit(cacing.ekor, ular_rect)
             else:
-                blok_sebelum = self.badan[index+1]-blok
-                blok_selanjutnya = self.badan[index-1]-blok
+                blok_sebelum = cacing.badan[index+1]-blok
+                blok_selanjutnya = cacing.badan[index-1]-blok
 
                 if blok_sebelum.x == blok_selanjutnya.x:
-                    layar.blit(self.b_v, ular_rect)
+                    layar.blit(cacing.b_v, ular_rect)
                 elif blok_sebelum.y == blok_selanjutnya.y:
-                    layar.blit(self.b_h, ular_rect)
+                    layar.blit(cacing.b_h, ular_rect)
                 else:
                     if blok_sebelum.x == -1 and blok_selanjutnya.y == -1 \
                             or blok_sebelum.y == -1 and blok_selanjutnya.x == -1:
                         # badan belok ke kiri dari atas.
-                        layar.blit(self.b_tl, ular_rect)
+                        layar.blit(cacing.b_tl, ular_rect)
                     if blok_sebelum.x == 1 and blok_selanjutnya.y == -1 \
                             or blok_sebelum.y == -1 and blok_selanjutnya.x == 1:
                         # badan belok ke kanan dari atas.
-                        layar.blit(self.b_tr, ular_rect)
+                        layar.blit(cacing.b_tr, ular_rect)
                     if blok_sebelum.x == -1 and blok_selanjutnya.y == 1 \
                             or blok_sebelum.y == 1 and blok_selanjutnya.x == -1:
                         # badan belok ke kiri dari bawah.
-                        layar.blit(self.b_bl, ular_rect)
+                        layar.blit(cacing.b_bl, ular_rect)
                     if blok_sebelum.x == 1 and blok_selanjutnya.y == 1 \
                             or blok_sebelum.y == 1 and blok_selanjutnya.x == 1:
                         # badan belok ke kanan dari bawah
-                        layar.blit(self.b_br, ular_rect)
+                        layar.blit(cacing.b_br, ular_rect)
 
         pass
 
-    def update_hg(self):
+    def update_hg(cacing):
         # baagian kepla
-        rKepala = self.badan[1]-self.badan[0]
+        rKepala = cacing.badan[1]-cacing.badan[0]
         if rKepala == Vector2(1, 0):
-            self.kepala = self.h_left
+            cacing.kepala = cacing.h_left
         elif rKepala == Vector2(-1, 0):
-            self.kepala = self.h_right
+            cacing.kepala = cacing.h_right
         elif rKepala == Vector2(0, 1):
-            self.kepala = self.h_down
+            cacing.kepala = cacing.h_down
         elif rKepala == Vector2(0, -1):
-            self.kepala = self.h_up
+            cacing.kepala = cacing.h_up
 
-    def update_eg(self):
+    def update_eg(cacing):
         # baagian kepla
-        rEkor = self.badan[-2]-self.badan[-1]
+        rEkor = cacing.badan[-2]-cacing.badan[-1]
         if rEkor == Vector2(1, 0):
-            self.ekor = self.t_left
+            cacing.ekor = cacing.t_left
         elif rEkor == Vector2(-1, 0):
-            self.ekor = self.t_right
+            cacing.ekor = cacing.t_right
         elif rEkor == Vector2(0, 1):
-            self.ekor = self.t_down
+            cacing.ekor = cacing.t_down
         elif rEkor == Vector2(0, -1):
-            self.ekor = self.t_up
+            cacing.ekor = cacing.t_up
 
-    def gerakSiular(self):
-        if self.newblok == True:
+    def gerakSiular(cacing):
+        if cacing.newblok == True:
             # copy badan
-            badanC = self.badan[:]
-            badanC.insert(0, badanC[0]+self.arah)
-            self.badan = badanC[:]
-            self.newblok = False
+            badanC = cacing.badan[:]
+            badanC.insert(0, badanC[0]+cacing.arah)
+            cacing.badan = badanC[:]
+            cacing.newblok = False
         else:
-            if self.arah != Vector2(0, 0):
-                badanC = self.badan[:-1]
-                badanC.insert(0, badanC[0]+self.arah)
-                self.badan = badanC[:]
+            if cacing.arah != Vector2(0, 0):
+                badanC = cacing.badan[:-1]
+                badanC.insert(0, badanC[0]+cacing.arah)
+                cacing.badan = badanC[:]
 
-    def tambah_blok(self):
-        self.newblok = True
+    def tambah_blok(cacing):
+        cacing.newblok = True
 
-    def reset(self):
-        self.badan = [Vector2(5, 12), Vector2(
+    def reset(cacing):
+        cacing.badan = [Vector2(5, 12), Vector2(
             4, 12), Vector2(3, 12), Vector2(2, 12)]
-        self.arah = Vector2(0, 0)
-        self.fd_pos = Vector2(8, 12)
+        cacing.arah = Vector2(0, 0)
+        cacing.fd_pos = Vector2(8, 12)
 
-    def len(self):
-        return len(self.badan)
+    def len(cacing):
+        return len(cacing.badan)
 
 
 class GAME(Cacing):
-    def __init__(self) -> None:
+    def __init__(game) -> None:
         super().__init__()
         # region Menu Utama
         # inisialisasi menu utama
-        self.aktif = True
-        self.title_font = font.Font(
+        game.aktif = True
+        game.title_font = font.Font(
             LOKASI_FONT_UNTUK_TULISAN / 'StudioGrotesk-Regular.ttf', 70)
-        self.btn_font1 = font.Font(None, 40)
-        self.wline = 0
+        game.btn_font1 = font.Font(None, 40)
+        game.wline = 0
 
-        self.makanan_ke1 = self.fr_makanan0
-        self.makanan_ke2 = self.fr_makanan0
-        self.makanan_ke3 = self.fr_makanan0
+        game.makanan_ke1 = game.fr_makanan0
+        game.makanan_ke2 = game.fr_makanan0
+        game.makanan_ke3 = game.fr_makanan0
 
-        self.def_fdPos1 = Vector2(20, 13)
-        self.def_fdPos2 = Vector2(11, 20)
-        self.def_fdPos3 = Vector2(2, 13)
-        self.fd_pos1 = self.def_fdPos1
-        self.fd_pos2 = self.def_fdPos2
-        self.fd_pos3 = self.def_fdPos3
+        game.def_fdPos1 = Vector2(20, 13)
+        game.def_fdPos2 = Vector2(11, 20)
+        game.def_fdPos3 = Vector2(2, 13)
+        game.fd_pos1 = game.def_fdPos1
+        game.fd_pos2 = game.def_fdPos2
+        game.fd_pos3 = game.def_fdPos3
 
         # membuat background
-        self.bg1 = Surface(UKURAN_WINDOWS)
-        self.bg1_rect = self.bg1.get_rect(topleft=(0, 0))
-        self.bg1.fill(bg)
+        game.bg1 = Surface(UKURAN_WINDOWS)
+        game.bg1_rect = game.bg1.get_rect(topleft=(0, 0))
+        game.bg1.fill(bg)
 
         # membuat judul
-        self.judul = self.title_font.render(
+        game.judul = game.title_font.render(
             judul, True, warnaTeks)
-        self.judul_rect = self.judul.get_rect(center=(UKURAN_WINDOWS[0]/2, 75))
+        game.judul_rect = game.judul.get_rect(center=(UKURAN_WINDOWS[0]/2, 75))
 
         # membuat panel untuk meletakan / memberi posisi tombol
-        self.panel_11 = Surface((380, 480))
-        self.panel_11Rect = self.panel_11.get_rect(midtop=(self.judul_rect.midbottom[0],
-                                                           self.judul_rect.midbottom[1]+100))
-        self.panel_11.fill(pn1)
+        game.panel_11 = Surface((380, 480))
+        game.panel_11Rect = game.panel_11.get_rect(midtop=(game.judul_rect.midbottom[0],
+                                                           game.judul_rect.midbottom[1]+100))
+        game.panel_11.fill(pn1)
 
         # region Tombol
         # TODO: Membuat Tombol berfungsi
         # membuat tombol play
-        self.btn_playRect = Rect((self.panel_11Rect.topleft[0]+10,
-                                  self.panel_11Rect.topleft[1]+10),
-                                 (self.panel_11Rect.width, 100))
-        self.btn_play = Tombol(layar,
-                               self.btn_playRect.x,
-                               self.btn_playRect.y,
-                               self.btn_playRect.width-20,
-                               self.btn_playRect.height,
-                               self.btn_font1,
+        game.btn_playRect = Rect((game.panel_11Rect.topleft[0]+10,
+                                  game.panel_11Rect.topleft[1]+10),
+                                 (game.panel_11Rect.width, 100))
+        game.btn_play = Tombol(layar,
+                               game.btn_playRect.x,
+                               game.btn_playRect.y,
+                               game.btn_playRect.width-20,
+                               game.btn_playRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -299,18 +299,18 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_main,
                                sudutRad=3,
-                               onRelease=self.fbtn_play)
+                               onRelease=game.fbtn_play)
 
         # membuat tombol pengaturan
-        self.btn_pengRect = Rect((self.panel_11Rect.topleft[0]+10,
-                                  self.btn_playRect.midbottom[1]+20),
-                                 (self.panel_11Rect.width, 100))
-        self.btn_peng = Tombol(layar,
-                               self.btn_pengRect.x,
-                               self.btn_pengRect.y,
-                               self.btn_pengRect.width-20,
-                               self.btn_pengRect.height,
-                               self.btn_font1,
+        game.btn_pengRect = Rect((game.panel_11Rect.topleft[0]+10,
+                                  game.btn_playRect.midbottom[1]+20),
+                                 (game.panel_11Rect.width, 100))
+        game.btn_peng = Tombol(layar,
+                               game.btn_pengRect.x,
+                               game.btn_pengRect.y,
+                               game.btn_pengRect.width-20,
+                               game.btn_pengRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -319,19 +319,19 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_pengaturan,
                                sudutRad=3,
-                               onRelease=self.btn_pengaturan)
+                               onRelease=game.btn_pengaturan)
 
         # membuat tombol keluar
-        self.btn_keluarRect = Rect((self.panel_11Rect.topleft[0]+10,
-                                    self.btn_pengRect.midbottom[1]+20),
-                                   (self.panel_11Rect.width, 100))
+        game.btn_keluarRect = Rect((game.panel_11Rect.topleft[0]+10,
+                                    game.btn_pengRect.midbottom[1]+20),
+                                   (game.panel_11Rect.width, 100))
 
-        self.btn_keluar = Tombol(layar,
-                                 self.btn_keluarRect.x,
-                                 self.btn_keluarRect.y,
-                                 self.btn_pengRect.width-20,
-                                 self.btn_pengRect.height,
-                                 self.btn_font1,
+        game.btn_keluar = Tombol(layar,
+                                 game.btn_keluarRect.x,
+                                 game.btn_keluarRect.y,
+                                 game.btn_pengRect.width-20,
+                                 game.btn_pengRect.height,
+                                 game.btn_font1,
                                  warnaTeks=warnaTeks,
                                  warnaAktif=wBA,
                                  warnaDitekan=wBP,
@@ -347,59 +347,59 @@ class GAME(Cacing):
 
         # region Pengaturan
         # membuat background
-        self.bg = Surface(UKURAN_WINDOWS)
-        self.bg_rect = self.bg.get_rect(topleft=(0, 0))
-        self.bg.fill(bg)
+        game.bg = Surface(UKURAN_WINDOWS)
+        game.bg_rect = game.bg.get_rect(topleft=(0, 0))
+        game.bg.fill(bg)
 
         # top panel
-        self.panel_1 = Surface((UKURAN_WINDOWS[0], 100))
-        self.panel_1Rect = self.panel_1.get_rect(topleft=(0, 0))
-        self.panel_1.fill(pn1)
+        game.panel_1 = Surface((UKURAN_WINDOWS[0], 100))
+        game.panel_1Rect = game.panel_1.get_rect(topleft=(0, 0))
+        game.panel_1.fill(pn1)
 
         # inisialisasi
-        self.paktif = True
-        self.font_h1 = font.Font(
+        game.paktif = True
+        game.font_h1 = font.Font(
             LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 33)
-        self.font_h2 = font.Font(
+        game.font_h2 = font.Font(
             LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 25)
-        self.btn_font = font.Font(None, 25)
+        game.btn_font = font.Font(None, 25)
 
         # Tampilan Gambar Gamenya pada setiap tema
-        self.tampilan_tema_default = image.load(
+        game.tampilan_tema_default = image.load(
             LOKASI_GAMBAR_DAN_LAIN2 / 'ptd.png').convert()
-        self.tampilan_tema_1 = image.load(
+        game.tampilan_tema_1 = image.load(
             LOKASI_GAMBAR_DAN_LAIN2 / 'pt1.png').convert()
-        self.tampilan_tema_2 = image.load(
+        game.tampilan_tema_2 = image.load(
             LOKASI_GAMBAR_DAN_LAIN2 / 'pt2.png').convert()
-        self.tampilan_tema_3 = image.load(
+        game.tampilan_tema_3 = image.load(
             LOKASI_GAMBAR_DAN_LAIN2 / 'pt3.png').convert()
 
-        self.tt_rect = self.tampilan_tema_default.get_rect(
-            midtop=(self.panel_1Rect.midbottom[0]+(self.panel_1Rect.midbottom[0]//2)-23,
-                    self.panel_1Rect.midbottom[1]+30))
+        game.tt_rect = game.tampilan_tema_default.get_rect(
+            midtop=(game.panel_1Rect.midbottom[0]+(game.panel_1Rect.midbottom[0]//2)-23,
+                    game.panel_1Rect.midbottom[1]+30))
 
         # membuat tulisan Pengaturan
-        self.teksH1 = self.font_h1.render(
+        game.teksH1 = game.font_h1.render(
             teks_di_pengaturan_h1, True, warnaTeks)
-        self.teksH1_rect = self.teksH1.get_rect(midleft=(self.panel_1Rect.midleft[0]+20,
-                                                         self.panel_1Rect.midleft[1]))
-        self.teksh2 = self.font_h2.render(
+        game.teksH1_rect = game.teksH1.get_rect(midleft=(game.panel_1Rect.midleft[0]+20,
+                                                         game.panel_1Rect.midleft[1]))
+        game.teksh2 = game.font_h2.render(
             teks_di_pengaturan_h2, True, warnaTeks)
-        self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
+        game.teksh2_rect = game.teksh2.get_rect(topleft=(12*30+35, 0))
+        game.teksh2_rect.y = 540-game.teksh2_rect.height-33
 
         # region Tombol
         # membuat tombol kembali
-        self.btnSize = (150, 75)
-        self.btn_kembaliRect = Rect((self.bg_rect.bottomleft[0]+20,
-                                     (self.bg_rect.bottomleft[1]-self.btnSize[1])-20),
-                                    self.btnSize)
-        self.btn_kembali = Tombol(self.bg,
-                                  self.btn_kembaliRect.x,
-                                  self.btn_kembaliRect.y,
-                                  self.btn_kembaliRect.width,
-                                  self.btn_kembaliRect.height,
-                                  self.btn_font,
+        game.btnSize = (150, 75)
+        game.btn_kembaliRect = Rect((game.bg_rect.bottomleft[0]+20,
+                                     (game.bg_rect.bottomleft[1]-game.btnSize[1])-20),
+                                    game.btnSize)
+        game.btn_kembali = Tombol(game.bg,
+                                  game.btn_kembaliRect.x,
+                                  game.btn_kembaliRect.y,
+                                  game.btn_kembaliRect.width,
+                                  game.btn_kembaliRect.height,
+                                  game.btn_font,
                                   20,
                                   nama_tombol_kembali,
                                   warnaAktif=wBA,
@@ -409,18 +409,18 @@ class GAME(Cacing):
                                   shadowDistance=2,
                                   shadowColour=wBSh,
                                   sudutRad=3,
-                                  onRelease=self.klikKembali)
+                                  onRelease=game.klikKembali)
 
         # membuat tombol tema bawaan
-        self.btn_defaultRect = Rect((self.btn_kembaliRect.topright[0]+20,
-                                     self.btn_kembaliRect.topright[1]),
-                                    self.btnSize)
-        self.btn_defaultT = Tombol(self.bg,
-                                   self.btn_defaultRect.x,
-                                   self.btn_defaultRect.y,
-                                   self.btn_defaultRect.width,
-                                   self.btn_defaultRect.height,
-                                   self.btn_font, 20,
+        game.btn_defaultRect = Rect((game.btn_kembaliRect.topright[0]+20,
+                                     game.btn_kembaliRect.topright[1]),
+                                    game.btnSize)
+        game.btn_defaultT = Tombol(game.bg,
+                                   game.btn_defaultRect.x,
+                                   game.btn_defaultRect.y,
+                                   game.btn_defaultRect.width,
+                                   game.btn_defaultRect.height,
+                                   game.btn_font, 20,
                                    nama_tombol_default,
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
@@ -429,18 +429,18 @@ class GAME(Cacing):
                                    shadowDistance=2,
                                    shadowColour=wBSh,
                                    sudutRad=3,
-                                   onClick=self.setDefTheme)
+                                   onClick=game.setDefTheme)
 
-        self.btn_soundRect = Rect((self.btn_defaultRect.topright[0]+20,
-                                   self.btn_defaultRect.topright[1]),
-                                  self.btnSize)
+        game.btn_soundRect = Rect((game.btn_defaultRect.topright[0]+20,
+                                   game.btn_defaultRect.topright[1]),
+                                  game.btnSize)
 
-        self.btn_sound = Tombol(self.bg,
-                                self.btn_soundRect.x,
-                                self.btn_soundRect.y,
-                                self.btn_soundRect.width,
-                                self.btn_soundRect.height,
-                                self.btn_font, 20,
+        game.btn_sound = Tombol(game.bg,
+                                game.btn_soundRect.x,
+                                game.btn_soundRect.y,
+                                game.btn_soundRect.width,
+                                game.btn_soundRect.height,
+                                game.btn_font, 20,
                                 nama_tombol_suara_ON,
                                 warnaAktif=wBA,
                                 warnaHover=wBH,
@@ -449,20 +449,20 @@ class GAME(Cacing):
                                 shadowDistance=2,
                                 shadowColour=wBSh,
                                 sudutRad=3,
-                                onRelease=self.klik_SoundbtnON)
+                                onRelease=game.klik_SoundbtnON)
 
         # region Tombol Theme
-        self.btnSize = (180, 100)
+        game.btnSize = (180, 100)
         # Tema ke 1
-        self.btn_theme1Rect = Rect((self.panel_1Rect.bottomleft[0]+20,
-                                    self.panel_1Rect.bottomleft[1]+25,),
-                                   self.btnSize)
-        self.btn_theme1 = Tombol(self.bg,
-                                 self.btn_theme1Rect.x,
-                                 self.btn_theme1Rect.y,
-                                 self.btn_theme1Rect.width,
-                                 self.btn_theme1Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme1Rect = Rect((game.panel_1Rect.bottomleft[0]+20,
+                                    game.panel_1Rect.bottomleft[1]+25,),
+                                   game.btnSize)
+        game.btn_theme1 = Tombol(game.bg,
+                                 game.btn_theme1Rect.x,
+                                 game.btn_theme1Rect.y,
+                                 game.btn_theme1Rect.width,
+                                 game.btn_theme1Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_1,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -471,18 +471,18 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme1)
+                                 onClick=game.setTheme1)
 
         # Tema ke 2
-        self.btn_theme2Rect = Rect((self.btn_theme1Rect.bottomleft[0],
-                                    self.btn_theme1Rect.bottomleft[1]+50),
-                                   self.btnSize)
-        self.btn_theme2 = Tombol(self.bg,
-                                 self.btn_theme2Rect.x,
-                                 self.btn_theme2Rect.y,
-                                 self.btn_theme2Rect.width,
-                                 self.btn_theme2Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme2Rect = Rect((game.btn_theme1Rect.bottomleft[0],
+                                    game.btn_theme1Rect.bottomleft[1]+50),
+                                   game.btnSize)
+        game.btn_theme2 = Tombol(game.bg,
+                                 game.btn_theme2Rect.x,
+                                 game.btn_theme2Rect.y,
+                                 game.btn_theme2Rect.width,
+                                 game.btn_theme2Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_2,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -491,17 +491,17 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme2)
+                                 onClick=game.setTheme2)
         # Tema ke 3
-        self.btn_theme3Rect = Rect((self.btn_theme2Rect.bottomleft[0],
-                                    self.btn_theme2Rect.bottomleft[1]+50,),
-                                   self.btnSize)
-        self.btn_theme3 = Tombol(self.bg,
-                                 self.btn_theme3Rect.x,
-                                 self.btn_theme3Rect.y,
-                                 self.btn_theme3Rect.width,
-                                 self.btn_theme3Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme3Rect = Rect((game.btn_theme2Rect.bottomleft[0],
+                                    game.btn_theme2Rect.bottomleft[1]+50,),
+                                   game.btnSize)
+        game.btn_theme3 = Tombol(game.bg,
+                                 game.btn_theme3Rect.x,
+                                 game.btn_theme3Rect.y,
+                                 game.btn_theme3Rect.width,
+                                 game.btn_theme3Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_3,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -510,113 +510,113 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme3)
+                                 onClick=game.setTheme3)
 
         # endregion
         # endregion
 
         # # membuat tulisan
         # ! TIDAK DIGUNAKAN....
-        self.teks1 = self.font_h2.render(
+        game.teks1 = game.font_h2.render(
             f'Theme: Default', True, warnaTeks)
-        self.teks1_rect = self.teks1.get_rect(bottomleft=(self.btn_kembaliRect.topleft[0],
-                                                          self.btn_kembaliRect.topleft[1]-20))
+        game.teks1_rect = game.teks1.get_rect(bottomleft=(game.btn_kembaliRect.topleft[0],
+                                                          game.btn_kembaliRect.topleft[1]-20))
         # endregion
 
         # region Play
         # membuat si ular, suara, makanannya, dll.
-        self.plAktif = True
-        self.reset()
-        self.go_nskor = 0
-        self.go_high_skor = 0
-        self.nths = 0
-        self.isreset = False
-        self.apakahGameOver = False
-        self.btn_soundState = 'ON'
+        game.plAktif = True
+        game.reset()
+        game.go_nskor = 0
+        game.go_high_skor = 0
+        game.nths = 0
+        game.isreset = False
+        game.apakahGameOver = False
+        game.btn_soundState = 'ON'
 
         # suara
-        self.suara_makan = mixer.Sound(LOKASI_SUARA / "suara_makan.mp3")
-        self.suara_nabrak = mixer.Sound(LOKASI_SUARA / "suara_nabrak.mp3")
-        self.suara_latar_belakang = mixer.Sound(LOKASI_SUARA / "bgm.mp3")
-        self.suara_latar_belakang.set_volume(0.58)
-        self.suara_makan.set_volume(0.7)
-        self.suara_nabrak.set_volume(0.7)
+        game.suara_makan = mixer.Sound(LOKASI_SUARA / "suara_makan.mp3")
+        game.suara_nabrak = mixer.Sound(LOKASI_SUARA / "suara_nabrak.mp3")
+        game.suara_latar_belakang = mixer.Sound(LOKASI_SUARA / "bgm.mp3")
+        game.suara_latar_belakang.set_volume(0.58)
+        game.suara_makan.set_volume(0.7)
+        game.suara_nabrak.set_volume(0.7)
 
         # membuat background
-        self.pbg = Surface(UKURAN_WINDOWS)
-        self.pbg_rect = self.pbg.get_rect(topleft=(0, 0))
-        self.pbg.fill(bg)
+        game.pbg = Surface(UKURAN_WINDOWS)
+        game.pbg_rect = game.pbg.get_rect(topleft=(0, 0))
+        game.pbg.fill(bg)
 
         # region Border
         # mwmbuat panel skor
-        self.pskor = Surface((UKURAN_WINDOWS[0], imgSize*2))
-        self.pskor_rect = self.pskor.get_rect(topleft=(0, 0))
-        self.pskor.fill(skp)
+        game.pskor = Surface((UKURAN_WINDOWS[0], imgSize*2))
+        game.pskor_rect = game.pskor.get_rect(topleft=(0, 0))
+        game.pskor.fill(skp)
 
-        self.border3 = Surface((imgSize*(celln), imgSize))
-        self.border3_rect = self.border3.get_rect(
-            topleft=self.pskor_rect.bottomleft)
-        self.border3.fill(brd)
+        game.border3 = Surface((imgSize*(celln), imgSize))
+        game.border3_rect = game.border3.get_rect(
+            topleft=game.pskor_rect.bottomleft)
+        game.border3.fill(brd)
 
-        self.border0 = Surface((imgSize, imgSize*(celln-2)))
-        self.border0_rect = self.border0.get_rect(
-            topleft=self.border3_rect.bottomleft)
-        self.border0.fill(brd)
+        game.border0 = Surface((imgSize, imgSize*(celln-2)))
+        game.border0_rect = game.border0.get_rect(
+            topleft=game.border3_rect.bottomleft)
+        game.border0.fill(brd)
 
-        self.border1 = Surface((imgSize*(celln-1), imgSize))
-        self.border1_rect = self.border1.get_rect(
-            bottomleft=(self.border0_rect.bottomright[0],
+        game.border1 = Surface((imgSize*(celln-1), imgSize))
+        game.border1_rect = game.border1.get_rect(
+            bottomleft=(game.border0_rect.bottomright[0],
                         UKURAN_WINDOWS[1]))
-        self.border1.fill(brd)
+        game.border1.fill(brd)
 
-        self.border2 = Surface((imgSize, imgSize*(celln-1)))
-        self.border2_rect = self.border2.get_rect(
-            topright=self.border3_rect.topright)
-        self.border2.fill(brd)
+        game.border2 = Surface((imgSize, imgSize*(celln-1)))
+        game.border2_rect = game.border2.get_rect(
+            topright=game.border3_rect.topright)
+        game.border2.fill(brd)
 
-        self.boardRect = Rect(self.border0_rect.topright,
+        game.boardRect = Rect(game.border0_rect.topright,
                               (imgSize*21, imgSize*19))
         # endregion
 
         # rumput
-        self.warnaRumput = tema0['rm']
+        game.warnaRumput = tema0['rm']
 
         # region Tampilan Game Over
-        self.plgAktif = True
-        self.pngmRect = Rect((0, 0), (350, 400))
-        self.pngmRect.center = self.boardRect.center
+        game.plgAktif = True
+        game.pngmRect = Rect((0, 0), (350, 400))
+        game.pngmRect.center = game.boardRect.center
 
         # piala
-        self.piala = image.load('./res/image/misc/piala.png').convert_alpha()
+        game.piala = image.load('./res/image/misc/piala.png').convert_alpha()
 
         # region Tombol
-        self.btnHomeRect = Rect((self.pngmRect.midleft[0]+10,
-                                 (self.pngmRect.bottomleft[1]-int(self.btnSize[1]/2))-30),
-                                (int(self.btnSize[0]/2)+40, int(self.btnSize[1]/2)+20))
-        self.btnHome = Tombol(layar,
-                              self.btnHomeRect.x,
-                              self.btnHomeRect.y,
-                              self.btnHomeRect.width,
-                              self.btnHomeRect.height,
-                              self.btn_font1, 20,
+        game.btnHomeRect = Rect((game.pngmRect.midleft[0]+10,
+                                 (game.pngmRect.bottomleft[1]-int(game.btnSize[1]/2))-30),
+                                (int(game.btnSize[0]/2)+40, int(game.btnSize[1]/2)+20))
+        game.btnHome = Tombol(layar,
+                              game.btnHomeRect.x,
+                              game.btnHomeRect.y,
+                              game.btnHomeRect.width,
+                              game.btnHomeRect.height,
+                              game.btn_font1, 20,
                               nama_tombol_kembali_ke_menu_utama,
                               warnaTeks,
                               wBA, wBH, wBP, 20, 2,
-                              onRelease=self.klikHome)
+                              onRelease=game.klikHome)
 
-        self.btnResetRect = Rect((self.pngmRect.midright[0]-10-(int(self.btnSize[0]/2)+40),
-                                  (self.pngmRect.bottomright[1]-int(self.btnSize[1]/2))-30),
-                                 (int(self.btnSize[0]/2)+40, int(self.btnSize[1]/2)+20))
-        self.btnReset = Tombol(layar,
-                               self.btnResetRect.x,
-                               self.btnResetRect.y,
-                               self.btnResetRect.width,
-                               self.btnResetRect.height,
-                               self.btn_font1, 20,
+        game.btnResetRect = Rect((game.pngmRect.midright[0]-10-(int(game.btnSize[0]/2)+40),
+                                  (game.pngmRect.bottomright[1]-int(game.btnSize[1]/2))-30),
+                                 (int(game.btnSize[0]/2)+40, int(game.btnSize[1]/2)+20))
+        game.btnReset = Tombol(layar,
+                               game.btnResetRect.x,
+                               game.btnResetRect.y,
+                               game.btnResetRect.width,
+                               game.btnResetRect.height,
+                               game.btn_font1, 20,
                                nama_tombol_ulang_game,
                                warnaTeks,
                                wBA, wBH, wBP, 20, 2,
-                               onRelease=self.klikReset)
+                               onRelease=game.klikReset)
         # endregion
 
         # endregion
@@ -625,18 +625,18 @@ class GAME(Cacing):
         # region Enable & Disable Tombol
         # PENTING!
         # Jika ada tombol baru disembunyikan!
-        # self.btn_defaultT.disable()
-        self.btn_defaultT.hide()
-        self.btn_kembali.hide()
-        self.btn_theme1.hide()
-        self.btn_theme2.hide()
-        self.btn_theme3.hide()
-        # self.btnHome.disable()
-        self.btnHome.hide()
-        # self.btnReset.disable()
-        self.btnReset.hide()
-        # self.btn_sound.disable()
-        self.btn_sound.hide()
+        # game.btn_defaultT.disable()
+        game.btn_defaultT.hide()
+        game.btn_kembali.hide()
+        game.btn_theme1.hide()
+        game.btn_theme2.hide()
+        game.btn_theme3.hide()
+        # game.btnHome.disable()
+        game.btnHome.hide()
+        # game.btnReset.disable()
+        game.btnReset.hide()
+        # game.btn_sound.disable()
+        game.btn_sound.hide()
         # endregion
 
         pass
@@ -645,565 +645,565 @@ class GAME(Cacing):
     # region Menu Utama
 
     # gambar makanan pada menu utama!
-    def gambar_makanan_MU(self):
+    def gambar_makanan_MU(game):
         """Gambar makanan pada menu utama."""
-        if self.wline == 0:
-            self.makanan_ke1 = self.fr_makanan0
-            self.makanan_ke2 = self.fr_makanan0
-            self.makanan_ke3 = self.fr_makanan0
-        elif self.wline == 1:
-            self.makanan_ke1 = self.fr_makanan1
-            self.makanan_ke2 = self.fr_makanan1
-            self.makanan_ke3 = self.fr_makanan1
-        elif self.wline == 2:
-            self.makanan_ke1 = self.fr_makanan2
-            self.makanan_ke2 = self.fr_makanan2
-            self.makanan_ke3 = self.fr_makanan2
-        elif self.wline == 3:
-            self.makanan_ke1 = self.fr_makanan3
-            self.makanan_ke2 = self.fr_makanan3
-            self.makanan_ke3 = self.fr_makanan3
+        if game.wline == 0:
+            game.makanan_ke1 = game.fr_makanan0
+            game.makanan_ke2 = game.fr_makanan0
+            game.makanan_ke3 = game.fr_makanan0
+        elif game.wline == 1:
+            game.makanan_ke1 = game.fr_makanan1
+            game.makanan_ke2 = game.fr_makanan1
+            game.makanan_ke3 = game.fr_makanan1
+        elif game.wline == 2:
+            game.makanan_ke1 = game.fr_makanan2
+            game.makanan_ke2 = game.fr_makanan2
+            game.makanan_ke3 = game.fr_makanan2
+        elif game.wline == 3:
+            game.makanan_ke1 = game.fr_makanan3
+            game.makanan_ke2 = game.fr_makanan3
+            game.makanan_ke3 = game.fr_makanan3
 
+        # posisi ke tiga makanan pada menu utama!
         fdrect1 = Rect(
-            (self.fd_pos1.x*imgSize, self.fd_pos1.y*imgSize), (imgSize, imgSize))
+            (game.fd_pos1.x*imgSize, game.fd_pos1.y*imgSize), (imgSize, imgSize))
         fdrect2 = Rect(
-            (self.fd_pos2.x*imgSize, self.fd_pos2.y*imgSize), (imgSize, imgSize))
+            (game.fd_pos2.x*imgSize, game.fd_pos2.y*imgSize), (imgSize, imgSize))
         fdrect3 = Rect(
-            (self.fd_pos3.x*imgSize, self.fd_pos3.y*imgSize), (imgSize, imgSize))
+            (game.fd_pos3.x*imgSize, game.fd_pos3.y*imgSize), (imgSize, imgSize))
 
-        layar.blit(self.makanan_ke1[int(self.index_makanan)], fdrect1)
-        layar.blit(self.makanan_ke2[int(self.index_makanan)], fdrect2)
-        layar.blit(self.makanan_ke3[int(self.index_makanan)], fdrect3)
+        layar.blit(game.makanan_ke1[int(game.index_makanan)], fdrect1)
+        layar.blit(game.makanan_ke2[int(game.index_makanan)], fdrect2)
+        layar.blit(game.makanan_ke3[int(game.index_makanan)], fdrect3)
 
         pass
-    # posisi ke 3 makanan pada menu utama!
 
-    def gambar(self):
+    def gambar(game):
         """Gambar si ular dan makanannya"""
-        self.gambar_makanan_MU()
-        self.gambar_ular()
+        game.gambar_makanan_MU()
+        game.gambar_ular()
         pass
 
-    def draw(self):
-        layar.blit(self.bg1, self.bg1_rect)
-        self.rumput()
+    def draw(game):
+        layar.blit(game.bg1, game.bg1_rect)
+        game.rumput()
 
-        self.gambar()
+        game.gambar()
 
-        layar.blit(self.judul, self.judul_rect)
+        layar.blit(game.judul, game.judul_rect)
         # mebuat garis bawah pada judul
 
-        if self.wline == 0:
+        if game.wline == 0:
             draw.line(layar, wLine,
-                      (self.judul_rect.midleft[0],
-                       self.judul_rect.midleft[1]+40),
-                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
-        elif self.wline == 1:
+                      (game.judul_rect.midleft[0],
+                       game.judul_rect.midleft[1]+40),
+                      (game.judul_rect.midright[0], game.judul_rect.midright[1]+40), 3)
+        elif game.wline == 1:
             draw.line(layar, tema1['wl'],
-                      (self.judul_rect.midleft[0],
-                       self.judul_rect.midleft[1]+40),
-                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
-        elif self.wline == 2:
+                      (game.judul_rect.midleft[0],
+                       game.judul_rect.midleft[1]+40),
+                      (game.judul_rect.midright[0], game.judul_rect.midright[1]+40), 3)
+        elif game.wline == 2:
             draw.line(layar, tema2['wl'],
-                      (self.judul_rect.midleft[0],
-                       self.judul_rect.midleft[1]+40),
-                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
-        elif self.wline == 3:
+                      (game.judul_rect.midleft[0],
+                       game.judul_rect.midleft[1]+40),
+                      (game.judul_rect.midright[0], game.judul_rect.midright[1]+40), 3)
+        elif game.wline == 3:
             draw.line(layar, tema3['wl'],
-                      (self.judul_rect.midleft[0],
-                       self.judul_rect.midleft[1]+40),
-                      (self.judul_rect.midright[0], self.judul_rect.midright[1]+40), 3)
+                      (game.judul_rect.midleft[0],
+                       game.judul_rect.midleft[1]+40),
+                      (game.judul_rect.midright[0], game.judul_rect.midright[1]+40), 3)
 
-        # layar.blit(self.panel_1, self.panel_11Rect)
+        # layar.blit(game.panel_1, game.panel_11Rect)
 
         pass
 
-    def run(self):
-        self.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
+    def run(game):
+        game.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
             11, 5), Vector2(10, 5), Vector2(9, 5)]
         UPDATE_CACING = USEREVENT+1
         pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
         bisagerak = False
-        self.arah = Vector2(0, 0)
-        self.fd_pos1 = self.def_fdPos1
-        self.fd_pos2 = self.def_fdPos2
-        self.fd_pos3 = self.def_fdPos3
-        while self.aktif:
+        game.arah = Vector2(0, 0)
+        game.fd_pos1 = game.def_fdPos1
+        game.fd_pos2 = game.def_fdPos2
+        game.fd_pos3 = game.def_fdPos3
+        while game.aktif:
             ki = event.get()
-            if len(self.badan) == 66 and bisagerak == False:
-                self.arah = Vector2(0, 0)
+            if len(game.badan) == 66 and bisagerak == False:
+                game.arah = Vector2(0, 0)
                 bisagerak = True
 
-            if self.index_makanan >= len(self.makanan_ke1):
-                self.index_makanan = 0
+            if game.index_makanan >= len(game.makanan_ke1):
+                game.index_makanan = 0
 
             for ki in ki:
                 if ki.type == QUIT:
                     quit()
                     exit()
                 if ki.type == UPDATE_CACING:
-                    self.update(untukMenuUtama=True)
+                    game.update(untukMenuUtama=True)
 
-                if ki.type == KEYDOWN and len(self.badan) >= 66 and bisagerak == True:
+                if ki.type == KEYDOWN and len(game.badan) >= 66 and bisagerak == True:
                     if ki.key == K_w or ki.key == K_UP:
-                        if self.arah.y != 1:
-                            self.arah = Vector2(0, -1)
+                        if game.arah.y != 1:
+                            game.arah = Vector2(0, -1)
 
                     if ki.key == K_d or ki.key == K_RIGHT:
-                        if self.arah.x != -1:
-                            self.arah = Vector2(1, 0)
+                        if game.arah.x != -1:
+                            game.arah = Vector2(1, 0)
 
                     if ki.key == K_s or ki.key == K_DOWN:
-                        if self.arah.y != -1:
-                            self.arah = Vector2(0, 1)
+                        if game.arah.y != -1:
+                            game.arah = Vector2(0, 1)
 
                     if ki.key == K_a or ki.key == K_LEFT:
-                        if self.arah.x != 1:
-                            self.arah = Vector2(-1, 0)
-            if len(self.badan) < 66:
-                if self.badan[0] == self.fd_pos1:
-                    self.fd_pos1 = Vector2(-1, -1)
+                        if game.arah.x != 1:
+                            game.arah = Vector2(-1, 0)
+            if len(game.badan) < 66:
+                if game.badan[0] == game.fd_pos1:
+                    game.fd_pos1 = Vector2(-1, -1)
                 else:
-                    if self.badan[-1] == self.def_fdPos1:
-                        self.fd_pos1 = self.def_fdPos1
+                    if game.badan[-1] == game.def_fdPos1:
+                        game.fd_pos1 = game.def_fdPos1
 
-                if self.badan[0] == self.fd_pos2:
-                    self.fd_pos2 = Vector2(-1, -1)
+                if game.badan[0] == game.fd_pos2:
+                    game.fd_pos2 = Vector2(-1, -1)
                 else:
-                    if self.badan[-1] == self.def_fdPos2:
-                        self.fd_pos2 = self.def_fdPos2
+                    if game.badan[-1] == game.def_fdPos2:
+                        game.fd_pos2 = game.def_fdPos2
 
-                if self.badan[0] == self.fd_pos3:
-                    self.fd_pos3 = Vector2(-1, -1)
+                if game.badan[0] == game.fd_pos3:
+                    game.fd_pos3 = Vector2(-1, -1)
                 else:
-                    if self.badan[-1] == self.def_fdPos3:
-                        self.fd_pos3 = self.def_fdPos3
+                    if game.badan[-1] == game.def_fdPos3:
+                        game.fd_pos3 = game.def_fdPos3
 
             else:
-                self.fd_pos1, self.fd_pos2, self.fd_pos3 = Vector2(
+                game.fd_pos1, game.fd_pos2, game.fd_pos3 = Vector2(
                     -1, -1), Vector2(-1, -1), Vector2(-1, -1)
 
-            if len(self.badan) < 66:
-                if self.arah == Vector2(0, 0):
-                    self.arah = Vector2(1, 0)
+            if len(game.badan) < 66:
+                if game.arah == Vector2(0, 0):
+                    game.arah = Vector2(1, 0)
 
                 # ular bergerak berputar se arah jarum jam
                 # jika kepala ular koordinatnya di 20,5
-                if self.badan[0].distance_to(Vector2(20, 5)) == 0.0:
-                    self.arah = Vector2(0, 1)
+                if game.badan[0].distance_to(Vector2(20, 5)) == 0.0:
+                    game.arah = Vector2(0, 1)
                 # jika kepala ular koordinatnya di 20,20
-                if self.badan[0].distance_to(Vector2(20, 20)) == 0.0:
-                    self.arah = Vector2(-1, 0)
+                if game.badan[0].distance_to(Vector2(20, 20)) == 0.0:
+                    game.arah = Vector2(-1, 0)
                 # jika kepala ular koordinatnya di 2,20
-                if self.badan[0].distance_to(Vector2(2, 20)) == 0.0:
-                    self.arah = Vector2(0, -1)
+                if game.badan[0].distance_to(Vector2(2, 20)) == 0.0:
+                    game.arah = Vector2(0, -1)
                 # jika kepala ular koordinatnya di 2,5
-                if self.badan[0].distance_to(Vector2(2, 5)) == 0.0:
-                    self.arah = Vector2(1, 0)
+                if game.badan[0].distance_to(Vector2(2, 5)) == 0.0:
+                    game.arah = Vector2(1, 0)
 
-            self.draw()
+            game.draw()
 
             pw.update(ki)
             display.update()
             fps.tick(FPS)
-            self.index_makanan += KONST_ANI*10
+            game.index_makanan += KONST_ANI*10
 
         pass
     # endregion
 
     # ! Membuat menu pengaturan
     # region Pengaturan
-    def pengDraw(self):
+    def pengDraw(game):
         # gambar tampilan pengaturan
-        layar.blit(self.bg, self.bg_rect)
-        layar.blit(self.panel_1, self.panel_1Rect)
-        layar.blit(self.teksH1, self.teksH1_rect)
-        layar.blit(self.teksh2, self.teksh2_rect)
-        # layar.blit(self.teks1, self.teks1_rect)
+        layar.blit(game.bg, game.bg_rect)
+        layar.blit(game.panel_1, game.panel_1Rect)
+        layar.blit(game.teksH1, game.teksH1_rect)
+        layar.blit(game.teksh2, game.teksh2_rect)
+        # layar.blit(game.teks1, game.teks1_rect)
 
         # region Garis dan Tampilan Map
         # hanya ganti warna si garis-garis
-        if self.wline == 0:
+        if game.wline == 0:
             # Tampilan Map
-            layar.blit(self.tampilan_tema_default, self.tt_rect)
+            layar.blit(game.tampilan_tema_default, game.tt_rect)
 
             # garis kotak di pinggir layar
             draw.line(layar, wLine, (0, 0), (UKURAN_WINDOWS[0], 0), 2)
             draw.line(layar, wLine, (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       wLine,
-                      (self.bg_rect.bottomleft[0],
-                       self.bg_rect.bottomleft[1]-2),
-                      (self.bg_rect.bottomright[0],
-                       self.bg_rect.bottomright[1]-2),
+                      (game.bg_rect.bottomleft[0],
+                       game.bg_rect.bottomleft[1]-2),
+                      (game.bg_rect.bottomright[0],
+                       game.bg_rect.bottomright[1]-2),
                       2)
             draw.line(layar,
                       wLine,
-                      (self.bg_rect.bottomright[0]-2,
-                       self.bg_rect.bottomright[1]),
-                      (self.bg_rect.topright[0]-2, self.bg_rect.topright[1]),
+                      (game.bg_rect.bottomright[0]-2,
+                       game.bg_rect.bottomright[1]),
+                      (game.bg_rect.topright[0]-2, game.bg_rect.topright[1]),
                       2)
 
             # Garis di antara tombol kembali dan tulisan "Theme:"
             draw.line(layar,
                       wLine,
                       (0,
-                       self.teks1_rect.midbottom[1]+10),
+                       game.teks1_rect.midbottom[1]+10),
                       (UKURAN_WINDOWS[0],
-                       self.teks1_rect.midbottom[1]+10), 3)
+                       game.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       wLine,
-                      (0, self.panel_1Rect.midbottom[1]),
-                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
+                      (0, game.panel_1Rect.midbottom[1]),
+                      (UKURAN_WINDOWS[0], game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       wLine,
-                      (self.btn_defaultRect.midtop[0]+30,
-                       self.btn_defaultRect.topright[1]-10),
-                      (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
+                      (game.btn_defaultRect.midtop[0]+30,
+                       game.btn_defaultRect.topright[1]-10),
+                      (game.btn_defaultRect.midtop[0]+30, game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       wLine,
-                      (self.btn_defaultRect.midtop[0] +
-                       30, self.teksh2_rect.y-30),
-                      (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
+                      (game.btn_defaultRect.midtop[0] +
+                       30, game.teksh2_rect.y-30),
+                      (UKURAN_WINDOWS[0]-1, game.teksh2_rect.y-30), 3)
 
-        if self.wline == 1:
+        if game.wline == 1:
             # Tampilan Map
-            layar.blit(self.tampilan_tema_1, self.tt_rect)
+            layar.blit(game.tampilan_tema_1, game.tt_rect)
 
             # garis kotak di pinggir layar
             draw.line(layar, tema1['wl'], (0, 0), (UKURAN_WINDOWS[0], 0), 2)
             draw.line(layar, tema1['wl'], (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       tema1['wl'],
-                      (self.bg_rect.bottomleft[0],
-                       self.bg_rect.bottomleft[1]-2),
-                      (self.bg_rect.bottomright[0],
-                       self.bg_rect.bottomright[1]-2),
+                      (game.bg_rect.bottomleft[0],
+                       game.bg_rect.bottomleft[1]-2),
+                      (game.bg_rect.bottomright[0],
+                       game.bg_rect.bottomright[1]-2),
                       2)
             draw.line(layar,
                       tema1['wl'],
-                      (self.bg_rect.bottomright[0]-2,
-                       self.bg_rect.bottomright[1]),
-                      (self.bg_rect.topright[0]-2, self.bg_rect.topright[1]),
+                      (game.bg_rect.bottomright[0]-2,
+                       game.bg_rect.bottomright[1]),
+                      (game.bg_rect.topright[0]-2, game.bg_rect.topright[1]),
                       2)
 
             # Garis di antara tombol kembali dan tulisan "Theme:"
             draw.line(layar,
                       tema1['wl'],
                       (0,
-                       self.teks1_rect.midbottom[1]+10),
+                       game.teks1_rect.midbottom[1]+10),
                       (UKURAN_WINDOWS[0],
-                       self.teks1_rect.midbottom[1]+10), 3)
+                       game.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       tema1['wl'],
-                      (0, self.panel_1Rect.midbottom[1]),
-                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
+                      (0, game.panel_1Rect.midbottom[1]),
+                      (UKURAN_WINDOWS[0], game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema1['wl'],
-                      (self.btn_defaultRect.midtop[0]+30,
-                       self.btn_defaultRect.topright[1]-10),
-                      (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
+                      (game.btn_defaultRect.midtop[0]+30,
+                       game.btn_defaultRect.topright[1]-10),
+                      (game.btn_defaultRect.midtop[0]+30, game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema1['wl'],
-                      (self.btn_defaultRect.midtop[0] +
-                       30, self.teksh2_rect.y-30),
-                      (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
+                      (game.btn_defaultRect.midtop[0] +
+                       30, game.teksh2_rect.y-30),
+                      (UKURAN_WINDOWS[0]-1, game.teksh2_rect.y-30), 3)
 
-        if self.wline == 2:
+        if game.wline == 2:
             # Tampilan Map
-            layar.blit(self.tampilan_tema_2, self.tt_rect)
+            layar.blit(game.tampilan_tema_2, game.tt_rect)
 
             # garis kotak di pinggir layar
             draw.line(layar, tema2['wl'], (0, 0), (UKURAN_WINDOWS[0], 0), 2)
             draw.line(layar, tema2['wl'], (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       tema2['wl'],
-                      (self.bg_rect.bottomleft[0],
-                       self.bg_rect.bottomleft[1]-2),
-                      (self.bg_rect.bottomright[0],
-                       self.bg_rect.bottomright[1]-2),
+                      (game.bg_rect.bottomleft[0],
+                       game.bg_rect.bottomleft[1]-2),
+                      (game.bg_rect.bottomright[0],
+                       game.bg_rect.bottomright[1]-2),
                       2)
             draw.line(layar,
                       tema2['wl'],
-                      (self.bg_rect.bottomright[0]-2,
-                       self.bg_rect.bottomright[1]),
-                      (self.bg_rect.topright[0]-2, self.bg_rect.topright[1]),
+                      (game.bg_rect.bottomright[0]-2,
+                       game.bg_rect.bottomright[1]),
+                      (game.bg_rect.topright[0]-2, game.bg_rect.topright[1]),
                       2)
 
             # Garis di antara tombol kembali dan tulisan "Theme:"
             draw.line(layar,
                       tema2['wl'],
                       (0,
-                       self.teks1_rect.midbottom[1]+10),
+                       game.teks1_rect.midbottom[1]+10),
                       (UKURAN_WINDOWS[0],
-                       self.teks1_rect.midbottom[1]+10), 3)
+                       game.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       tema2['wl'],
-                      (0, self.panel_1Rect.midbottom[1]),
-                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
+                      (0, game.panel_1Rect.midbottom[1]),
+                      (UKURAN_WINDOWS[0], game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema2['wl'],
-                      (self.btn_defaultRect.midtop[0]+30,
-                       self.btn_defaultRect.topright[1]-10),
-                      (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
+                      (game.btn_defaultRect.midtop[0]+30,
+                       game.btn_defaultRect.topright[1]-10),
+                      (game.btn_defaultRect.midtop[0]+30, game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema2['wl'],
-                      (self.btn_defaultRect.midtop[0] +
-                       30, self.teksh2_rect.y-30),
-                      (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
+                      (game.btn_defaultRect.midtop[0] +
+                       30, game.teksh2_rect.y-30),
+                      (UKURAN_WINDOWS[0]-1, game.teksh2_rect.y-30), 3)
 
-        if self.wline == 3:
+        if game.wline == 3:
             # Tampilan Map
-            layar.blit(self.tampilan_tema_3, self.tt_rect)
+            layar.blit(game.tampilan_tema_3, game.tt_rect)
 
             # garis kotak di pinggir layar
             draw.line(layar, tema3['wl'], (0, 0), (UKURAN_WINDOWS[0], 0), 2)
             draw.line(layar, tema3['wl'], (0, 0), (0, UKURAN_WINDOWS[1]), 2)
             draw.line(layar,
                       tema3['wl'],
-                      (self.bg_rect.bottomleft[0],
-                       self.bg_rect.bottomleft[1]-2),
-                      (self.bg_rect.bottomright[0],
-                       self.bg_rect.bottomright[1]-2),
+                      (game.bg_rect.bottomleft[0],
+                       game.bg_rect.bottomleft[1]-2),
+                      (game.bg_rect.bottomright[0],
+                       game.bg_rect.bottomright[1]-2),
                       2)
             draw.line(layar,
                       tema3['wl'],
-                      (self.bg_rect.bottomright[0]-2,
-                       self.bg_rect.bottomright[1]),
-                      (self.bg_rect.topright[0]-2, self.bg_rect.topright[1]),
+                      (game.bg_rect.bottomright[0]-2,
+                       game.bg_rect.bottomright[1]),
+                      (game.bg_rect.topright[0]-2, game.bg_rect.topright[1]),
                       2)
 
             # Garis di antara tombol kembali dan tulisan "Theme:"
             draw.line(layar,
                       tema3['wl'],
                       (0,
-                       self.teks1_rect.midbottom[1]+10),
+                       game.teks1_rect.midbottom[1]+10),
                       (UKURAN_WINDOWS[0],
-                       self.teks1_rect.midbottom[1]+10), 3)
+                       game.teks1_rect.midbottom[1]+10), 3)
 
             draw.line(layar,
                       tema3['wl'],
-                      (0, self.panel_1Rect.midbottom[1]),
-                      (UKURAN_WINDOWS[0], self.panel_1Rect.midbottom[1]), 3)
+                      (0, game.panel_1Rect.midbottom[1]),
+                      (UKURAN_WINDOWS[0], game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema3['wl'],
-                      (self.btn_defaultRect.midtop[0]+30,
-                       self.btn_defaultRect.topright[1]-10),
-                      (self.btn_defaultRect.midtop[0]+30, self.panel_1Rect.midbottom[1]), 3)
+                      (game.btn_defaultRect.midtop[0]+30,
+                       game.btn_defaultRect.topright[1]-10),
+                      (game.btn_defaultRect.midtop[0]+30, game.panel_1Rect.midbottom[1]), 3)
 
             draw.line(layar,
                       tema3['wl'],
-                      (self.btn_defaultRect.midtop[0] +
-                       30, self.teksh2_rect.y-30),
-                      (UKURAN_WINDOWS[0]-1, self.teksh2_rect.y-30), 3)
+                      (game.btn_defaultRect.midtop[0] +
+                       30, game.teksh2_rect.y-30),
+                      (UKURAN_WINDOWS[0]-1, game.teksh2_rect.y-30), 3)
         # endregion
 
-        self.gambar_makanan(display=True)
-        self.gambar_ular()
+        game.gambar_makanan(display=True)
+        game.gambar_ular()
         pass
 
-    def pengaturan(self):
-        self.badan = [Vector2(15, 17), Vector2(
+    def pengaturan(game):
+        game.badan = [Vector2(15, 17), Vector2(
             14, 17), Vector2(13, 17), Vector2(12, 17)]
         tunggu = True
-        while self.paktif:
+        while game.paktif:
             ki = event.get()
             for ki in ki:
                 if ki.type == QUIT:
                     quit()
                     exit()
 
-            if self.index_makanan >= len(self.fr_makanan):
-                self.index_makanan = 0
+            if game.index_makanan >= len(game.fr_makanan):
+                game.index_makanan = 0
 
             if tunggu:
                 tm.sleep(TMFB)
                 tunggu = False
-            self.pengDraw()
+            game.pengDraw()
 
             pw.update(ki)
             display.update()
             fps.tick(FPS)
-            self.index_makanan += KONST_ANI*10
+            game.index_makanan += KONST_ANI*10
 
     # endregion
 
     # ! membuat Game Cacingnya
     # region Game
-    def drawElem(self):
-        layar.blit(self.pbg, self.pbg_rect)
-        self.rumput()
+    def drawElem(game):
+        layar.blit(game.pbg, game.pbg_rect)
+        game.rumput()
 
-        self.gambar_makanan()
-        self.gambar_ular()
+        game.gambar_makanan()
+        game.gambar_ular()
 
-        layar.blits([(self.pskor, self.pskor_rect),
-                     (self.border0, self.border0_rect),
-                     (self.border1, self.border1_rect),
-                     (self.border2, self.border2_rect),
-                     (self.border3, self.border3_rect)])
+        layar.blits([(game.pskor, game.pskor_rect),
+                     (game.border0, game.border0_rect),
+                     (game.border1, game.border1_rect),
+                     (game.border2, game.border2_rect),
+                     (game.border3, game.border3_rect)])
 
-        self.skor()
+        game.skor()
 
-    def update(self, untukMenuUtama=False):
+    def update(game, untukMenuUtama=False):
         if not untukMenuUtama:
-            self.gerakSiular()
-            self.cek_tabrakan()
-            self.cek_gagal()
+            game.gerakSiular()
+            game.cek_tabrakan()
+            game.cek_gagal()
         else:
-            self.gerakSiular()
-            self.cek_tabrakan(untukMenuUtama=True)
+            game.gerakSiular()
+            game.cek_tabrakan(untukMenuUtama=True)
 
-    def cek_tabrakan(self, untukMenuUtama=False):
+    def cek_tabrakan(game, untukMenuUtama=False):
         """Cek si cacing jika nabrak makanan."""
         if not untukMenuUtama:
-            if self.fd_pos.distance_to(self.badan[0]) == 0.0:
-                self.acakPos()
-                if not self.apakahGameOver:
-                    self.tambah_blok()
-                    self.go_nskor += 1
-                self.suara_makan.play()
-            for blok in self.badan[1:]:
-                if blok == self.fd_pos:
-                    self.acakPos()
+            if game.fd_pos.distance_to(game.badan[0]) == 0.0:
+                game.acakPos()
+                if not game.apakahGameOver:
+                    game.tambah_blok()
+                    game.go_nskor += 1
+                game.suara_makan.play()
+            for blok in game.badan[1:]:
+                if blok == game.fd_pos:
+                    game.acakPos()
         else:
-            if self.badan[0].x == -1:
-                self.badan[0].x = celln
-            if self.badan[0].x == celln+1:
-                self.badan[0].x = 0
-            if self.badan[0].y == -1:
-                self.badan[0].y = celln
-            if self.badan[0].y == celln+1:
-                self.badan[0].y = 0
+            if game.badan[0].x == -1:
+                game.badan[0].x = celln
+            if game.badan[0].x == celln+1:
+                game.badan[0].x = 0
+            if game.badan[0].y == -1:
+                game.badan[0].y = celln
+            if game.badan[0].y == celln+1:
+                game.badan[0].y = 0
             pass
 
-            if self.fd_pos1.distance_to(self.badan[0]) == 0.0:
-                self.tambah_blok()
-                # self.suara_makan.play()
-            if self.fd_pos2.distance_to(self.badan[0]) == 0.0:
-                self.tambah_blok()
+            if game.fd_pos1.distance_to(game.badan[0]) == 0.0:
+                game.tambah_blok()
+                # game.suara_makan.play()
+            if game.fd_pos2.distance_to(game.badan[0]) == 0.0:
+                game.tambah_blok()
 
-            if self.fd_pos2.distance_to(self.badan[0]) == 0.0:
-                self.tambah_blok()
+            if game.fd_pos2.distance_to(game.badan[0]) == 0.0:
+                game.tambah_blok()
             pass
 
-    def cek_gagal(self):
+    def cek_gagal(game):
         """Cek si cacing jika nabrak tembok atau badannya sendiri."""
-        if not 1 <= self.badan[0].x < celln-1 or not 3 <= self.badan[0].y < celln-1:
-            self.apakahGameOver = True
-            self.suara_latar_belakang.stop()
-            self.suara_nabrak.play()
-            self.gameOver()
+        if not 1 <= game.badan[0].x < celln-1 or not 3 <= game.badan[0].y < celln-1:
+            game.apakahGameOver = True
+            game.suara_latar_belakang.stop()
+            game.suara_nabrak.play()
+            game.gameOver()
             pass
         else:
-            self.apakahGameOver = False
+            game.apakahGameOver = False
 
-        for blok in self.badan[1:]:
-            if blok == self.badan[0] and self.arah != Vector2(0, 0):
-                self.apakahGameOver = True
-                self.suara_latar_belakang.stop()
-                self.suara_nabrak.play()
-                self.gameOver()
+        for blok in game.badan[1:]:
+            if blok == game.badan[0] and game.arah != Vector2(0, 0):
+                game.apakahGameOver = True
+                game.suara_latar_belakang.stop()
+                game.suara_nabrak.play()
+                game.gameOver()
         pass
 
-    def drawGameOver(self):
-        if self.nths == 0:
-            draw.rect(layar, tema0['pn1'], self.pngmRect, 0, 4)
-        elif self.nths == 1:
-            draw.rect(layar, tema1['pn1'], self.pngmRect, 0, 4)
-        elif self.nths == 2:
-            draw.rect(layar, tema2['pn1'], self.pngmRect, 0, 4)
-        elif self.nths == 3:
-            draw.rect(layar, tema3['pn1'], self.pngmRect, 0, 4)
+    def drawGameOver(game):
+        if game.nths == 0:
+            draw.rect(layar, tema0['pn1'], game.pngmRect, 0, 4)
+        elif game.nths == 1:
+            draw.rect(layar, tema1['pn1'], game.pngmRect, 0, 4)
+        elif game.nths == 2:
+            draw.rect(layar, tema2['pn1'], game.pngmRect, 0, 4)
+        elif game.nths == 3:
+            draw.rect(layar, tema3['pn1'], game.pngmRect, 0, 4)
         # membuat tulisan game over
-        if self.wline == 0:
-            self.tkgmover = self.font_h1.render('Game Over', True, tema0['tk'])
-        if self.wline == 1:
-            self.tkgmover = self.font_h1.render('Game Over', True, tema1['tk'])
-        if self.wline == 2:
-            self.tkgmover = self.font_h1.render('Game Over', True, tema2['tk'])
-        if self.wline == 3:
-            self.tkgmover = self.font_h1.render('Game Over', True, tema3['tk'])
-        self.tkgmoverRect = self.tkgmover.get_rect(midtop=(self.pngmRect.midtop[0],
-                                                           self.pngmRect.midtop[1]+10))
+        if game.wline == 0:
+            game.tkgmover = game.font_h1.render('Game Over', True, tema0['tk'])
+        if game.wline == 1:
+            game.tkgmover = game.font_h1.render('Game Over', True, tema1['tk'])
+        if game.wline == 2:
+            game.tkgmover = game.font_h1.render('Game Over', True, tema2['tk'])
+        if game.wline == 3:
+            game.tkgmover = game.font_h1.render('Game Over', True, tema3['tk'])
+        game.tkgmoverRect = game.tkgmover.get_rect(midtop=(game.pngmRect.midtop[0],
+                                                           game.pngmRect.midtop[1]+10))
 
-        # self.pngmRect.center = self.boardRect.center
+        # game.pngmRect.center = game.boardRect.center
 
         # region Skor dan HighSkor
-        self.display_makanan2x = transform.smoothscale(
-            self.makanan, (self.pskor_rect.height-25, self.pskor_rect.height-25))
-        self.display_makanan2xRect = self.display_makanan2x.get_rect(
-            midleft=(self.pngmRect.midleft[0]+40, int(self.boardRect.midleft[1]-(self.boardRect.midleft[1]*(1/4)))))
+        game.display_makanan2x = transform.smoothscale(
+            game.makanan, (game.pskor_rect.height-25, game.pskor_rect.height-25))
+        game.display_makanan2xRect = game.display_makanan2x.get_rect(
+            midleft=(game.pngmRect.midleft[0]+40, int(game.boardRect.midleft[1]-(game.boardRect.midleft[1]*(1/4)))))
 
-        if self.wline == 0:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema0['tk'])
-        if self.wline == 1:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema1['tk'])
-        if self.wline == 2:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema2['tk'])
-        if self.wline == 3:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema3['tk'])
+        if game.wline == 0:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema0['tk'])
+        if game.wline == 1:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema1['tk'])
+        if game.wline == 2:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema2['tk'])
+        if game.wline == 3:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema3['tk'])
 
-        self.teks_skorRect = self.teks_skor.get_rect(
-            midleft=self.display_makanan2xRect.midright)
-        self.teks_skorRect.x += 5
-        self.teks_skorRect.y += 2
+        game.teks_skorRect = game.teks_skor.get_rect(
+            midleft=game.display_makanan2xRect.midright)
+        game.teks_skorRect.x += 5
+        game.teks_skorRect.y += 2
 
         # membuat high skor
-        if self.go_nskor >= self.go_high_skor:
-            self.go_high_skor = self.go_nskor
-        if self.wline == 0:
-            teks_hskor = self.font_h1.render(
-                f'{self.go_high_skor}', True, tema0['tk'])
-        if self.wline == 1:
-            teks_hskor = self.font_h1.render(
-                f'{self.go_high_skor}', True, tema1['tk'])
-        if self.wline == 2:
-            teks_hskor = self.font_h1.render(
-                f'{self.go_high_skor}', True, tema2['tk'])
-        if self.wline == 3:
-            teks_hskor = self.font_h1.render(
-                f'{self.go_high_skor}', True, tema3['tk'])
+        if game.go_nskor >= game.go_high_skor:
+            game.go_high_skor = game.go_nskor
+        if game.wline == 0:
+            teks_hskor = game.font_h1.render(
+                f'{game.go_high_skor}', True, tema0['tk'])
+        if game.wline == 1:
+            teks_hskor = game.font_h1.render(
+                f'{game.go_high_skor}', True, tema1['tk'])
+        if game.wline == 2:
+            teks_hskor = game.font_h1.render(
+                f'{game.go_high_skor}', True, tema2['tk'])
+        if game.wline == 3:
+            teks_hskor = game.font_h1.render(
+                f'{game.go_high_skor}', True, tema3['tk'])
         teks_hskorRect = teks_hskor.get_rect(
-            midleft=(self.pngmRect.midright[0]-80, self.teks_skorRect.midright[1]))
+            midleft=(game.pngmRect.midright[0]-80, game.teks_skorRect.midright[1]))
 
-        pialaRect = self.piala.get_rect(
+        pialaRect = game.piala.get_rect(
             midright=(teks_hskorRect.midleft[0]-5, teks_hskorRect.midleft[1]))
 
         # endregion
 
-        layar.blits([(self.tkgmover, self.tkgmoverRect), (self.display_makanan2x, self.display_makanan2xRect),
-                     (self.teks_skor, self.teks_skorRect), (teks_hskor, teks_hskorRect), (self.piala, pialaRect)])
+        layar.blits([(game.tkgmover, game.tkgmoverRect), (game.display_makanan2x, game.display_makanan2xRect),
+                     (game.teks_skor, game.teks_skorRect), (teks_hskor, teks_hskorRect), (game.piala, pialaRect)])
         pass
 
-    def gameOver(self):
+    def gameOver(game):
         # region 'Disable' & 'Enable' Tombol
-        self.btnHome.enable()
-        self.btnHome.show()
-        self.btnReset.enable()
-        self.btnReset.show()
-        self.btn_play.disable()
-        self.btn_keluar.disable()
-        self.btn_peng.disable()
-        self.btn_play.hide()
-        self.btn_keluar.hide()
-        self.btn_peng.hide()
+        game.btnHome.enable()
+        game.btnHome.show()
+        game.btnReset.enable()
+        game.btnReset.show()
+        game.btn_play.disable()
+        game.btn_keluar.disable()
+        game.btn_peng.disable()
+        game.btn_play.hide()
+        game.btn_keluar.hide()
+        game.btn_peng.hide()
         # endregion
-        while self.plgAktif:
+        while game.plgAktif:
             ki = event.get()
             for ki in ki:
                 if ki.type == QUIT:
@@ -1211,113 +1211,113 @@ class GAME(Cacing):
                     exit()
                 if ki.type == KEYDOWN:
                     if ki.key == K_RETURN:
-                        self.klikReset()
+                        game.klikReset()
                 if ki.type == KEYDOWN:
                     if ki.key == K_SPACE:
-                        self.klikHome()
+                        game.klikHome()
 
-            self.drawGameOver()
+            game.drawGameOver()
             pw.update(ki)
             display.update()
             fps.tick(FPS)
 
-    def play(self):
+    def play(game):
         UPDATE_CACING = USEREVENT
         pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
         tunggu = True
-        while self.plAktif:
+        while game.plAktif:
             for ki in event.get():
                 if ki.type == QUIT:
                     quit()
                     exit()
                 if ki.type == UPDATE_CACING:
-                    self.update()
+                    game.update()
 
                 if ki.type == KEYDOWN:
                     # Kontrol si ular
                     if ki.key == K_w or ki.key == K_UP:
-                        if self.arah.y != 1:
-                            self.arah = Vector2(0, -1)
+                        if game.arah.y != 1:
+                            game.arah = Vector2(0, -1)
 
                     if ki.key == K_d or ki.key == K_RIGHT:
-                        if self.arah.x != -1:
-                            self.arah = Vector2(1, 0)
+                        if game.arah.x != -1:
+                            game.arah = Vector2(1, 0)
 
                     if ki.key == K_s or ki.key == K_DOWN:
-                        if self.arah.y != -1:
-                            self.arah = Vector2(0, 1)
+                        if game.arah.y != -1:
+                            game.arah = Vector2(0, 1)
 
                     if ki.key == K_a or ki.key == K_LEFT:
-                        if self.arah.x != 1:
-                            self.arah = Vector2(-1, 0)
+                        if game.arah.x != 1 and game.arah != Vector2(0,0):
+                            game.arah = Vector2(-1, 0)
 
                 pass
 
-            if self.index_makanan >= 5:
-                self.index_makanan = 0
+            if game.index_makanan >= 5:
+                game.index_makanan = 0
 
             if tunggu:
                 tm.sleep(TMFB)
                 tunggu = False
 
-            self.drawElem()
+            game.drawElem()
             display.update()
+            game.index_makanan += (KONST_ANI*10)
             fps.tick(FPS)
-            self.index_makanan += (KONST_ANI*10)
 
-    def skor(self):
+    def skor(game):
         # membuat tulisan skor
-        self.display_makanan2x = transform.smoothscale(
-            self.makanan, (self.pskor_rect.height-25, self.pskor_rect.height-25))
-        self.display_makanan2xRect = self.display_makanan2x.get_rect(
-            midleft=(self.border0_rect.topright[0]+125, self.pskor_rect.midleft[1]))
+        game.display_makanan2x = transform.smoothscale(
+            game.makanan, (game.pskor_rect.height-25, game.pskor_rect.height-25))
+        game.display_makanan2xRect = game.display_makanan2x.get_rect(
+            midleft=(game.border0_rect.topright[0]+125, game.pskor_rect.midleft[1]))
 
-        self.nskor = 0
-        self.nskor+= self.go_nskor
+        game.nskor = 0
+        game.nskor+= game.go_nskor
 
-        if self.wline == 0:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema0['tk'])
-        if self.wline == 1:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema1['tk'])
-        if self.wline == 2:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema2['tk'])
-        if self.wline == 3:
-            self.teks_skor = self.font_h1.render(
-                f'{self.nskor}', True, tema3['tk'])
+        if game.wline == 0:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema0['tk'])
+        if game.wline == 1:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema1['tk'])
+        if game.wline == 2:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema2['tk'])
+        if game.wline == 3:
+            game.teks_skor = game.font_h1.render(
+                f'{game.nskor}', True, tema3['tk'])
 
-        self.teks_skorRect = self.teks_skor.get_rect(
-            midleft=self.display_makanan2xRect.midright)
-        self.teks_skorRect.x += 5
-        self.teks_skorRect.y += 2
+        game.teks_skorRect = game.teks_skor.get_rect(
+            midleft=game.display_makanan2xRect.midright)
+        game.teks_skorRect.x += 5
+        game.teks_skorRect.y += 2
 
         # membuat piala jika player mengulang game
         dis_piala2x = transform.smoothscale(
-            self.piala, (self.pskor_rect.height-25, self.pskor_rect.height-25))
+            game.piala, (game.pskor_rect.height-25, game.pskor_rect.height-25))
         dis_piala2xRect = dis_piala2x.get_rect(
-            midleft=(self.border0_rect.topright[0]+(125*3), self.pskor_rect.midleft[1]))
+            midleft=(game.border0_rect.topright[0]+(125*3), game.pskor_rect.midleft[1]))
 
-        layar.blits([(self.teks_skor, self.teks_skorRect),
-                    (self.display_makanan2x, self.display_makanan2xRect)])
+        layar.blits([(game.teks_skor, game.teks_skorRect),
+                    (game.display_makanan2x, game.display_makanan2xRect)])
 
-        if self.go_high_skor != 0:
-            if self.nskor >= self.go_high_skor:
-                self.go_high_skor = self.nskor
+        if game.go_high_skor != 0:
+            if game.nskor >= game.go_high_skor:
+                game.go_high_skor = game.nskor
 
-            if self.wline == 0:
-                teks_hskor = self.font_h1.render(
-                    f'{self.go_high_skor}', True, tema0['tk'])
-            if self.wline == 1:
-                teks_hskor = self.font_h1.render(
-                    f'{self.go_high_skor}', True, tema1['tk'])
-            if self.wline == 2:
-                teks_hskor = self.font_h1.render(
-                    f'{self.go_high_skor}', True, tema2['tk'])
-            if self.wline == 3:
-                teks_hskor = self.font_h1.render(
-                    f'{self.go_high_skor}', True, tema3['tk'])
+            if game.wline == 0:
+                teks_hskor = game.font_h1.render(
+                    f'{game.go_high_skor}', True, tema0['tk'])
+            if game.wline == 1:
+                teks_hskor = game.font_h1.render(
+                    f'{game.go_high_skor}', True, tema1['tk'])
+            if game.wline == 2:
+                teks_hskor = game.font_h1.render(
+                    f'{game.go_high_skor}', True, tema2['tk'])
+            if game.wline == 3:
+                teks_hskor = game.font_h1.render(
+                    f'{game.go_high_skor}', True, tema3['tk'])
             teks_hskorRect = teks_hskor.get_rect(
                 midleft=(dis_piala2xRect.midright[0]+5, dis_piala2xRect.midright[1]+1))
 
@@ -1326,7 +1326,7 @@ class GAME(Cacing):
 
         pass
 
-    def rumput(self):
+    def rumput(game):
         # Gambar Rumput / Kotak2
         for i in range(celln):
             if i % 2 == 0:
@@ -1334,93 +1334,93 @@ class GAME(Cacing):
                     if j % 2 == 0:
                         rumputRect = Rect(j*imgSize, i*imgSize,
                                           imgSize, imgSize)
-                        draw.rect(layar, self.warnaRumput, rumputRect)
+                        draw.rect(layar, game.warnaRumput, rumputRect)
             else:
                 for j in range(celln):
                     if j % 2 != 0:
                         rumputRect = Rect(j*imgSize, i*imgSize,
                                           imgSize, imgSize)
-                        draw.rect(layar, self.warnaRumput, rumputRect)
+                        draw.rect(layar, game.warnaRumput, rumputRect)
                 pass
         pass
 
     # endregion
 
     # region Fungsi Tombol2 Jika Di Klik
-    def klikHome(self):
-        self.btnHome.disable()
-        self.btnHome.hide()
-        self.btnReset.disable()
-        self.btnReset.hide()
-        self.btn_play.enable()
-        self.btn_keluar.enable()
-        self.btn_peng.enable()
-        self.btn_play.show()
-        self.btn_keluar.show()
-        self.btn_peng.show()
-        self.run()
+    def klikHome(game):
+        game.btnHome.disable()
+        game.btnHome.hide()
+        game.btnReset.disable()
+        game.btnReset.hide()
+        game.btn_play.enable()
+        game.btn_keluar.enable()
+        game.btn_peng.enable()
+        game.btn_play.show()
+        game.btn_keluar.show()
+        game.btn_peng.show()
+        game.run()
 
-    def klikReset(self):
-        self.btnHome.disable()
-        self.btnHome.hide()
-        self.btnReset.disable()
-        self.btnReset.hide()
-        self.go_nskor = 0
-        self.reset()
-        self.suara_latar_belakang.play()
-        self.play()
+    def klikReset(game):
+        game.btnHome.disable()
+        game.btnHome.hide()
+        game.btnReset.disable()
+        game.btnReset.hide()
+        game.go_nskor = 0
+        game.reset()
+        game.suara_latar_belakang.play()
+        game.play()
 
-    def btn_pengaturan(self):
-        self.btn_defaultT.show()
-        self.btn_kembali.show()
-        self.btn_theme1.show()
-        self.btn_theme2.show()
-        self.btn_theme3.show()
+    def btn_pengaturan(game):
+        game.btn_defaultT.show()
+        game.btn_kembali.show()
+        game.btn_theme1.show()
+        game.btn_theme2.show()
+        game.btn_theme3.show()
 
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
+        game.btn_keluar.hide()
+        game.btn_play.hide()
+        game.btn_peng.hide()
 
-        self.btn_sound.show()
+        game.btn_sound.show()
 
-        self.pengaturan()
+        game.pengaturan()
 
-    def klikKembali(self):
-        self.btn_kembali.hide()
-        self.btn_defaultT.hide()
-        self.btn_theme1.hide()
-        self.btn_theme2.hide()
-        self.btn_theme3.hide()
+    def klikKembali(game):
+        game.btn_kembali.hide()
+        game.btn_defaultT.hide()
+        game.btn_theme1.hide()
+        game.btn_theme2.hide()
+        game.btn_theme3.hide()
 
-        self.btn_keluar.show()
-        self.btn_play.show()
-        self.btn_peng.show()
+        game.btn_keluar.show()
+        game.btn_play.show()
+        game.btn_peng.show()
 
-        self.btn_sound.disable()
-        self.btn_sound.hide()
+        game.btn_sound.disable()
+        game.btn_sound.hide()
 
         # taro cacing & makanan ke posisi awalnya
-        self.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
+        game.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
             11, 5), Vector2(10, 5), Vector2(9, 5)]
-        self.arah = Vector2(0, 0)
-        self.fd_pos1 = self.def_fdPos1
-        self.fd_pos2 = self.def_fdPos2
-        self.fd_pos3 = self.def_fdPos3
-        self.run()
+        game.arah = Vector2(0, 0)
+        game.fd_pos1 = game.def_fdPos1
+        game.fd_pos2 = game.def_fdPos2
+        game.fd_pos3 = game.def_fdPos3
+        game.run()
 
-    def klik_SoundbtnON(self):
-        self.suara_latar_belakang.set_volume(0.58)
-        self.suara_makan.set_volume(0.7)
-        self.suara_nabrak.set_volume(0.7)
-        self.btn_soundState = 'ON'
+    def klik_SoundbtnON(game):
+        game.suara_latar_belakang.set_volume(0.58)
+        game.suara_makan.set_volume(0.7)
+        game.suara_nabrak.set_volume(0.7)
+        game.btn_soundState = 'ON'
 
-        if self.wline == 0:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+        if game.wline == 0:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -1429,18 +1429,18 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
-            self.btn_sound.hoverColour = tema0['btnH']
-            self.btn_sound.pressedColour = tema0['btnP']
-            self.btn_sound.inactiveColour = tema0['btnA']
-            self.btn_sound.textColour = rgb(233, 255, 191)
-        if self.wline == 1:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnOFF)
+            game.btn_sound.hoverColour = tema0['btnH']
+            game.btn_sound.pressedColour = tema0['btnP']
+            game.btn_sound.inactiveColour = tema0['btnA']
+            game.btn_sound.textColour = rgb(233, 255, 191)
+        if game.wline == 1:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=tema1['btnA'],
                                     warnaHover=tema1['btnH'],
@@ -1449,18 +1449,18 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
-            self.btn_sound.hoverColour = tema1['btnH']
-            self.btn_sound.pressedColour = tema1['btnP']
-            self.btn_sound.inactiveColour = tema1['btnA']
-            self.btn_sound.textColour = tema1['tk']
-        if self.wline == 2:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnOFF)
+            game.btn_sound.hoverColour = tema1['btnH']
+            game.btn_sound.pressedColour = tema1['btnP']
+            game.btn_sound.inactiveColour = tema1['btnA']
+            game.btn_sound.textColour = tema1['tk']
+        if game.wline == 2:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=tema2['btnA'],
                                     warnaHover=tema2['btnH'],
@@ -1469,18 +1469,18 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
-            self.btn_sound.hoverColour = tema2['btnH']
-            self.btn_sound.pressedColour = tema2['btnP']
-            self.btn_sound.inactiveColour = tema2['btnA']
-            self.btn_sound.textColour = tema2['tk']
-        if self.wline == 3:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnOFF)
+            game.btn_sound.hoverColour = tema2['btnH']
+            game.btn_sound.pressedColour = tema2['btnP']
+            game.btn_sound.inactiveColour = tema2['btnA']
+            game.btn_sound.textColour = tema2['tk']
+        if game.wline == 3:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=tema3['btnA'],
                                     warnaHover=tema3['btnH'],
@@ -1489,26 +1489,26 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
-            self.btn_sound.hoverColour = tema3['btnH']
-            self.btn_sound.pressedColour = tema3['btnP']
-            self.btn_sound.inactiveColour = tema3['btnA']
-            self.btn_sound.textColour = tema3['tk']
+                                    onRelease=game.klik_SoundbtnOFF)
+            game.btn_sound.hoverColour = tema3['btnH']
+            game.btn_sound.pressedColour = tema3['btnP']
+            game.btn_sound.inactiveColour = tema3['btnA']
+            game.btn_sound.textColour = tema3['tk']
         pass
 
-    def klik_SoundbtnOFF(self):
-        self.suara_latar_belakang.set_volume(0.0)
-        self.suara_makan.set_volume(0.0)
-        self.suara_nabrak.set_volume(0.0)
-        self.btn_soundState = 'OFF'
+    def klik_SoundbtnOFF(game):
+        game.suara_latar_belakang.set_volume(0.0)
+        game.suara_makan.set_volume(0.0)
+        game.suara_nabrak.set_volume(0.0)
+        game.btn_soundState = 'OFF'
 
-        if self.wline == 0:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+        if game.wline == 0:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -1517,18 +1517,18 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-            self.btn_sound.hoverColour = tema0['btnH']
-            self.btn_sound.pressedColour = tema0['btnP']
-            self.btn_sound.inactiveColour = tema0['btnA']
-            self.btn_sound.textColour = rgb(233, 255, 191)
-        if self.wline == 1:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+            game.btn_sound.hoverColour = tema0['btnH']
+            game.btn_sound.pressedColour = tema0['btnP']
+            game.btn_sound.inactiveColour = tema0['btnA']
+            game.btn_sound.textColour = rgb(233, 255, 191)
+        if game.wline == 1:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=tema1['btnA'],
                                     warnaHover=tema1['btnH'],
@@ -1537,18 +1537,18 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-            self.btn_sound.hoverColour = tema1['btnH']
-            self.btn_sound.pressedColour = tema1['btnP']
-            self.btn_sound.inactiveColour = tema1['btnA']
-            self.btn_sound.textColour = tema1['tk']
-        if self.wline == 2:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+            game.btn_sound.hoverColour = tema1['btnH']
+            game.btn_sound.pressedColour = tema1['btnP']
+            game.btn_sound.inactiveColour = tema1['btnA']
+            game.btn_sound.textColour = tema1['tk']
+        if game.wline == 2:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=tema2['btnA'],
                                     warnaHover=tema2['btnH'],
@@ -1557,18 +1557,18 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-            self.btn_sound.hoverColour = tema2['btnH']
-            self.btn_sound.pressedColour = tema2['btnP']
-            self.btn_sound.inactiveColour = tema2['btnA']
-            self.btn_sound.textColour = tema2['tk']
-        if self.wline == 3:
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+            game.btn_sound.hoverColour = tema2['btnH']
+            game.btn_sound.pressedColour = tema2['btnP']
+            game.btn_sound.inactiveColour = tema2['btnA']
+            game.btn_sound.textColour = tema2['tk']
+        if game.wline == 3:
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=tema3['btnA'],
                                     warnaHover=tema3['btnH'],
@@ -1577,39 +1577,34 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-            self.btn_sound.hoverColour = tema3['btnH']
-            self.btn_sound.pressedColour = tema3['btnP']
-            self.btn_sound.inactiveColour = tema3['btnA']
-            self.btn_sound.textColour = tema3['tk']
+                                    onRelease=game.klik_SoundbtnON)
+            game.btn_sound.hoverColour = tema3['btnH']
+            game.btn_sound.pressedColour = tema3['btnP']
+            game.btn_sound.inactiveColour = tema3['btnA']
+            game.btn_sound.textColour = tema3['tk']
         pass
 
-    def fbtn_play(self):
-        # self.badan = [Vector2(5, 12), Vector2(
-        #     4, 12), Vector2(3, 12), Vector2(2, 12)]
-        # self.arah = Vector2(0, 0)
-        # self.fd_pos = Vector2(8, 12)
-        self.reset()
-        self.go_nskor = 0
-        self.suara_latar_belakang.play(-1)
-        self.play()
+    def fbtn_play(game):
+        game.reset()
+        game.go_nskor = 0
+        game.suara_latar_belakang.play(-1)
+        game.play()
 
-    def setDefTheme(self):
+    def setDefTheme(game):
         global warnaTeks
-        self.wline = 0
-        self.bg.fill(tema0['bg'])
-        self.panel_1.fill(tema0['pn1'])
+        game.wline = 0
+        game.bg.fill(tema0['bg'])
+        game.panel_1.fill(tema0['pn1'])
         warnaTeks = tema0['tk']
-        self.display_makananAktif = 0
+        game.display_makananAktif = 0
 
-        # region Pengaturan
-        # membuat tombol kembali
-        self.btn_kembali = Tombol(self.bg,
-                                  self.btn_kembaliRect.x,
-                                  self.btn_kembaliRect.y,
-                                  self.btn_kembaliRect.width,
-                                  self.btn_kembaliRect.height,
-                                  self.btn_font,
+        # region pengaturan
+        game.btn_kembali = Tombol(game.bg,
+                                  game.btn_kembaliRect.x,
+                                  game.btn_kembaliRect.y,
+                                  game.btn_kembaliRect.width,
+                                  game.btn_kembaliRect.height,
+                                  game.btn_font,
                                   20,
                                   nama_tombol_kembali,
                                   warnaAktif=wBA,
@@ -1619,15 +1614,15 @@ class GAME(Cacing):
                                   shadowDistance=2,
                                   shadowColour=wBSh,
                                   sudutRad=3,
-                                  onRelease=self.klikKembali)
+                                  onRelease=game.klikKembali)
 
         # membuat tombol tema bawaan
-        self.btn_defaultT = Tombol(self.bg,
-                                   self.btn_defaultRect.x,
-                                   self.btn_defaultRect.y,
-                                   self.btn_defaultRect.width,
-                                   self.btn_defaultRect.height,
-                                   self.btn_font, 20,
+        game.btn_defaultT = Tombol(game.bg,
+                                   game.btn_defaultRect.x,
+                                   game.btn_defaultRect.y,
+                                   game.btn_defaultRect.width,
+                                   game.btn_defaultRect.height,
+                                   game.btn_font, 20,
                                    nama_tombol_default,
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
@@ -1636,15 +1631,15 @@ class GAME(Cacing):
                                    shadowDistance=2,
                                    shadowColour=wBSh,
                                    sudutRad=3,
-                                   onClick=self.setDefTheme)
+                                   onClick=game.setDefTheme)
 
-        if self.btn_soundState == 'ON':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+        if game.btn_soundState == 'ON':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -1653,14 +1648,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-        if self.btn_soundState == 'OFF':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+        if game.btn_soundState == 'OFF':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -1669,14 +1664,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
+                                    onRelease=game.klik_SoundbtnOFF)
 
-        self.btn_theme1 = Tombol(self.bg,
-                                 self.btn_theme1Rect.x,
-                                 self.btn_theme1Rect.y,
-                                 self.btn_theme1Rect.width,
-                                 self.btn_theme1Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme1 = Tombol(game.bg,
+                                 game.btn_theme1Rect.x,
+                                 game.btn_theme1Rect.y,
+                                 game.btn_theme1Rect.width,
+                                 game.btn_theme1Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_1,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -1685,15 +1680,15 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme1)
+                                 onClick=game.setTheme1)
 
         # Tema ke 2
-        self.btn_theme2 = Tombol(self.bg,
-                                 self.btn_theme2Rect.x,
-                                 self.btn_theme2Rect.y,
-                                 self.btn_theme2Rect.width,
-                                 self.btn_theme2Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme2 = Tombol(game.bg,
+                                 game.btn_theme2Rect.x,
+                                 game.btn_theme2Rect.y,
+                                 game.btn_theme2Rect.width,
+                                 game.btn_theme2Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_2,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -1702,14 +1697,14 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme2)
+                                 onClick=game.setTheme2)
         # Tema ke 3
-        self.btn_theme3 = Tombol(self.bg,
-                                 self.btn_theme3Rect.x,
-                                 self.btn_theme3Rect.y,
-                                 self.btn_theme3Rect.width,
-                                 self.btn_theme3Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme3 = Tombol(game.bg,
+                                 game.btn_theme3Rect.x,
+                                 game.btn_theme3Rect.y,
+                                 game.btn_theme3Rect.width,
+                                 game.btn_theme3Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_3,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -1718,49 +1713,25 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme3)
+                                 onClick=game.setTheme3)
 
-        self.teks1 = self.font_h2.render('Theme: Default', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
+        game.teks1 = game.font_h2.render('Theme: Default', True, warnaTeks)
+        game.teksH1 = game.font_h1.render(
             teks_di_pengaturan_h1, True, warnaTeks)
-        # self.btn_kembali.inactiveColour = tema0['btnA']
-        # self.btn_kembali.hoverColour = tema0['btnH']
-        # self.btn_kembali.pressedColour = tema0['btnP']
-        # self.btn_kembali.textColour = warnaTeks
-        # self.btn_defaultT.inactiveColour = tema0['btnA']
-        # self.btn_defaultT.hoverColour = tema0['btnH']
-        # self.btn_defaultT.pressedColour = tema0['btnP']
-        # self.btn_defaultT.textColour = warnaTeks
-        # self.btn_theme1.inactiveColour = tema0['btnA']
-        # self.btn_theme1.hoverColour = tema0['btnH']
-        # self.btn_theme1.pressedColour = tema0['btnP']
-        # self.btn_theme1.textColour = warnaTeks
-        # self.btn_theme2.inactiveColour = tema0['btnA']
-        # self.btn_theme2.hoverColour = tema0['btnH']
-        # self.btn_theme2.pressedColour = tema0['btnP']
-        # self.btn_theme2.textColour = warnaTeks
-        # self.btn_theme3.inactiveColour = tema0['btnA']
-        # self.btn_theme3.hoverColour = tema0['btnH']
-        # self.btn_theme3.pressedColour = tema0['btnP']
-        # self.btn_theme3.textColour = warnaTeks
-        # self.btn_sound.hoverColour = tema0['btnH']
-        # self.btn_sound.pressedColour = tema0['btnP']
-        # self.btn_sound.inactiveColour = tema0['btnA']
-        # self.btn_sound.textColour = warnaTeks
 
-        self.teksh2 = self.font_h2.render(
+        game.teksh2 = game.font_h2.render(
             teks_di_pengaturan_h2, True, tema0['tk'])
-        self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
+        game.teksh2_rect = game.teksh2.get_rect(topleft=(12*30+35, 0))
+        game.teksh2_rect.y = 540-game.teksh2_rect.height-33
         # endregion
 
         # region Menu Utama
-        self.btn_play = Tombol(layar,
-                               self.btn_playRect.x,
-                               self.btn_playRect.y,
-                               self.btn_playRect.width-20,
-                               self.btn_playRect.height,
-                               self.btn_font1,
+        game.btn_play = Tombol(layar,
+                               game.btn_playRect.x,
+                               game.btn_playRect.y,
+                               game.btn_playRect.width-20,
+                               game.btn_playRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -1769,15 +1740,15 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_main,
                                sudutRad=3,
-                               onRelease=self.fbtn_play)
+                               onRelease=game.fbtn_play)
 
         # membuat tombol pengaturan
-        self.btn_peng = Tombol(layar,
-                               self.btn_pengRect.x,
-                               self.btn_pengRect.y,
-                               self.btn_pengRect.width-20,
-                               self.btn_pengRect.height,
-                               self.btn_font1,
+        game.btn_peng = Tombol(layar,
+                               game.btn_pengRect.x,
+                               game.btn_pengRect.y,
+                               game.btn_pengRect.width-20,
+                               game.btn_pengRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -1786,16 +1757,16 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_pengaturan,
                                sudutRad=3,
-                               onRelease=self.btn_pengaturan)
+                               onRelease=game.btn_pengaturan)
 
         # membuat tombol keluar
 
-        self.btn_keluar = Tombol(layar,
-                                 self.btn_keluarRect.x,
-                                 self.btn_keluarRect.y,
-                                 self.btn_pengRect.width-20,
-                                 self.btn_pengRect.height,
-                                 self.btn_font1,
+        game.btn_keluar = Tombol(layar,
+                                 game.btn_keluarRect.x,
+                                 game.btn_keluarRect.y,
+                                 game.btn_pengRect.width-20,
+                                 game.btn_pengRect.height,
+                                 game.btn_font1,
                                  warnaTeks=warnaTeks,
                                  warnaAktif=wBA,
                                  warnaDitekan=wBP,
@@ -1806,122 +1777,106 @@ class GAME(Cacing):
                                  sudutRad=3,
                                  onRelease=lambda: exit())
 
-        self.bg1.fill(tema0['bg'])
-        # self.btn_play.inactiveColour = tema0['btnA']
-        # self.btn_play.hoverColour = tema0['btnH']
-        # self.btn_play.pressedColour = tema0['btnP']
-        # self.btn_play.textColour = warnaTeks
-        # self.btn_keluar.inactiveColour = tema0['btnA']
-        # self.btn_keluar.hoverColour = tema0['btnH']
-        # self.btn_keluar.pressedColour = tema0['btnP']
-        # self.btn_keluar.textColour = warnaTeks
-        # self.btn_peng.inactiveColour = tema0['btnA']
-        # self.btn_peng.hoverColour = tema0['btnH']
-        # self.btn_peng.pressedColour = tema0['btnP']
-        # self.btn_peng.textColour = warnaTeks
-        # self.btn_keluar.inactiveColour = tema0['btnA']
-        # self.btn_keluar.hoverColour = tema0['btnH']
-        # self.btn_keluar.pressedColour = tema0['btnP']
-        # self.btn_keluar.textColour = warnaTeks
-        self.judul = self.title_font.render(
+        game.bg1.fill(tema0['bg'])
+        game.judul = game.title_font.render(
             judul, True, warnaTeks)
         # endregion
 
         # region Ular
-        self.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
+        game.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
+        game.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
+        game.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
+        game.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
 
-        self.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp1/'badan_br.png').convert_alpha()
+        game.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
+        game.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
+        game.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
+        game.b_br = image.load(thp1/'badan_br.png').convert_alpha()
 
-        self.b_v = image.load(thp1/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp1/'badan_h.png').convert_alpha()
+        game.b_v = image.load(thp1/'badan_v.png').convert_alpha()
+        game.b_h = image.load(thp1/'badan_h.png').convert_alpha()
 
-        self.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
+        game.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
+        game.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
+        game.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
+        game.t_right = image.load(thp1/'ekor_right.png').convert_alpha()
         # endregion
 
         # region Play
-        self.nths = 0
-        self.warnaRumput = tema0['rm']
-        self.pbg.fill(tema0['bg'])
-        self.pskor.fill(tema0['skp'])
-        self.border0.fill(tema0['brd'])
-        self.border1.fill(tema0['brd'])
-        self.border2.fill(tema0['brd'])
-        self.border3.fill(tema0['brd'])
+        game.nths = 0
+        game.warnaRumput = tema0['rm']
+        game.pbg.fill(tema0['bg'])
+        game.pskor.fill(tema0['skp'])
+        game.border0.fill(tema0['brd'])
+        game.border1.fill(tema0['brd'])
+        game.border2.fill(tema0['brd'])
+        game.border3.fill(tema0['brd'])
 
-        self.btnHome = Tombol(layar,
-                              self.btnHomeRect.x,
-                              self.btnHomeRect.y,
-                              self.btnHomeRect.width,
-                              self.btnHomeRect.height,
-                              self.btn_font1, 20,
+        game.btnHome = Tombol(layar,
+                              game.btnHomeRect.x,
+                              game.btnHomeRect.y,
+                              game.btnHomeRect.width,
+                              game.btnHomeRect.height,
+                              game.btn_font1, 20,
                               nama_tombol_kembali_ke_menu_utama,
                               warnaTeks,
                               wBA, wBH, wBP, 20, 2,
-                              onRelease=self.klikHome)
+                              onRelease=game.klikHome)
 
-        self.btnReset = Tombol(layar,
-                               self.btnResetRect.x,
-                               self.btnResetRect.y,
-                               self.btnResetRect.width,
-                               self.btnResetRect.height,
-                               self.btn_font1, 20,
+        game.btnReset = Tombol(layar,
+                               game.btnResetRect.x,
+                               game.btnResetRect.y,
+                               game.btnResetRect.width,
+                               game.btnResetRect.height,
+                               game.btn_font1, 20,
                                nama_tombol_ulang_game,
                                warnaTeks,
                                wBA, wBH, wBP, 20, 2,
-                               onRelease=self.klikReset)
+                               onRelease=game.klikReset)
         # endregion
 
         # makanan
-        self.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
+        game.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f2.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
                            image.load(mkn/'pete_f0.png').convert_alpha()]
-        self.makanan = image.load(mkn/'pete.png').convert_alpha()
+        game.makanan = image.load(mkn/'pete.png').convert_alpha()
 
         # region END
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
-        self.btnHome.hide()
-        self.btnReset.hide()
+        game.btn_keluar.hide()
+        game.btn_play.hide()
+        game.btn_peng.hide()
+        game.btnHome.hide()
+        game.btnReset.hide()
         # endregion
         pass
 
-    def setTheme1(self):
-        self.wline = 1
-        self.bg.fill(tema1['bg'])
-        self.panel_1.fill(tema1['pn1'])
+    def setTheme1(game):
+        game.wline = 1
+        game.bg.fill(tema1['bg'])
+        game.panel_1.fill(tema1['pn1'])
         warnaTeks = tema1['tk']
         wBA = tema1['btnA']
         wBH = tema1['btnH']
         wBP = tema1['btnP']
-        self.display_makananAktif = 1
+        game.display_makananAktif = 1
 
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
+        game.btn_keluar.hide()
+        game.btn_play.hide()
+        game.btn_peng.hide()
 
-        self.btn_sound.show()
-        self.btn_sound.enable()
+        game.btn_sound.show()
+        game.btn_sound.enable()
 
         # region pengaturan
-        self.btn_kembali = Tombol(self.bg,
-                                  self.btn_kembaliRect.x,
-                                  self.btn_kembaliRect.y,
-                                  self.btn_kembaliRect.width,
-                                  self.btn_kembaliRect.height,
-                                  self.btn_font,
+        game.btn_kembali = Tombol(game.bg,
+                                  game.btn_kembaliRect.x,
+                                  game.btn_kembaliRect.y,
+                                  game.btn_kembaliRect.width,
+                                  game.btn_kembaliRect.height,
+                                  game.btn_font,
                                   20,
                                   nama_tombol_kembali,
                                   warnaAktif=wBA,
@@ -1931,15 +1886,15 @@ class GAME(Cacing):
                                   shadowDistance=2,
                                   shadowColour=wBSh,
                                   sudutRad=3,
-                                  onRelease=self.klikKembali)
+                                  onRelease=game.klikKembali)
 
         # membuat tombol tema bawaan
-        self.btn_defaultT = Tombol(self.bg,
-                                   self.btn_defaultRect.x,
-                                   self.btn_defaultRect.y,
-                                   self.btn_defaultRect.width,
-                                   self.btn_defaultRect.height,
-                                   self.btn_font, 20,
+        game.btn_defaultT = Tombol(game.bg,
+                                   game.btn_defaultRect.x,
+                                   game.btn_defaultRect.y,
+                                   game.btn_defaultRect.width,
+                                   game.btn_defaultRect.height,
+                                   game.btn_font, 20,
                                    nama_tombol_default,
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
@@ -1948,15 +1903,15 @@ class GAME(Cacing):
                                    shadowDistance=2,
                                    shadowColour=wBSh,
                                    sudutRad=3,
-                                   onClick=self.setDefTheme)
+                                   onClick=game.setDefTheme)
 
-        if self.btn_soundState == 'ON':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+        if game.btn_soundState == 'ON':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -1965,14 +1920,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-        if self.btn_soundState == 'OFF':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+        if game.btn_soundState == 'OFF':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -1981,15 +1936,15 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
+                                    onRelease=game.klik_SoundbtnOFF)
 
         # region Tombol Theme
-        self.btn_theme1 = Tombol(self.bg,
-                                 self.btn_theme1Rect.x,
-                                 self.btn_theme1Rect.y,
-                                 self.btn_theme1Rect.width,
-                                 self.btn_theme1Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme1 = Tombol(game.bg,
+                                 game.btn_theme1Rect.x,
+                                 game.btn_theme1Rect.y,
+                                 game.btn_theme1Rect.width,
+                                 game.btn_theme1Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_1,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -1998,15 +1953,15 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme1)
+                                 onClick=game.setTheme1)
 
         # Tema ke 2
-        self.btn_theme2 = Tombol(self.bg,
-                                 self.btn_theme2Rect.x,
-                                 self.btn_theme2Rect.y,
-                                 self.btn_theme2Rect.width,
-                                 self.btn_theme2Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme2 = Tombol(game.bg,
+                                 game.btn_theme2Rect.x,
+                                 game.btn_theme2Rect.y,
+                                 game.btn_theme2Rect.width,
+                                 game.btn_theme2Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_2,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2015,14 +1970,14 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme2)
+                                 onClick=game.setTheme2)
         # Tema ke 3
-        self.btn_theme3 = Tombol(self.bg,
-                                 self.btn_theme3Rect.x,
-                                 self.btn_theme3Rect.y,
-                                 self.btn_theme3Rect.width,
-                                 self.btn_theme3Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme3 = Tombol(game.bg,
+                                 game.btn_theme3Rect.x,
+                                 game.btn_theme3Rect.y,
+                                 game.btn_theme3Rect.width,
+                                 game.btn_theme3Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_3,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2031,50 +1986,26 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme3)
+                                 onClick=game.setTheme3)
 
-        # self.teks1 = self.font_h2.render('Theme: ', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
+        # game.teks1 = game.font_h2.render('Theme: ', True, warnaTeks)
+        game.teksH1 = game.font_h1.render(
             teks_di_pengaturan_h1, True, tema1['tk'])
-        # self.btn_kembali.inactiveColour = tema1['btnA']
-        # self.btn_kembali.hoverColour = tema1['btnH']
-        # self.btn_kembali.pressedColour = tema1['btnP']
-        # self.btn_kembali.textColour = tema1['tk']
-        # self.btn_defaultT.inactiveColour = tema1['btnA']
-        # self.btn_defaultT.hoverColour = tema1['btnH']
-        # self.btn_defaultT.pressedColour = tema1['btnP']
-        # self.btn_defaultT.textColour = tema1['tk']
-        # self.btn_theme1.inactiveColour = tema1['btnA']
-        # self.btn_theme1.hoverColour = tema1['btnH']
-        # self.btn_theme1.pressedColour = tema1['btnP']
-        # self.btn_theme1.textColour = tema1['tk']
-        # self.btn_theme2.inactiveColour = tema1['btnA']
-        # self.btn_theme2.hoverColour = tema1['btnH']
-        # self.btn_theme2.pressedColour = tema1['btnP']
-        # self.btn_theme2.textColour = tema1['tk']
-        # self.btn_theme3.inactiveColour = tema1['btnA']
-        # self.btn_theme3.hoverColour = tema1['btnH']
-        # self.btn_theme3.pressedColour = tema1['btnP']
-        # self.btn_theme3.textColour = tema1['tk']
-        # self.btn_sound.hoverColour = tema1['btnH']
-        # self.btn_sound.pressedColour = tema1['btnP']
-        # self.btn_sound.inactiveColour = tema1['btnA']
-        # self.btn_sound.textColour = tema1['tk']
 
-        self.teksh2 = self.font_h2.render(
+        game.teksh2 = game.font_h2.render(
             teks_di_pengaturan_h2, True, tema1['tk'])
-        self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
+        game.teksh2_rect = game.teksh2.get_rect(topleft=(12*30+35, 0))
+        game.teksh2_rect.y = 540-game.teksh2_rect.height-33
         # endregion
         # endregion
 
         # region menu utama
-        self.btn_play = Tombol(layar,
-                               self.btn_playRect.x,
-                               self.btn_playRect.y,
-                               self.btn_playRect.width-20,
-                               self.btn_playRect.height,
-                               self.btn_font1,
+        game.btn_play = Tombol(layar,
+                               game.btn_playRect.x,
+                               game.btn_playRect.y,
+                               game.btn_playRect.width-20,
+                               game.btn_playRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -2083,15 +2014,15 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_main,
                                sudutRad=3,
-                               onRelease=self.fbtn_play)
+                               onRelease=game.fbtn_play)
 
         # membuat tombol pengaturan
-        self.btn_peng = Tombol(layar,
-                               self.btn_pengRect.x,
-                               self.btn_pengRect.y,
-                               self.btn_pengRect.width-20,
-                               self.btn_pengRect.height,
-                               self.btn_font1,
+        game.btn_peng = Tombol(layar,
+                               game.btn_pengRect.x,
+                               game.btn_pengRect.y,
+                               game.btn_pengRect.width-20,
+                               game.btn_pengRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -2100,16 +2031,16 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_pengaturan,
                                sudutRad=3,
-                               onRelease=self.btn_pengaturan)
+                               onRelease=game.btn_pengaturan)
 
         # membuat tombol keluar
 
-        self.btn_keluar = Tombol(layar,
-                                 self.btn_keluarRect.x,
-                                 self.btn_keluarRect.y,
-                                 self.btn_pengRect.width-20,
-                                 self.btn_pengRect.height,
-                                 self.btn_font1,
+        game.btn_keluar = Tombol(layar,
+                                 game.btn_keluarRect.x,
+                                 game.btn_keluarRect.y,
+                                 game.btn_pengRect.width-20,
+                                 game.btn_pengRect.height,
+                                 game.btn_font1,
                                  warnaTeks=warnaTeks,
                                  warnaAktif=wBA,
                                  warnaDitekan=wBP,
@@ -2120,120 +2051,97 @@ class GAME(Cacing):
                                  sudutRad=3,
                                  onRelease=lambda: exit())
 
-        self.bg1.fill(tema1['bg'])
-        # self.btn_play.inactiveColour = tema1['btnA']
-        # self.btn_play.hoverColour = tema1['btnH']
-        # self.btn_play.pressedColour = tema1['btnP']
-        # self.btn_play.textColour = tema1['tk']
-        # self.btn_keluar.inactiveColour = tema1['btnA']
-        # self.btn_keluar.hoverColour = tema1['btnH']
-        # self.btn_keluar.pressedColour = tema1['btnP']
-        # self.btn_keluar.textColour = tema1['tk']
-        # self.btn_peng.inactiveColour = tema1['btnA']
-        # self.btn_peng.hoverColour = tema1['btnH']
-        # self.btn_peng.pressedColour = tema1['btnP']
-        # self.btn_peng.textColour = tema1['tk']
-        # self.btn_keluar.inactiveColour = tema1['btnA']
-        # self.btn_keluar.hoverColour = tema1['btnH']
-        # self.btn_keluar.pressedColour = tema1['btnP']
-        # self.btn_keluar.textColour = tema1['tk']
-        self.judul = self.title_font.render(
+        game.bg1.fill(tema1['bg'])
+        game.judul = game.title_font.render(
             judul, True, tema1['tk'])
         # endregion
 
         # region Ular
-        self.h_up = image.load(thp2/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp2/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp2/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp2/'kepala_right.png').convert_alpha()
+        game.h_up = image.load(thp2/'kepala_up.png').convert_alpha()
+        game.h_down = image.load(thp2/'kepala_down.png').convert_alpha()
+        game.h_left = image.load(thp2/'kepala_left.png').convert_alpha()
+        game.h_right = image.load(thp2/'kepala_right.png').convert_alpha()
 
-        self.b_tr = image.load(thp2/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp2/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp2/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp2/'badan_br.png').convert_alpha()
+        game.b_tr = image.load(thp2/'badan_tr.png').convert_alpha()
+        game.b_tl = image.load(thp2/'badan_tl.png').convert_alpha()
+        game.b_bl = image.load(thp2/'badan_bl.png').convert_alpha()
+        game.b_br = image.load(thp2/'badan_br.png').convert_alpha()
 
-        self.b_v = image.load(thp2/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp2/'badan_h.png').convert_alpha()
+        game.b_v = image.load(thp2/'badan_v.png').convert_alpha()
+        game.b_h = image.load(thp2/'badan_h.png').convert_alpha()
 
-        self.t_up = image.load(thp2/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp2/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp2/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp2/'ekor_right.png').convert_alpha()
+        game.t_up = image.load(thp2/'ekor_up.png').convert_alpha()
+        game.t_down = image.load(thp2/'ekor_down.png').convert_alpha()
+        game.t_left = image.load(thp2/'ekor_left.png').convert_alpha()
+        game.t_right = image.load(thp2/'ekor_right.png').convert_alpha()
         # endregion
 
         # region Play
-        self.nths = 1
-        self.warnaRumput = tema1['rm']
-        self.pbg.fill(tema1['bg'])
-        self.pskor.fill(tema1['skp'])
-        self.border0.fill(tema1['brd'])
-        self.border1.fill(tema1['brd'])
-        self.border2.fill(tema1['brd'])
-        self.border3.fill(tema1['brd'])
+        game.nths = 1
+        game.warnaRumput = tema1['rm']
+        game.pbg.fill(tema1['bg'])
+        game.pskor.fill(tema1['skp'])
+        game.border0.fill(tema1['brd'])
+        game.border1.fill(tema1['brd'])
+        game.border2.fill(tema1['brd'])
+        game.border3.fill(tema1['brd'])
 
-        self.btnHome = Tombol(layar,
-                              self.btnHomeRect.x,
-                              self.btnHomeRect.y,
-                              self.btnHomeRect.width,
-                              self.btnHomeRect.height,
-                              self.btn_font1, 20,
+        game.btnHome = Tombol(layar,
+                              game.btnHomeRect.x,
+                              game.btnHomeRect.y,
+                              game.btnHomeRect.width,
+                              game.btnHomeRect.height,
+                              game.btn_font1, 20,
                               nama_tombol_kembali_ke_menu_utama,
                               warnaTeks,
                               wBA, wBH, wBP, 20, 2,
-                              onRelease=self.klikHome)
+                              onRelease=game.klikHome)
 
-        self.btnReset = Tombol(layar,
-                               self.btnResetRect.x,
-                               self.btnResetRect.y,
-                               self.btnResetRect.width,
-                               self.btnResetRect.height,
-                               self.btn_font1, 20,
+        game.btnReset = Tombol(layar,
+                               game.btnResetRect.x,
+                               game.btnResetRect.y,
+                               game.btnResetRect.width,
+                               game.btnResetRect.height,
+                               game.btn_font1, 20,
                                nama_tombol_ulang_game,
                                warnaTeks,
                                wBA, wBH, wBP, 20, 2,
-                               onRelease=self.klikReset)
-
-        # self.btnReset.inactiveColour = tema1['btnA']
-        # self.btnReset.hoverColour = tema1['btnH']
-        # self.btnReset.pressedColour = tema1['btnP']
-        # self.btnHome.inactiveColour = tema1['btnA']
-        # self.btnHome.hoverColour = tema1['btnH']
-        # self.btnHome.pressedColour = tema1['btnP']
+                               onRelease=game.klikReset)
         # endregion
 
-        self.fr_makanan = [image.load(mkn/'nasgor_f0.png').convert_alpha(),
+        game.fr_makanan = [image.load(mkn/'nasgor_f0.png').convert_alpha(),
                            image.load(mkn/'nasgor_f1.png').convert_alpha(),
                            image.load(mkn/'nasgor_f2.png').convert_alpha(),
                            image.load(mkn/'nasgor_f2.png').convert_alpha(),
                            image.load(mkn/'nasgor_f1.png').convert_alpha(),
                            image.load(mkn/'nasgor_f0.png').convert_alpha()]
 
-        self.makanan = image.load(mkn/'nasgor.png').convert_alpha()
+        game.makanan = image.load(mkn/'nasgor.png').convert_alpha()
 
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
-        self.btnHome.hide()
-        self.btnReset.hide()
+        game.btn_keluar.hide()
+        game.btn_play.hide()
+        game.btn_peng.hide()
+        game.btnHome.hide()
+        game.btnReset.hide()
         pass
 
-    def setTheme2(self):
-        self.bg.fill(tema2['bg'])
-        self.panel_1.fill(tema2['pn1'])
+    def setTheme2(game):
+        game.bg.fill(tema2['bg'])
+        game.panel_1.fill(tema2['pn1'])
         warnaTeks = tema2['tk']
         wBA = tema2['btnA']
         wBH = tema2['btnH']
         wBP = tema2['btnP']
-        self.wline = 2
-        self.display_makananAktif = 2
+        game.wline = 2
+        game.display_makananAktif = 2
 
         # region pengaturan
-        self.btn_kembali = Tombol(self.bg,
-                                  self.btn_kembaliRect.x,
-                                  self.btn_kembaliRect.y,
-                                  self.btn_kembaliRect.width,
-                                  self.btn_kembaliRect.height,
-                                  self.btn_font,
+        game.btn_kembali = Tombol(game.bg,
+                                  game.btn_kembaliRect.x,
+                                  game.btn_kembaliRect.y,
+                                  game.btn_kembaliRect.width,
+                                  game.btn_kembaliRect.height,
+                                  game.btn_font,
                                   20,
                                   nama_tombol_kembali,
                                   warnaAktif=wBA,
@@ -2243,15 +2151,15 @@ class GAME(Cacing):
                                   shadowDistance=2,
                                   shadowColour=wBSh,
                                   sudutRad=3,
-                                  onRelease=self.klikKembali)
+                                  onRelease=game.klikKembali)
 
         # membuat tombol tema bawaan
-        self.btn_defaultT = Tombol(self.bg,
-                                   self.btn_defaultRect.x,
-                                   self.btn_defaultRect.y,
-                                   self.btn_defaultRect.width,
-                                   self.btn_defaultRect.height,
-                                   self.btn_font, 20,
+        game.btn_defaultT = Tombol(game.bg,
+                                   game.btn_defaultRect.x,
+                                   game.btn_defaultRect.y,
+                                   game.btn_defaultRect.width,
+                                   game.btn_defaultRect.height,
+                                   game.btn_font, 20,
                                    nama_tombol_default,
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
@@ -2260,15 +2168,15 @@ class GAME(Cacing):
                                    shadowDistance=2,
                                    shadowColour=wBSh,
                                    sudutRad=3,
-                                   onClick=self.setDefTheme)
+                                   onClick=game.setDefTheme)
 
-        if self.btn_soundState == 'ON':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+        if game.btn_soundState == 'ON':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -2277,14 +2185,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-        if self.btn_soundState == 'OFF':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+        if game.btn_soundState == 'OFF':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -2293,14 +2201,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
+                                    onRelease=game.klik_SoundbtnOFF)
 
-        self.btn_theme1 = Tombol(self.bg,
-                                 self.btn_theme1Rect.x,
-                                 self.btn_theme1Rect.y,
-                                 self.btn_theme1Rect.width,
-                                 self.btn_theme1Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme1 = Tombol(game.bg,
+                                 game.btn_theme1Rect.x,
+                                 game.btn_theme1Rect.y,
+                                 game.btn_theme1Rect.width,
+                                 game.btn_theme1Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_1,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2309,18 +2217,18 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme1)
+                                 onClick=game.setTheme1)
 
         # Tema ke 2
-        self.btn_theme2Rect = Rect((self.btn_theme1Rect.bottomleft[0],
-                                    self.btn_theme1Rect.bottomleft[1]+50),
-                                   self.btnSize)
-        self.btn_theme2 = Tombol(self.bg,
-                                 self.btn_theme2Rect.x,
-                                 self.btn_theme2Rect.y,
-                                 self.btn_theme2Rect.width,
-                                 self.btn_theme2Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme2Rect = Rect((game.btn_theme1Rect.bottomleft[0],
+                                    game.btn_theme1Rect.bottomleft[1]+50),
+                                   game.btnSize)
+        game.btn_theme2 = Tombol(game.bg,
+                                 game.btn_theme2Rect.x,
+                                 game.btn_theme2Rect.y,
+                                 game.btn_theme2Rect.width,
+                                 game.btn_theme2Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_2,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2329,17 +2237,17 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme2)
+                                 onClick=game.setTheme2)
         # Tema ke 3
-        self.btn_theme3Rect = Rect((self.btn_theme2Rect.bottomleft[0],
-                                    self.btn_theme2Rect.bottomleft[1]+50,),
-                                   self.btnSize)
-        self.btn_theme3 = Tombol(self.bg,
-                                 self.btn_theme3Rect.x,
-                                 self.btn_theme3Rect.y,
-                                 self.btn_theme3Rect.width,
-                                 self.btn_theme3Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme3Rect = Rect((game.btn_theme2Rect.bottomleft[0],
+                                    game.btn_theme2Rect.bottomleft[1]+50,),
+                                   game.btnSize)
+        game.btn_theme3 = Tombol(game.bg,
+                                 game.btn_theme3Rect.x,
+                                 game.btn_theme3Rect.y,
+                                 game.btn_theme3Rect.width,
+                                 game.btn_theme3Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_3,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2348,49 +2256,24 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme3)
+                                 onClick=game.setTheme3)
 
-        # self.teks1 = self.font_h2.render('Theme: Snowy Time', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
+        game.teksH1 = game.font_h1.render(
             teks_di_pengaturan_h1, True, warnaTeks)
-        # self.btn_kembali.inactiveColour = tema2['btnA']
-        # self.btn_kembali.hoverColour = tema2['btnH']
-        # self.btn_kembali.pressedColour = tema2['btnP']
-        # self.btn_kembali.textColour = warnaTeks
-        # self.btn_defaultT.inactiveColour = tema2['btnA']
-        # self.btn_defaultT.hoverColour = tema2['btnH']
-        # self.btn_defaultT.pressedColour = tema2['btnP']
-        # self.btn_defaultT.textColour = warnaTeks
-        # self.btn_theme1.inactiveColour = tema2['btnA']
-        # self.btn_theme1.hoverColour = tema2['btnH']
-        # self.btn_theme1.pressedColour = tema2['btnP']
-        # self.btn_theme1.textColour = warnaTeks
-        # self.btn_theme2.inactiveColour = tema2['btnA']
-        # self.btn_theme2.hoverColour = tema2['btnH']
-        # self.btn_theme2.pressedColour = tema2['btnP']
-        # self.btn_theme2.textColour = warnaTeks
-        # self.btn_theme3.inactiveColour = tema2['btnA']
-        # self.btn_theme3.hoverColour = tema2['btnH']
-        # self.btn_theme3.pressedColour = tema2['btnP']
-        # self.btn_theme3.textColour = warnaTeks
-        # self.btn_sound.hoverColour = tema2['btnH']
-        # self.btn_sound.pressedColour = tema2['btnP']
-        # self.btn_sound.inactiveColour = tema2['btnA']
-        # self.btn_sound.textColour = warnaTeks
 
-        self.teksh2 = self.font_h2.render(
+        game.teksh2 = game.font_h2.render(
             teks_di_pengaturan_h2, True, tema2['tk'])
-        self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
+        game.teksh2_rect = game.teksh2.get_rect(topleft=(12*30+35, 0))
+        game.teksh2_rect.y = 540-game.teksh2_rect.height-33
         # endregion
 
         # region menu utama
-        self.btn_play = Tombol(layar,
-                               self.btn_playRect.x,
-                               self.btn_playRect.y,
-                               self.btn_playRect.width-20,
-                               self.btn_playRect.height,
-                               self.btn_font1,
+        game.btn_play = Tombol(layar,
+                               game.btn_playRect.x,
+                               game.btn_playRect.y,
+                               game.btn_playRect.width-20,
+                               game.btn_playRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -2399,15 +2282,15 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_main,
                                sudutRad=3,
-                               onRelease=self.fbtn_play)
+                               onRelease=game.fbtn_play)
 
         # membuat tombol pengaturan
-        self.btn_peng = Tombol(layar,
-                               self.btn_pengRect.x,
-                               self.btn_pengRect.y,
-                               self.btn_pengRect.width-20,
-                               self.btn_pengRect.height,
-                               self.btn_font1,
+        game.btn_peng = Tombol(layar,
+                               game.btn_pengRect.x,
+                               game.btn_pengRect.y,
+                               game.btn_pengRect.width-20,
+                               game.btn_pengRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -2416,16 +2299,16 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_pengaturan,
                                sudutRad=3,
-                               onRelease=self.btn_pengaturan)
+                               onRelease=game.btn_pengaturan)
 
         # membuat tombol keluar
 
-        self.btn_keluar = Tombol(layar,
-                                 self.btn_keluarRect.x,
-                                 self.btn_keluarRect.y,
-                                 self.btn_pengRect.width-20,
-                                 self.btn_pengRect.height,
-                                 self.btn_font1,
+        game.btn_keluar = Tombol(layar,
+                                 game.btn_keluarRect.x,
+                                 game.btn_keluarRect.y,
+                                 game.btn_pengRect.width-20,
+                                 game.btn_pengRect.height,
+                                 game.btn_font1,
                                  warnaTeks=warnaTeks,
                                  warnaAktif=wBA,
                                  warnaDitekan=wBP,
@@ -2436,122 +2319,98 @@ class GAME(Cacing):
                                  sudutRad=3,
                                  onRelease=lambda: exit())
 
-        self.bg1.fill(tema2['bg'])
-        # self.btn_play.inactiveColour = tema2['btnA']
-        # self.btn_play.hoverColour = tema2['btnH']
-        # self.btn_play.pressedColour = tema2['btnP']
-        # self.btn_play.textColour = warnaTeks
-        # self.btn_keluar.inactiveColour = tema2['btnA']
-        # self.btn_keluar.hoverColour = tema2['btnH']
-        # self.btn_keluar.pressedColour = tema2['btnP']
-        # self.btn_keluar.textColour = warnaTeks
-        # self.btn_peng.inactiveColour = tema2['btnA']
-        # self.btn_peng.hoverColour = tema2['btnH']
-        # self.btn_peng.pressedColour = tema2['btnP']
-        # self.btn_peng.textColour = warnaTeks
-        # self.btn_keluar.inactiveColour = tema2['btnA']
-        # self.btn_keluar.hoverColour = tema2['btnH']
-        # self.btn_keluar.pressedColour = tema2['btnP']
-        # self.btn_keluar.textColour = warnaTeks
-        # self.judul_rect = self.judul_rect
-        self.judul = self.title_font.render(
+        game.bg1.fill(tema2['bg'])
+        game.judul = game.title_font.render(
             judul, True, warnaTeks)
         # endregion
 
         # region Ular
-        self.h_up = image.load(thp3/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp3/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp3/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp3/'kepala_right.png').convert_alpha()
+        game.h_up = image.load(thp3/'kepala_up.png').convert_alpha()
+        game.h_down = image.load(thp3/'kepala_down.png').convert_alpha()
+        game.h_left = image.load(thp3/'kepala_left.png').convert_alpha()
+        game.h_right = image.load(thp3/'kepala_right.png').convert_alpha()
 
-        self.b_tr = image.load(thp3/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp3/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp3/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp3/'badan_br.png').convert_alpha()
+        game.b_tr = image.load(thp3/'badan_tr.png').convert_alpha()
+        game.b_tl = image.load(thp3/'badan_tl.png').convert_alpha()
+        game.b_bl = image.load(thp3/'badan_bl.png').convert_alpha()
+        game.b_br = image.load(thp3/'badan_br.png').convert_alpha()
 
-        self.b_v = image.load(thp3/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp3/'badan_h.png').convert_alpha()
+        game.b_v = image.load(thp3/'badan_v.png').convert_alpha()
+        game.b_h = image.load(thp3/'badan_h.png').convert_alpha()
 
-        self.t_up = image.load(thp3/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp3/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp3/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp3/'ekor_right.png').convert_alpha()
+        game.t_up = image.load(thp3/'ekor_up.png').convert_alpha()
+        game.t_down = image.load(thp3/'ekor_down.png').convert_alpha()
+        game.t_left = image.load(thp3/'ekor_left.png').convert_alpha()
+        game.t_right = image.load(thp3/'ekor_right.png').convert_alpha()
         # endregion
 
         # region Play
-        self.nths = 2
-        self.warnaRumput = tema2['rm']
-        self.pbg.fill(tema2['bg'])
-        self.pskor.fill(tema2['skp'])
-        self.border0.fill(tema2['brd'])
-        self.border1.fill(tema2['brd'])
-        self.border2.fill(tema2['brd'])
-        self.border3.fill(tema2['brd'])
+        game.nths = 2
+        game.warnaRumput = tema2['rm']
+        game.pbg.fill(tema2['bg'])
+        game.pskor.fill(tema2['skp'])
+        game.border0.fill(tema2['brd'])
+        game.border1.fill(tema2['brd'])
+        game.border2.fill(tema2['brd'])
+        game.border3.fill(tema2['brd'])
 
-        self.btnHome = Tombol(layar,
-                              self.btnHomeRect.x,
-                              self.btnHomeRect.y,
-                              self.btnHomeRect.width,
-                              self.btnHomeRect.height,
-                              self.btn_font1, 20,
+        game.btnHome = Tombol(layar,
+                              game.btnHomeRect.x,
+                              game.btnHomeRect.y,
+                              game.btnHomeRect.width,
+                              game.btnHomeRect.height,
+                              game.btn_font1, 20,
                               nama_tombol_kembali_ke_menu_utama,
                               warnaTeks,
                               wBA, wBH, wBP, 20, 2,
-                              onRelease=self.klikHome)
+                              onRelease=game.klikHome)
 
-        self.btnReset = Tombol(layar,
-                               self.btnResetRect.x,
-                               self.btnResetRect.y,
-                               self.btnResetRect.width,
-                               self.btnResetRect.height,
-                               self.btn_font1, 20,
+        game.btnReset = Tombol(layar,
+                               game.btnResetRect.x,
+                               game.btnResetRect.y,
+                               game.btnResetRect.width,
+                               game.btnResetRect.height,
+                               game.btn_font1, 20,
                                nama_tombol_ulang_game,
                                warnaTeks,
                                wBA, wBH, wBP, 20, 2,
-                               onRelease=self.klikReset)
-
-        # self.btnReset.inactiveColour = tema2['btnA']
-        # self.btnReset.hoverColour = tema2['btnH']
-        # self.btnReset.pressedColour = tema2['btnP']
-        # self.btnHome.inactiveColour = tema2['btnA']
-        # self.btnHome.hoverColour = tema2['btnH']
-        # self.btnHome.pressedColour = tema2['btnP']
+                               onRelease=game.klikReset)
         # endregion
 
-        self.fr_makanan = [image.load(mkn/'sate_f0.png').convert_alpha(),
+        game.fr_makanan = [image.load(mkn/'sate_f0.png').convert_alpha(),
                            image.load(mkn/'sate_f1.png').convert_alpha(),
                            image.load(mkn/'sate_f2.png').convert_alpha(),
                            image.load(mkn/'sate_f2.png').convert_alpha(),
                            image.load(mkn/'sate_f1.png').convert_alpha(),
                            image.load(mkn/'sate_f0.png').convert_alpha()]
 
-        self.makanan = image.load(mkn/'sate.png').convert_alpha()
+        game.makanan = image.load(mkn/'sate.png').convert_alpha()
 
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
-        self.btnHome.hide()
-        self.btnReset.hide()
+        game.btn_keluar.hide()
+        game.btn_play.hide()
+        game.btn_peng.hide()
+        game.btnHome.hide()
+        game.btnReset.hide()
         pass
 
-    def setTheme3(self):
-        self.bg.fill(tema3['bg'])
-        self.panel_1.fill(tema3['pn1'])
+    def setTheme3(game):
+        game.bg.fill(tema3['bg'])
+        game.panel_1.fill(tema3['pn1'])
         warnaTeks = tema3['tk']
         wBA = tema3['btnA']
         wBH = tema3['btnH']
         wBP = tema3['btnP']
-        self.wline = 3
-        self.display_makananAktif = 3
+        game.wline = 3
+        game.display_makananAktif = 3
 
         # region pengaturan
         # membuat tombol kembali
-        self.btn_kembali = Tombol(self.bg,
-                                  self.btn_kembaliRect.x,
-                                  self.btn_kembaliRect.y,
-                                  self.btn_kembaliRect.width,
-                                  self.btn_kembaliRect.height,
-                                  self.btn_font,
+        game.btn_kembali = Tombol(game.bg,
+                                  game.btn_kembaliRect.x,
+                                  game.btn_kembaliRect.y,
+                                  game.btn_kembaliRect.width,
+                                  game.btn_kembaliRect.height,
+                                  game.btn_font,
                                   20,
                                   nama_tombol_kembali,
                                   warnaAktif=wBA,
@@ -2561,15 +2420,15 @@ class GAME(Cacing):
                                   shadowDistance=2,
                                   shadowColour=wBSh,
                                   sudutRad=3,
-                                  onRelease=self.klikKembali)
+                                  onRelease=game.klikKembali)
 
         # membuat tombol tema bawaan
-        self.btn_defaultT = Tombol(self.bg,
-                                   self.btn_defaultRect.x,
-                                   self.btn_defaultRect.y,
-                                   self.btn_defaultRect.width,
-                                   self.btn_defaultRect.height,
-                                   self.btn_font, 20,
+        game.btn_defaultT = Tombol(game.bg,
+                                   game.btn_defaultRect.x,
+                                   game.btn_defaultRect.y,
+                                   game.btn_defaultRect.width,
+                                   game.btn_defaultRect.height,
+                                   game.btn_font, 20,
                                    nama_tombol_default,
                                    warnaAktif=wBA,
                                    warnaHover=wBH,
@@ -2578,15 +2437,15 @@ class GAME(Cacing):
                                    shadowDistance=2,
                                    shadowColour=wBSh,
                                    sudutRad=3,
-                                   onClick=self.setDefTheme)
+                                   onClick=game.setDefTheme)
 
-        if self.btn_soundState == 'ON':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+        if game.btn_soundState == 'ON':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_ON,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -2595,14 +2454,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnON)
-        if self.btn_soundState == 'OFF':
-            self.btn_sound = Tombol(self.bg,
-                                    self.btn_soundRect.x,
-                                    self.btn_soundRect.y,
-                                    self.btn_soundRect.width,
-                                    self.btn_soundRect.height,
-                                    self.btn_font, 20,
+                                    onRelease=game.klik_SoundbtnON)
+        if game.btn_soundState == 'OFF':
+            game.btn_sound = Tombol(game.bg,
+                                    game.btn_soundRect.x,
+                                    game.btn_soundRect.y,
+                                    game.btn_soundRect.width,
+                                    game.btn_soundRect.height,
+                                    game.btn_font, 20,
                                     nama_tombol_suara_OFF,
                                     warnaAktif=wBA,
                                     warnaHover=wBH,
@@ -2611,14 +2470,14 @@ class GAME(Cacing):
                                     shadowDistance=2,
                                     shadowColour=wBSh,
                                     sudutRad=3,
-                                    onRelease=self.klik_SoundbtnOFF)
+                                    onRelease=game.klik_SoundbtnOFF)
 
-        self.btn_theme1 = Tombol(self.bg,
-                                 self.btn_theme1Rect.x,
-                                 self.btn_theme1Rect.y,
-                                 self.btn_theme1Rect.width,
-                                 self.btn_theme1Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme1 = Tombol(game.bg,
+                                 game.btn_theme1Rect.x,
+                                 game.btn_theme1Rect.y,
+                                 game.btn_theme1Rect.width,
+                                 game.btn_theme1Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_1,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2627,15 +2486,15 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme1)
+                                 onClick=game.setTheme1)
 
         # Tema ke 2
-        self.btn_theme2 = Tombol(self.bg,
-                                 self.btn_theme2Rect.x,
-                                 self.btn_theme2Rect.y,
-                                 self.btn_theme2Rect.width,
-                                 self.btn_theme2Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme2 = Tombol(game.bg,
+                                 game.btn_theme2Rect.x,
+                                 game.btn_theme2Rect.y,
+                                 game.btn_theme2Rect.width,
+                                 game.btn_theme2Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_2,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2644,14 +2503,14 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme2)
+                                 onClick=game.setTheme2)
         # Tema ke 3
-        self.btn_theme3 = Tombol(self.bg,
-                                 self.btn_theme3Rect.x,
-                                 self.btn_theme3Rect.y,
-                                 self.btn_theme3Rect.width,
-                                 self.btn_theme3Rect.height,
-                                 self.btn_font, 50,
+        game.btn_theme3 = Tombol(game.bg,
+                                 game.btn_theme3Rect.x,
+                                 game.btn_theme3Rect.y,
+                                 game.btn_theme3Rect.width,
+                                 game.btn_theme3Rect.height,
+                                 game.btn_font, 50,
                                  nama_tema_ke_3,
                                  warnaAktif=wBA,
                                  warnaHover=wBH,
@@ -2660,44 +2519,20 @@ class GAME(Cacing):
                                  shadowDistance=2,
                                  shadowColour=wBSh,
                                  sudutRad=3,
-                                 onClick=self.setTheme3)
+                                 onClick=game.setTheme3)
 
-        # self.teks1 = self.font_h2.render('Theme: Pastel', True, warnaTeks)
-        self.teksH1 = self.font_h1.render(
+        # game.teks1 = game.font_h2.render('Theme: Pastel', True, warnaTeks)
+        game.teksH1 = game.font_h1.render(
             teks_di_pengaturan_h1, True, warnaTeks)
-        # self.btn_kembali.inactiveColour = tema3['btnA']
-        # self.btn_kembali.hoverColour = tema3['btnH']
-        # self.btn_kembali.pressedColour = tema3['btnP']
-        # self.btn_kembali.textColour = warnaTeks
-        # self.btn_defaultT.inactiveColour = tema3['btnA']
-        # self.btn_defaultT.hoverColour = tema3['btnH']
-        # self.btn_defaultT.pressedColour = tema3['btnP']
-        # self.btn_defaultT.textColour = warnaTeks
-        # self.btn_theme1.inactiveColour = tema3['btnA']
-        # self.btn_theme1.hoverColour = tema3['btnH']
-        # self.btn_theme1.pressedColour = tema3['btnP']
-        # self.btn_theme1.textColour = warnaTeks
-        # self.btn_theme2.inactiveColour = tema3['btnA']
-        # self.btn_theme2.hoverColour = tema3['btnH']
-        # self.btn_theme2.pressedColour = tema3['btnP']
-        # self.btn_theme2.textColour = warnaTeks
-        # self.btn_theme3.inactiveColour = tema3['btnA']
-        # self.btn_theme3.hoverColour = tema3['btnH']
-        # self.btn_theme3.pressedColour = tema3['btnP']
-        # self.btn_theme3.textColour = warnaTeks
-        # self.btn_sound.hoverColour = tema3['btnH']
-        # self.btn_sound.pressedColour = tema3['btnP']
-        # self.btn_sound.inactiveColour = tema3['btnA']
-        # self.btn_sound.textColour = warnaTeks
         # endregion
 
         # region menu utama
-        self.btn_play = Tombol(layar,
-                               self.btn_playRect.x,
-                               self.btn_playRect.y,
-                               self.btn_playRect.width-20,
-                               self.btn_playRect.height,
-                               self.btn_font1,
+        game.btn_play = Tombol(layar,
+                               game.btn_playRect.x,
+                               game.btn_playRect.y,
+                               game.btn_playRect.width-20,
+                               game.btn_playRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -2706,15 +2541,15 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_main,
                                sudutRad=3,
-                               onRelease=self.fbtn_play)
+                               onRelease=game.fbtn_play)
 
         # membuat tombol pengaturan
-        self.btn_peng = Tombol(layar,
-                               self.btn_pengRect.x,
-                               self.btn_pengRect.y,
-                               self.btn_pengRect.width-20,
-                               self.btn_pengRect.height,
-                               self.btn_font1,
+        game.btn_peng = Tombol(layar,
+                               game.btn_pengRect.x,
+                               game.btn_pengRect.y,
+                               game.btn_pengRect.width-20,
+                               game.btn_pengRect.height,
+                               game.btn_font1,
                                warnaTeks=warnaTeks,
                                warnaAktif=wBA,
                                warnaDitekan=wBP,
@@ -2723,16 +2558,16 @@ class GAME(Cacing):
                                shadowColour=wBSh,
                                teks=nama_tombol_pengaturan,
                                sudutRad=3,
-                               onRelease=self.btn_pengaturan)
+                               onRelease=game.btn_pengaturan)
 
         # membuat tombol keluar
 
-        self.btn_keluar = Tombol(layar,
-                                 self.btn_keluarRect.x,
-                                 self.btn_keluarRect.y,
-                                 self.btn_pengRect.width-20,
-                                 self.btn_pengRect.height,
-                                 self.btn_font1,
+        game.btn_keluar = Tombol(layar,
+                                 game.btn_keluarRect.x,
+                                 game.btn_keluarRect.y,
+                                 game.btn_pengRect.width-20,
+                                 game.btn_pengRect.height,
+                                 game.btn_font1,
                                  warnaTeks=warnaTeks,
                                  warnaAktif=wBA,
                                  warnaDitekan=wBP,
@@ -2743,106 +2578,83 @@ class GAME(Cacing):
                                  sudutRad=3,
                                  onRelease=lambda: exit())
 
-        self.bg1.fill(tema3['bg'])
-        # self.btn_play.inactiveColour = tema3['btnA']
-        # self.btn_play.hoverColour = tema3['btnH']
-        # self.btn_play.pressedColour = tema3['btnP']
-        # self.btn_play.textColour = warnaTeks
-        # self.btn_keluar.inactiveColour = tema3['btnA']
-        # self.btn_keluar.hoverColour = tema3['btnH']
-        # self.btn_keluar.pressedColour = tema3['btnP']
-        # self.btn_keluar.textColour = warnaTeks
-        # self.btn_peng.inactiveColour = tema3['btnA']
-        # self.btn_peng.hoverColour = tema3['btnH']
-        # self.btn_peng.pressedColour = tema3['btnP']
-        # self.btn_peng.textColour = warnaTeks
-        # self.btn_keluar.inactiveColour = tema3['btnA']
-        # self.btn_keluar.hoverColour = tema3['btnH']
-        # self.btn_keluar.pressedColour = tema3['btnP']
-        # self.btn_keluar.textColour = warnaTeks
-        # self.judul_rect = self.judul_rect
-        self.judul = self.title_font.render(
+        game.bg1.fill(tema3['bg'])
+        game.judul = game.title_font.render(
             judul, True, warnaTeks)
 
-        self.teksh2 = self.font_h2.render(
+        game.teksh2 = game.font_h2.render(
             teks_di_pengaturan_h2, True, tema3['tk'])
-        self.teksh2_rect = self.teksh2.get_rect(topleft=(12*30+35, 0))
-        self.teksh2_rect.y = 540-self.teksh2_rect.height-33
+        game.teksh2_rect = game.teksh2.get_rect(topleft=(12*30+35, 0))
+        game.teksh2_rect.y = 540-game.teksh2_rect.height-33
         # endregion
 
         # region Ular
-        self.h_up = image.load(thp4/'kepala_up.png').convert_alpha()
-        self.h_down = image.load(thp4/'kepala_down.png').convert_alpha()
-        self.h_left = image.load(thp4/'kepala_left.png').convert_alpha()
-        self.h_right = image.load(thp4/'kepala_right.png').convert_alpha()
+        game.h_up = image.load(thp4/'kepala_up.png').convert_alpha()
+        game.h_down = image.load(thp4/'kepala_down.png').convert_alpha()
+        game.h_left = image.load(thp4/'kepala_left.png').convert_alpha()
+        game.h_right = image.load(thp4/'kepala_right.png').convert_alpha()
 
-        self.b_tr = image.load(thp4/'badan_tr.png').convert_alpha()
-        self.b_tl = image.load(thp4/'badan_tl.png').convert_alpha()
-        self.b_bl = image.load(thp4/'badan_bl.png').convert_alpha()
-        self.b_br = image.load(thp4/'badan_br.png').convert_alpha()
+        game.b_tr = image.load(thp4/'badan_tr.png').convert_alpha()
+        game.b_tl = image.load(thp4/'badan_tl.png').convert_alpha()
+        game.b_bl = image.load(thp4/'badan_bl.png').convert_alpha()
+        game.b_br = image.load(thp4/'badan_br.png').convert_alpha()
 
-        self.b_v = image.load(thp4/'badan_v.png').convert_alpha()
-        self.b_h = image.load(thp4/'badan_h.png').convert_alpha()
+        game.b_v = image.load(thp4/'badan_v.png').convert_alpha()
+        game.b_h = image.load(thp4/'badan_h.png').convert_alpha()
 
-        self.t_up = image.load(thp4/'ekor_up.png').convert_alpha()
-        self.t_down = image.load(thp4/'ekor_down.png').convert_alpha()
-        self.t_left = image.load(thp4/'ekor_left.png').convert_alpha()
-        self.t_right = image.load(thp4/'ekor_right.png').convert_alpha()
+        game.t_up = image.load(thp4/'ekor_up.png').convert_alpha()
+        game.t_down = image.load(thp4/'ekor_down.png').convert_alpha()
+        game.t_left = image.load(thp4/'ekor_left.png').convert_alpha()
+        game.t_right = image.load(thp4/'ekor_right.png').convert_alpha()
         # endregion
 
         # region Play
-        self.nths = 3
-        self.warnaRumput = tema3['rm']
-        self.pbg.fill(tema3['bg'])
-        self.pskor.fill(tema3['skp'])
-        self.border0.fill(tema3['brd'])
-        self.border1.fill(tema3['brd'])
-        self.border2.fill(tema3['brd'])
-        self.border3.fill(tema3['brd'])
+        game.nths = 3
+        game.warnaRumput = tema3['rm']
+        game.pbg.fill(tema3['bg'])
+        game.pskor.fill(tema3['skp'])
+        game.border0.fill(tema3['brd'])
+        game.border1.fill(tema3['brd'])
+        game.border2.fill(tema3['brd'])
+        game.border3.fill(tema3['brd'])
 
-        self.btnHome = Tombol(layar,
-                              self.btnHomeRect.x,
-                              self.btnHomeRect.y,
-                              self.btnHomeRect.width,
-                              self.btnHomeRect.height,
-                              self.btn_font1, 20,
+        game.btnHome = Tombol(layar,
+                              game.btnHomeRect.x,
+                              game.btnHomeRect.y,
+                              game.btnHomeRect.width,
+                              game.btnHomeRect.height,
+                              game.btn_font1, 20,
                               nama_tombol_kembali_ke_menu_utama,
                               warnaTeks,
                               wBA, wBH, wBP, 20, 2,
-                              onRelease=self.klikHome)
+                              onRelease=game.klikHome)
 
-        self.btnReset = Tombol(layar,
-                               self.btnResetRect.x,
-                               self.btnResetRect.y,
-                               self.btnResetRect.width,
-                               self.btnResetRect.height,
-                               self.btn_font1, 20,
+        game.btnReset = Tombol(layar,
+                               game.btnResetRect.x,
+                               game.btnResetRect.y,
+                               game.btnResetRect.width,
+                               game.btnResetRect.height,
+                               game.btn_font1, 20,
                                nama_tombol_ulang_game,
                                warnaTeks,
                                wBA, wBH, wBP, 20, 2,
-                               onRelease=self.klikReset)
-        # self.btnReset.inactiveColour = tema3['btnA']
-        # self.btnReset.hoverColour = tema3['btnH']
-        # self.btnReset.pressedColour = tema3['btnP']
-        # self.btnHome.inactiveColour = tema3['btnA']
-        # self.btnHome.hoverColour = tema3['btnH']
-        # self.btnHome.pressedColour = tema3['btnP']
+                               onRelease=game.klikReset)
         # endregion
 
-        self.fr_makanan = [image.load(mkn/'jengkol_f0.png').convert_alpha(),
+        game.fr_makanan = [image.load(mkn/'jengkol_f0.png').convert_alpha(),
                            image.load(mkn/'jengkol_f1.png').convert_alpha(),
                            image.load(mkn/'jengkol_f2.png').convert_alpha(),
                            image.load(mkn/'jengkol_f2.png').convert_alpha(),
                            image.load(mkn/'jengkol_f1.png').convert_alpha(),
                            image.load(mkn/'jengkol_f0.png').convert_alpha()]
 
-        self.makanan = image.load(mkn/'jengkol.png').convert_alpha()
+        game.makanan = image.load(mkn/'jengkol.png').convert_alpha()
 
-        self.btn_keluar.hide()
-        self.btn_play.hide()
-        self.btn_peng.hide()
-        self.btnHome.hide()
-        self.btnReset.hide()
+        game.btn_keluar.hide()
+        game.btn_play.hide()
+        game.btn_peng.hide()
+        game.btnHome.hide()
+        game.btnReset.hide()
 
         pass
 

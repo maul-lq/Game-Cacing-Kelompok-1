@@ -28,7 +28,7 @@ def rgb(r: int, g: int, b: int, a: int = 255):
 
 # Konstant
 KONST_ANI = 0.015
-TMFB = 0.6
+TMFB = 0.4
 
 UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan)
 BANYAK_KOTAK = 23
