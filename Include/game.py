@@ -16,12 +16,11 @@ waktu_mulai = tm.time()
 
 
 # region
-# inisialisasi pygame
 init()
-thp1 = LOKASI_ULAR_TEMA_KE_1
-thp2 = LOKASI_ULAR_TEMA_KE_2
-thp3 = LOKASI_ULAR_TEMA_KE_3
-thp4 = LOKASI_ULAR_TEMA_KE_4
+thp1 = LOKASI_CACING_TEMA_KE_1
+thp2 = LOKASI_CACING_TEMA_KE_2
+thp3 = LOKASI_CACING_TEMA_KE_3
+thp4 = LOKASI_CACING_TEMA_KE_4
 mkn = LOKASI_MAKANAN
 
 # membuat window / layar
@@ -31,14 +30,13 @@ layar = display.set_mode(UKURAN_WINDOWS)
 
 # memuat judul dan ikon
 display.set_caption(JUDUL_PADA_WINDOWS)
-display.set_icon(image.load('./res/ikon/ikon.png', 'Ikon')
-                 )  # Ikon buat gamenya
+display.set_icon(image.load('./res/ikon/ikon.png'))  # Ikon buat gamenya
 # endregion
 
 
 class Makanan:
     def __init__(makanan) -> None:
-        makanan.acakPos()
+        # makanan.acakPos()
         makanan.index_makanan = 0
         makanan.fr_makanan = [image.load(mkn/'pete_f0.png').convert_alpha(),
                            image.load(mkn/'pete_f1.png').convert_alpha(),
@@ -72,6 +70,7 @@ class Makanan:
                             image.load(mkn/'sate_f0.png').convert_alpha()]
         makanan.makanan = image.load(mkn/'pete.png').convert_alpha()
 
+        # buat tampilan makanan di pengaturan
         makanan.display_makananAktif = 0
         pass
 
@@ -83,40 +82,34 @@ class Makanan:
         pass
 
     def gambar_makanan(makanan, display=False):
-        if not display:
-            fdrect = Rect(int(makanan.fd_pos.x)*imgSize,
-                          int(makanan.fd_pos.y)*imgSize,
-                          imgSize, imgSize)
+        if not display: # jika makanan bukan buat pajangan
+            fdrect = Rect(int(makanan.fd_pos.x)*imgSize, int(makanan.fd_pos.y)*imgSize, imgSize, imgSize)
 
             layar.blit(makanan.fr_makanan[int(makanan.index_makanan)], fdrect)
         else:
             if makanan.display_makananAktif == 0:
+                # jika tema 0 / 'cacing hutan' dipilih maka makanan pete yang akan bergerak.
                 layar.blits([(makanan.fr_makanan0[int(makanan.index_makanan)], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan1[2], Rect(
-                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan2[2], Rect(
-                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[2], Rect((18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan2[2], Rect((19*imgSize, 17*imgSize), (imgSize, imgSize))),
                              (makanan.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
             if makanan.display_makananAktif == 1:
+                # jika tema 1 / 'cacing tanah' dipilih maka makanan nasi goreng yang akan bergerak.
                 layar.blits([(makanan.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan1[2], Rect(
-                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan2[int(makanan.index_makanan)], Rect(
-                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[2], Rect((18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan2[int(makanan.index_makanan)], Rect((19*imgSize, 17*imgSize), (imgSize, imgSize))),
                              (makanan.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
             if makanan.display_makananAktif == 2:
+                # jika tema 2 / 'cacing kutub' dipilih maka makanan sate yang akan bergerak.
                 layar.blits([(makanan.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan1[2], Rect(
-                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan2[2], Rect(
-                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[2], Rect((18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan2[2], Rect((19*imgSize, 17*imgSize), (imgSize, imgSize))),
                              (makanan.fr_makanan3[int(makanan.index_makanan)], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
             if makanan.display_makananAktif == 3:
+                # jika tema 3 / 'cacing emas' dipilih maka makanan jengkol yang akan bergerak.
                 layar.blits([(makanan.fr_makanan0[2], Rect((17*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan1[int(makanan.index_makanan)], Rect(
-                                 (18*imgSize, 17*imgSize), (imgSize, imgSize))),
-                             (makanan.fr_makanan2[2], Rect(
-                                 (19*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan1[int(makanan.index_makanan)], Rect((18*imgSize, 17*imgSize), (imgSize, imgSize))),
+                             (makanan.fr_makanan2[2], Rect((19*imgSize, 17*imgSize), (imgSize, imgSize))),
                              (makanan.fr_makanan3[2], Rect((20*imgSize, 17*imgSize), (imgSize, imgSize)))])
         pass
 
@@ -124,24 +117,29 @@ class Makanan:
 class Cacing(Makanan):
     def __init__(cacing) -> None:
         super().__init__()
-        cacing.badan = [Vector2(5, 12), Vector2(
-            4, 12), Vector2(3, 12), Vector2(2, 12)]
+        cacing.badan = [Vector2(5, 12), Vector2(4, 12), Vector2(3, 12), Vector2(2, 12)]
         cacing.arah = Vector2(0, 0)
-        cacing.newblok = False
+        cacing.blok_baru = False
 
+        # lokasi gambar kepala cacing yang menghadap ke atas, bawah, kiri, kanan.
         cacing.h_up = image.load(thp1/'kepala_up.png').convert_alpha()
         cacing.h_down = image.load(thp1/'kepala_down.png').convert_alpha()
         cacing.h_left = image.load(thp1/'kepala_left.png').convert_alpha()
         cacing.h_right = image.load(thp1/'kepala_right.png').convert_alpha()
 
+        # lokasi gambar badan cacing yang belok dari atas ke kanan dan belok dari atas ke kiri.
         cacing.b_tr = image.load(thp1/'badan_tr.png').convert_alpha()
         cacing.b_tl = image.load(thp1/'badan_tl.png').convert_alpha()
+        
+        # lokasi gambar badan cacing yang belok dari bawah ke kanan dan belok dari bawah ke kiri.
         cacing.b_bl = image.load(thp1/'badan_bl.png').convert_alpha()
         cacing.b_br = image.load(thp1/'badan_br.png').convert_alpha()
 
+        # lokasi gambar badan cacing yang menghadap atas/bawah (vertikal), kiri/kanan (horizontal).
         cacing.b_v = image.load(thp1/'badan_v.png').convert_alpha()
         cacing.b_h = image.load(thp1/'badan_h.png').convert_alpha()
 
+        # lokasi gambar ekor cacing yang menghadap ke atas, bawah, kiri, kanan.
         cacing.t_up = image.load(thp1/'ekor_up.png').convert_alpha()
         cacing.t_down = image.load(thp1/'ekor_down.png').convert_alpha()
         cacing.t_left = image.load(thp1/'ekor_left.png').convert_alpha()
@@ -149,46 +147,47 @@ class Cacing(Makanan):
 
         pass
 
-    def gambar_ular(cacing):
-        cacing.update_hg()
-        cacing.update_eg()
+    def gambar_cacing(cacing):
+        cacing.update_hg() # gambar kepala.
+        cacing.update_eg() # gambar ekor.
 
-        for index, blok in enumerate(cacing.badan):
+        # gambar kepala, badan, ekor cacing sesuai arah dia bergerak.
+        for index, blok in enumerate(cacing.badan): # mengambil isi dari list(badan) serta indexnya.
             x_pos = int(blok.x)*imgSize
             y_pos = int(blok.y)*imgSize
-            ular_rect = Rect(x_pos, y_pos,
-                             imgSize, imgSize)
+            cacing_rect = Rect(x_pos, y_pos, imgSize, imgSize)
 
-            if index == 0:  # index ke 0 jadi kepalanya
-                layar.blit(cacing.kepala, ular_rect)
+            if index == 0:  # jika index nya 0 (cacing.badan[0]) maka jadi kepalanya
+                layar.blit(cacing.kepala, cacing_rect)
+    
             # index terakhir dari list badan jadi ekornya
             elif index == len(cacing.badan)-1:
-                layar.blit(cacing.ekor, ular_rect)
+                layar.blit(cacing.ekor, cacing_rect)
             else:
                 blok_sebelum = cacing.badan[index+1]-blok
                 blok_selanjutnya = cacing.badan[index-1]-blok
 
-                if blok_sebelum.x == blok_selanjutnya.x:
-                    layar.blit(cacing.b_v, ular_rect)
+                if blok_sebelum.x == blok_selanjutnya.x: 
+                    # jika posisi x dari badan sebelumnya sama dengan posisi x dari badan selanjutnya.
+                    layar.blit(cacing.b_v, cacing_rect) # tampilkan gambar vertikal di badan cacing.
                 elif blok_sebelum.y == blok_selanjutnya.y:
-                    layar.blit(cacing.b_h, ular_rect)
+                    # jika posisi y dari badan sebelumnya sama dengan posisi y dari badan selanjutnya.
+                    layar.blit(cacing.b_h, cacing_rect) # tampilkan gambar horizontal di badan cacing.
                 else:
-                    if blok_sebelum.x == -1 and blok_selanjutnya.y == -1 \
-                            or blok_sebelum.y == -1 and blok_selanjutnya.x == -1:
-                        # badan belok ke kiri dari atas.
-                        layar.blit(cacing.b_tl, ular_rect)
-                    if blok_sebelum.x == 1 and blok_selanjutnya.y == -1 \
-                            or blok_sebelum.y == -1 and blok_selanjutnya.x == 1:
-                        # badan belok ke kanan dari atas.
-                        layar.blit(cacing.b_tr, ular_rect)
-                    if blok_sebelum.x == -1 and blok_selanjutnya.y == 1 \
-                            or blok_sebelum.y == 1 and blok_selanjutnya.x == -1:
-                        # badan belok ke kiri dari bawah.
-                        layar.blit(cacing.b_bl, ular_rect)
-                    if blok_sebelum.x == 1 and blok_selanjutnya.y == 1 \
-                            or blok_sebelum.y == 1 and blok_selanjutnya.x == 1:
-                        # badan belok ke kanan dari bawah
-                        layar.blit(cacing.b_br, ular_rect)
+                    if blok_sebelum.x == -1 and blok_selanjutnya.y == -1 or blok_sebelum.y == -1 and blok_selanjutnya.x == -1:
+                         # tampilakan badan yang belok ke kiri dari atas atau sebaliknya.
+                        layar.blit(cacing.b_tl, cacing_rect)
+                    elif blok_sebelum.x == 1 and blok_selanjutnya.y == -1 or blok_sebelum.y == -1 and blok_selanjutnya.x == 1:
+                        # tampilakan badan yang belok ke kanan dari atas atau sebaliknya.
+                        layar.blit(cacing.b_tr, cacing_rect)
+                    elif blok_sebelum.x == -1 and blok_selanjutnya.y == 1 or blok_sebelum.y == 1 and blok_selanjutnya.x == -1:
+                        # tampilakan badan yang belok ke kiri dari bawah atau sebaliknya.
+                        layar.blit(cacing.b_bl, cacing_rect)
+                    elif blok_sebelum.x == 1 and blok_selanjutnya.y == 1 or blok_sebelum.y == 1 and blok_selanjutnya.x == 1:
+                        # tampilakan badan yang belok ke kanan dari bawah atau sebaliknya.
+                        layar.blit(cacing.b_br, cacing_rect)
+                        pass
+
 
         pass
 
@@ -196,70 +195,85 @@ class Cacing(Makanan):
         # baagian kepla
         rKepala = cacing.badan[1]-cacing.badan[0]
         if rKepala == Vector2(1, 0):
+            # jika kepala cacing sedang menghadap kiri.
             cacing.kepala = cacing.h_left
         elif rKepala == Vector2(-1, 0):
+            # jika kepala cacing sedang menghadap kanan.
             cacing.kepala = cacing.h_right
         elif rKepala == Vector2(0, 1):
+            # jika kepala cacing sedang menghadap bawah.
             cacing.kepala = cacing.h_down
         elif rKepala == Vector2(0, -1):
+            # jika kepala cacing sedang menghadap atas.
             cacing.kepala = cacing.h_up
 
     def update_eg(cacing):
         # baagian kepla
         rEkor = cacing.badan[-2]-cacing.badan[-1]
         if rEkor == Vector2(1, 0):
+            # jika ekor menghadap kiri
             cacing.ekor = cacing.t_left
         elif rEkor == Vector2(-1, 0):
+            # jika ekor menghadap kanan
             cacing.ekor = cacing.t_right
         elif rEkor == Vector2(0, 1):
+            # jika ekor menghadap bawah
             cacing.ekor = cacing.t_down
         elif rEkor == Vector2(0, -1):
+            # jika ekor menghadap atas
             cacing.ekor = cacing.t_up
 
-    def gerakSiular(cacing):
-        if cacing.newblok == True:
-            # copy badan
-            badanC = cacing.badan[:]
+    def gerakSiCacing(cacing):
+        if cacing.blok_baru == True:
+            # jika ada blok baru (badannya disuruh nambah panjang).
+            badanC = cacing.badan[:] # copy badan cacing
+            # copy dari badan cacing dimasukin blok baru (kepalanya) yang ditambah arah gerak
             badanC.insert(0, badanC[0]+cacing.arah)
+            # badan cacing diganti dengan badanC
             cacing.badan = badanC[:]
-            cacing.newblok = False
+            # blok baru diubah jadi False kalo tidak akan terus nambah panjang.
+            cacing.blok_baru = False
         else:
             if cacing.arah != Vector2(0, 0):
-                badanC = cacing.badan[:-1]
+                # jika cacing sudah bergerak sesuai arah
+                badanC = cacing.badan[:-1] # copy badan cacing kecuali ekornya.
+                # copy dari badan cacing  dimasukin blok baru (kepalanya) yang di tambah arah gerak.
+                # untuk buat ilusi dia bergerak
                 badanC.insert(0, badanC[0]+cacing.arah)
+                # badan cacing diganti dengan badanC
                 cacing.badan = badanC[:]
 
     def tambah_blok(cacing):
-        cacing.newblok = True
+        cacing.blok_baru = True
 
     def reset(cacing):
+        """Reset posis cacing, arah geraknya, dan posisi makanannya."""
         cacing.badan = [Vector2(5, 12), Vector2(
             4, 12), Vector2(3, 12), Vector2(2, 12)]
         cacing.arah = Vector2(0, 0)
         cacing.fd_pos = Vector2(8, 12)
-
-    def len(cacing):
-        return len(cacing.badan)
 
 
 class GAME(Cacing):
     def __init__(game) -> None:
         super().__init__()
         # region Menu Utama
-        # inisialisasi menu utama
+        # menu utama
         game.aktif = True
-        game.title_font = font.Font(
-            LOKASI_FONT_UNTUK_TULISAN / 'StudioGrotesk-Regular.ttf', 70)
+        game.title_font = font.Font(LOKASI_FONT_UNTUK_TULISAN / 'StudioGrotesk-Regular.ttf', 70)
         game.btn_font1 = font.Font(None, 40)
-        game.wline = 0
+        game.wline = 0 # warna garis sesuai tema.
 
         game.makanan_ke1 = game.fr_makanan0
         game.makanan_ke2 = game.fr_makanan0
         game.makanan_ke3 = game.fr_makanan0
 
+        # posis awal dari ke-3 makanan.
         game.def_fdPos1 = Vector2(20, 13)
         game.def_fdPos2 = Vector2(11, 20)
         game.def_fdPos3 = Vector2(2, 13)
+        
+        # posisi makanan
         game.fd_pos1 = game.def_fdPos1
         game.fd_pos2 = game.def_fdPos2
         game.fd_pos3 = game.def_fdPos3
@@ -270,18 +284,18 @@ class GAME(Cacing):
         game.bg1.fill(bg)
 
         # membuat judul
-        game.judul = game.title_font.render(
-            judul, True, warnaTeks)
+        game.judul = game.title_font.render(judul, True, warnaTeks)
         game.judul_rect = game.judul.get_rect(center=(UKURAN_WINDOWS[0]/2, 75))
 
-        # membuat panel untuk meletakan / memberi posisi tombol
+        # membuat panel untuk meletakan / memberi posisi tombol.
+        # ? tidak di tampilkan
         game.panel_11 = Surface((380, 480))
         game.panel_11Rect = game.panel_11.get_rect(midtop=(game.judul_rect.midbottom[0],
                                                            game.judul_rect.midbottom[1]+100))
-        game.panel_11.fill(pn1)
+        # game.panel_11.fill(pn1)
 
         # region Tombol
-        # TODO: Membuat Tombol berfungsi
+        # TODO: Membuat Tombol berfungsi (Selesai!)
         # membuat tombol play
         game.btn_playRect = Rect((game.panel_11Rect.topleft[0]+10,
                                   game.panel_11Rect.topleft[1]+10),
@@ -352,44 +366,33 @@ class GAME(Cacing):
         game.bg_rect = game.bg.get_rect(topleft=(0, 0))
         game.bg.fill(bg)
 
-        # top panel
+        # panel di atas
         game.panel_1 = Surface((UKURAN_WINDOWS[0], 100))
         game.panel_1Rect = game.panel_1.get_rect(topleft=(0, 0))
         game.panel_1.fill(pn1)
 
-        # inisialisasi
         game.paktif = True
-        game.font_h1 = font.Font(
-            LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 33)
-        game.font_h2 = font.Font(
-            LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 25)
+        game.font_h1 = font.Font(LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 33)
+        game.font_h2 = font.Font(LOKASI_FONT_UNTUK_TULISAN/'StudioGrotesk-Regular.ttf', 25)
         game.btn_font = font.Font(None, 25)
 
-        # Tampilan Gambar Gamenya pada setiap tema
-        game.tampilan_tema_default = image.load(
-            LOKASI_GAMBAR_DAN_LAIN2 / 'ptd.png').convert()
-        game.tampilan_tema_1 = image.load(
-            LOKASI_GAMBAR_DAN_LAIN2 / 'pt1.png').convert()
-        game.tampilan_tema_2 = image.load(
-            LOKASI_GAMBAR_DAN_LAIN2 / 'pt2.png').convert()
-        game.tampilan_tema_3 = image.load(
-            LOKASI_GAMBAR_DAN_LAIN2 / 'pt3.png').convert()
+        # Tampilan Gambar Gamenya pada setiap tema.
+        game.tampilan_tema_default = image.load(LOKASI_GAMBAR_DAN_LAIN2 / 'ptd.png').convert()
+        game.tampilan_tema_1 = image.load(LOKASI_GAMBAR_DAN_LAIN2 / 'pt1.png').convert()
+        game.tampilan_tema_2 = image.load(LOKASI_GAMBAR_DAN_LAIN2 / 'pt2.png').convert()
+        game.tampilan_tema_3 = image.load(LOKASI_GAMBAR_DAN_LAIN2 / 'pt3.png').convert()
 
         game.tt_rect = game.tampilan_tema_default.get_rect(
-            midtop=(game.panel_1Rect.midbottom[0]+(game.panel_1Rect.midbottom[0]//2)-23,
-                    game.panel_1Rect.midbottom[1]+30))
+            midtop=(game.panel_1Rect.midbottom[0]+(game.panel_1Rect.midbottom[0]//2)-23, game.panel_1Rect.midbottom[1]+30))
 
-        # membuat tulisan Pengaturan
-        game.teksH1 = game.font_h1.render(
-            teks_di_pengaturan_h1, True, warnaTeks)
-        game.teksH1_rect = game.teksH1.get_rect(midleft=(game.panel_1Rect.midleft[0]+20,
-                                                         game.panel_1Rect.midleft[1]))
-        game.teksh2 = game.font_h2.render(
-            teks_di_pengaturan_h2, True, warnaTeks)
+        # membuat tulisan di tampilan Pengaturan
+        game.teksH1 = game.font_h1.render(teks_di_pengaturan_h1, True, warnaTeks)
+        game.teksH1_rect = game.teksH1.get_rect(midleft=(game.panel_1Rect.midleft[0]+20, game.panel_1Rect.midleft[1]))
+        game.teksh2 = game.font_h2.render(teks_di_pengaturan_h2, True, warnaTeks)
         game.teksh2_rect = game.teksh2.get_rect(topleft=(12*30+35, 0))
         game.teksh2_rect.y = 540-game.teksh2_rect.height-33
 
-        # region Tombol
+        # region Tombol di tampilan pengaturan
         # membuat tombol kembali
         game.btnSize = (150, 75)
         game.btn_kembaliRect = Rect((game.bg_rect.bottomleft[0]+20,
@@ -412,7 +415,7 @@ class GAME(Cacing):
                                   sudutRad=3,
                                   onRelease=game.klikKembali)
 
-        # membuat tombol tema bawaan
+        # membuat tombol tema 'cacing hutan'
         game.btn_defaultRect = Rect((game.btn_kembaliRect.topright[0]+20,
                                      game.btn_kembaliRect.topright[1]),
                                     game.btnSize)
@@ -432,6 +435,7 @@ class GAME(Cacing):
                                    sudutRad=3,
                                    onClick=game.setDefTheme)
 
+        # membuat tombol pengaturan suara ON/OFF
         game.btn_soundRect = Rect((game.btn_defaultRect.topright[0]+20,
                                    game.btn_defaultRect.topright[1]),
                                   game.btnSize)
@@ -530,11 +534,14 @@ class GAME(Cacing):
         game.reset()
         game.go_nskor = 0
         game.go_high_skor = 0
-        game.nths = 0
-        game.isreset = False
-        game.apakahGameOver = False
         game.btn_soundState = 'ON'
-
+        
+        # untuk menentukan warna di panel/permukaan persegi panjang di game over.
+        game.nths = 0
+        
+        # game.isreset = False
+        game.apakahGameOver = False
+    
         # suara
         game.suara_makan = mixer.Sound(LOKASI_SUARA / "suara_makan.mp3")
         game.suara_nabrak = mixer.Sound(LOKASI_SUARA / "suara_nabrak.mp3")
@@ -579,7 +586,7 @@ class GAME(Cacing):
                               (imgSize*21, imgSize*19))
         # endregion
 
-        # rumput
+        # warna rumput
         game.warnaRumput = tema0['rm']
 
         # region Tampilan Game Over
@@ -588,9 +595,10 @@ class GAME(Cacing):
         game.pngmRect.center = game.boardRect.center
 
         # piala
-        game.piala = image.load('./res/image/misc/piala.png').convert_alpha()
+        game.piala = image.load(LOKASI_GAMBAR_DAN_LAIN2 / 'piala.png').convert_alpha()
 
         # region Tombol
+        # tombol kembali ke menu utama.
         game.btnHomeRect = Rect((game.pngmRect.midleft[0]+10,
                                  (game.pngmRect.bottomleft[1]-int(game.btnSize[1]/2))-30),
                                 (int(game.btnSize[0]/2)+40, int(game.btnSize[1]/2)+20))
@@ -605,6 +613,7 @@ class GAME(Cacing):
                               wBA, wBH, wBP, 20, 2,
                               onRelease=game.klikHome)
 
+        # tombol ulang
         game.btnResetRect = Rect((game.pngmRect.midright[0]-10-(int(game.btnSize[0]/2)+40),
                                   (game.pngmRect.bottomright[1]-int(game.btnSize[1]/2))-30),
                                  (int(game.btnSize[0]/2)+40, int(game.btnSize[1]/2)+20))
@@ -623,9 +632,9 @@ class GAME(Cacing):
         # endregion
         # endregion
 
-        # region Enable & Disable Tombol
-        # PENTING!
-        # Jika ada tombol baru disembunyikan!
+        # region Sembunyikan & Tampilkan Tombol
+        # PENTING baim!
+        # Jika ada tombol baru, disembunyikan!
         # game.btn_defaultT.disable()
         game.btn_defaultT.hide()
         game.btn_kembali.hide()
@@ -648,31 +657,31 @@ class GAME(Cacing):
     # gambar makanan pada menu utama!
     def gambar_makanan_MU(game):
         """Gambar makanan pada menu utama."""
-        if game.wline == 0:
+
+        # tampilan gambar ke-3 makanan sesuai tema
+        if game.wline == 0: # pete
             game.makanan_ke1 = game.fr_makanan0
             game.makanan_ke2 = game.fr_makanan0
             game.makanan_ke3 = game.fr_makanan0
-        elif game.wline == 1:
-            game.makanan_ke1 = game.fr_makanan1
-            game.makanan_ke2 = game.fr_makanan1
-            game.makanan_ke3 = game.fr_makanan1
-        elif game.wline == 2:
+        elif game.wline == 1: # nasi goreng
             game.makanan_ke1 = game.fr_makanan2
             game.makanan_ke2 = game.fr_makanan2
             game.makanan_ke3 = game.fr_makanan2
-        elif game.wline == 3:
+        elif game.wline == 2: # sate
             game.makanan_ke1 = game.fr_makanan3
             game.makanan_ke2 = game.fr_makanan3
             game.makanan_ke3 = game.fr_makanan3
+        elif game.wline == 3: # jengkol
+            game.makanan_ke1 = game.fr_makanan1
+            game.makanan_ke2 = game.fr_makanan1
+            game.makanan_ke3 = game.fr_makanan1
 
         # posisi ke tiga makanan pada menu utama!
-        fdrect1 = Rect(
-            (game.fd_pos1.x*imgSize, game.fd_pos1.y*imgSize), (imgSize, imgSize))
-        fdrect2 = Rect(
-            (game.fd_pos2.x*imgSize, game.fd_pos2.y*imgSize), (imgSize, imgSize))
-        fdrect3 = Rect(
-            (game.fd_pos3.x*imgSize, game.fd_pos3.y*imgSize), (imgSize, imgSize))
+        fdrect1 = Rect((game.fd_pos1.x*imgSize, game.fd_pos1.y*imgSize), (imgSize, imgSize))
+        fdrect2 = Rect((game.fd_pos2.x*imgSize, game.fd_pos2.y*imgSize), (imgSize, imgSize))
+        fdrect3 = Rect((game.fd_pos3.x*imgSize, game.fd_pos3.y*imgSize), (imgSize, imgSize))
 
+        # gambar di tampilkan.
         layar.blit(game.makanan_ke1[int(game.index_makanan)], fdrect1)
         layar.blit(game.makanan_ke2[int(game.index_makanan)], fdrect2)
         layar.blit(game.makanan_ke3[int(game.index_makanan)], fdrect3)
@@ -682,7 +691,7 @@ class GAME(Cacing):
     def gambar(game):
         """Gambar si ular dan makanannya"""
         game.gambar_makanan_MU()
-        game.gambar_ular()
+        game.gambar_cacing()
         pass
 
     def draw(game):
@@ -718,24 +727,29 @@ class GAME(Cacing):
         # layar.blit(game.panel_1, game.panel_11Rect)
 
         pass
-
+    
+    # membuat cacing jalan sendiri
+    # dan menampilkan gambar-gambar di menu utamanya.
     def run(game):
-        game.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(
-            11, 5), Vector2(10, 5), Vector2(9, 5)]
+        game.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(11, 5), Vector2(10, 5), Vector2(9, 5)]
         UPDATE_CACING = USEREVENT+1
-        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
-        bisagerak = False
+        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_CACING_BERGERAK)
+        bisagerak = True
         game.arah = Vector2(0, 0)
         game.fd_pos1 = game.def_fdPos1
         game.fd_pos2 = game.def_fdPos2
         game.fd_pos3 = game.def_fdPos3
         while game.aktif:
             ki = event.get()
-            if len(game.badan) == 66 and bisagerak == False:
+            if len(game.badan) == 66 and bisagerak:
+                # jika panjang badan cacing sudah 66 
+                # dan sedang bergerak.
                 game.arah = Vector2(0, 0)
-                bisagerak = True
+                bisagerak = False
 
             if game.index_makanan >= len(game.makanan_ke1):
+                # jika index_makanan lebih dari atau sama dengan
+                # panjang list makanan atau frame.
                 game.index_makanan = 0
 
             for ki in ki:
@@ -745,7 +759,10 @@ class GAME(Cacing):
                 if ki.type == UPDATE_CACING:
                     game.update(untukMenuUtama=True)
 
-                if ki.type == KEYDOWN and len(game.badan) >= 66 and bisagerak == True:
+                # jika panjang badan cacing 
+                # lebih dari atau sama dengan 66 dan bisa gerak
+                # maka cacing bisa di kontrol / di mainkan.
+                if ki.type == KEYDOWN and len(game.badan) >= 66 and bisagerak:
                     if ki.key == K_w or ki.key == K_UP:
                         if game.arah.y != 1:
                             game.arah = Vector2(0, -1)
@@ -761,11 +778,17 @@ class GAME(Cacing):
                     if ki.key == K_a or ki.key == K_LEFT:
                         if game.arah.x != 1:
                             game.arah = Vector2(-1, 0)
+
             if len(game.badan) < 66:
+                # jika makanan sudah 
+                # dimakan (posisi kepala == posisi makanan)
+                # posisi makanan akan pindah -1,-1.
                 if game.badan[0] == game.fd_pos1:
                     game.fd_pos1 = Vector2(-1, -1)
                 else:
+                    # jika posisi ekor cacing == posisi awal makanan.
                     if game.badan[-1] == game.def_fdPos1:
+                        # posisi makanan pindah lagi ke posisi awalnya.
                         game.fd_pos1 = game.def_fdPos1
 
                 if game.badan[0] == game.fd_pos2:
@@ -781,14 +804,15 @@ class GAME(Cacing):
                         game.fd_pos3 = game.def_fdPos3
 
             else:
-                game.fd_pos1, game.fd_pos2, game.fd_pos3 = Vector2(
-                    -1, -1), Vector2(-1, -1), Vector2(-1, -1)
+                # jika panjang cacing sudah 66 
+                # makanan pindah posisinya ke -1,-1
+                game.fd_pos1, game.fd_pos2, game.fd_pos3 = Vector2(-1, -1), Vector2(-1, -1), Vector2(-1, -1)
 
             if len(game.badan) < 66:
                 if game.arah == Vector2(0, 0):
                     game.arah = Vector2(1, 0)
 
-                # ular bergerak berputar se arah jarum jam
+                # ular bergerak berputar se arah jarum jam.
                 # jika kepala ular koordinatnya di 20,5
                 if game.badan[0].distance_to(Vector2(20, 5)) == 0.0:
                     game.arah = Vector2(0, 1)
@@ -1010,9 +1034,10 @@ class GAME(Cacing):
         # endregion
 
         game.gambar_makanan(display=True)
-        game.gambar_ular()
+        game.gambar_cacing()
         pass
-
+    
+    # menampilkan gambar-gambar di pengaturan.
     def pengaturan(game):
         game.badan = [Vector2(15, 17), Vector2(
             14, 17), Vector2(13, 17), Vector2(12, 17)]
@@ -1046,7 +1071,7 @@ class GAME(Cacing):
         game.rumput()
 
         game.gambar_makanan()
-        game.gambar_ular()
+        game.gambar_cacing()
 
         layar.blits([(game.pskor, game.pskor_rect),
                      (game.border0, game.border0_rect),
@@ -1058,16 +1083,17 @@ class GAME(Cacing):
 
     def update(game, untukMenuUtama=False):
         if not untukMenuUtama:
-            game.gerakSiular()
+            game.gerakSiCacing()
             game.cek_tabrakan()
             game.cek_gagal()
         else:
-            game.gerakSiular()
+            game.gerakSiCacing()
             game.cek_tabrakan(untukMenuUtama=True)
 
     def cek_tabrakan(game, untukMenuUtama=False):
-        """Cek si cacing jika nabrak makanan."""
-        if not untukMenuUtama:
+        """Cek si cacing jika nabrak makanan dan tembok(menu utama)."""
+        if not untukMenuUtama: 
+            # jika bukan untuk menu utama / untuk mainnya.
             if game.fd_pos.distance_to(game.badan[0]) == 0.0:
                 game.acakPos()
                 if not game.apakahGameOver:
@@ -1118,6 +1144,7 @@ class GAME(Cacing):
         pass
 
     def drawGameOver(game):
+        """Tampilan game over"""
         if game.nths == 0:
             draw.rect(layar, tema0['pn1'], game.pngmRect, 0, 4)
         elif game.nths == 1:
@@ -1126,6 +1153,7 @@ class GAME(Cacing):
             draw.rect(layar, tema2['pn1'], game.pngmRect, 0, 4)
         elif game.nths == 3:
             draw.rect(layar, tema3['pn1'], game.pngmRect, 0, 4)
+
         # membuat tulisan game over
         if game.wline == 0:
             game.tkgmover = game.font_h1.render('Game Over', True, tema0['tk'])
@@ -1146,6 +1174,7 @@ class GAME(Cacing):
         game.display_makanan2xRect = game.display_makanan2x.get_rect(
             midleft=(game.pngmRect.midleft[0]+40, int(game.boardRect.midleft[1]-(game.boardRect.midleft[1]*(1/4)))))
 
+        # membuat skor
         if game.wline == 0:
             game.teks_skor = game.font_h1.render(
                 f'{game.nskor}', True, tema0['tk'])
@@ -1192,14 +1221,14 @@ class GAME(Cacing):
         pass
 
     def gameOver(game):
-        # region 'Disable' & 'Enable' Tombol
-        game.btnHome.enable()
+        # region Tombol
+        # game.btnHome.enable()
         game.btnHome.show()
-        game.btnReset.enable()
+        # game.btnReset.enable()
         game.btnReset.show()
-        game.btn_play.disable()
-        game.btn_keluar.disable()
-        game.btn_peng.disable()
+        # game.btn_play.disable()
+        # game.btn_keluar.disable()
+        # game.btn_peng.disable()
         game.btn_play.hide()
         game.btn_keluar.hide()
         game.btn_peng.hide()
@@ -1224,7 +1253,7 @@ class GAME(Cacing):
 
     def play(game):
         UPDATE_CACING = USEREVENT
-        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_ULAR_BERGERAK)
+        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_CACING_BERGERAK)
         tunggu = True
         while game.plAktif:
             for ki in event.get():
@@ -1294,15 +1323,14 @@ class GAME(Cacing):
         game.teks_skorRect.x += 5
         game.teks_skorRect.y += 2
 
-        # membuat piala jika player mengulang game
-        dis_piala2x = transform.smoothscale(
-            game.piala, (game.pskor_rect.height-25, game.pskor_rect.height-25))
-        dis_piala2xRect = dis_piala2x.get_rect(
-            midleft=(game.border0_rect.topright[0]+(125*3), game.pskor_rect.midleft[1]))
+        # membuat piala jika player mengulang game.
+        dis_piala2x = transform.smoothscale(game.piala, (game.pskor_rect.height-25, game.pskor_rect.height-25))
+        dis_piala2xRect = dis_piala2x.get_rect(midleft=(game.border0_rect.topright[0]+(125*3), game.pskor_rect.midleft[1]))
 
         layar.blits([(game.teks_skor, game.teks_skorRect),
                     (game.display_makanan2x, game.display_makanan2xRect)])
 
+        # jika highskor sudah bukan 0 maka high skor akan di tampilkan.
         if game.go_high_skor != 0:
             if game.nskor >= game.go_high_skor:
                 game.go_high_skor = game.nskor
@@ -1349,22 +1377,24 @@ class GAME(Cacing):
 
     # region Fungsi Tombol2 Jika Di Klik
     def klikHome(game):
-        game.btnHome.disable()
+        """fungsi tombol jika diklik dari game over"""
+        # game.btnHome.disable()
         game.btnHome.hide()
-        game.btnReset.disable()
+        # game.btnReset.disable()
         game.btnReset.hide()
-        game.btn_play.enable()
-        game.btn_keluar.enable()
-        game.btn_peng.enable()
+        # game.btn_play.enable()
+        # game.btn_keluar.enable()
+        # game.btn_peng.enable()
         game.btn_play.show()
         game.btn_keluar.show()
         game.btn_peng.show()
         game.run()
 
     def klikReset(game):
-        game.btnHome.disable()
+        """fungsi tombol jika diklik dari game over"""
+        # game.btnHome.disable()
         game.btnHome.hide()
-        game.btnReset.disable()
+        # game.btnReset.disable()
         game.btnReset.hide()
         game.go_nskor = 0
         game.reset()
@@ -1372,21 +1402,22 @@ class GAME(Cacing):
         game.play()
 
     def btn_pengaturan(game):
+        """fungsi tombol jika diklik dari menu utama"""
         game.btn_defaultT.show()
         game.btn_kembali.show()
         game.btn_theme1.show()
         game.btn_theme2.show()
         game.btn_theme3.show()
+        game.btn_sound.show()
 
         game.btn_keluar.hide()
         game.btn_play.hide()
         game.btn_peng.hide()
 
-        game.btn_sound.show()
-
         game.pengaturan()
 
     def klikKembali(game):
+        """fungsi tombol jika diklik dari pengaturan"""
         game.btn_kembali.hide()
         game.btn_defaultT.hide()
         game.btn_theme1.hide()
@@ -1397,7 +1428,7 @@ class GAME(Cacing):
         game.btn_play.show()
         game.btn_peng.show()
 
-        game.btn_sound.disable()
+        # game.btn_sound.disable()
         game.btn_sound.hide()
 
         # taro cacing & makanan ke posisi awalnya
@@ -1410,6 +1441,7 @@ class GAME(Cacing):
         game.run()
 
     def klik_SoundbtnON(game):
+        """fungsi jika klik tombol 'Sound ON'"""
         game.suara_latar_belakang.set_volume(0.58)
         game.suara_makan.set_volume(0.7)
         game.suara_nabrak.set_volume(0.7)
@@ -1498,6 +1530,7 @@ class GAME(Cacing):
         pass
 
     def klik_SoundbtnOFF(game):
+        """fungsi jika klik tombol 'Sound OFF'"""
         game.suara_latar_belakang.set_volume(0.0)
         game.suara_makan.set_volume(0.0)
         game.suara_nabrak.set_volume(0.0)
@@ -1586,6 +1619,7 @@ class GAME(Cacing):
         pass
 
     def fbtn_play(game):
+        """fungsi tombol main/play dari menu utama."""
         game.reset()
         game.go_nskor = 0
         game.suara_latar_belakang.play(-1)

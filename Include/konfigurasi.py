@@ -27,31 +27,31 @@ def rgb(r: int, g: int, b: int, a: int = 255):
 
 
 # Konstant
-KONST_ANI = 0.015
+KONST_ANI = 0.015 # kecepatan animasi.
 TMFB = 0.4
 
 UKURAN_GAMBAR = 30  # Ukuran gambar (ular, makanan)
 BANYAK_KOTAK = 23
 UKURAN_WINDOWS = (UKURAN_GAMBAR*BANYAK_KOTAK, UKURAN_GAMBAR*BANYAK_KOTAK)
 
-# Theme Colour, Skin, etc.
+# Warna tema, model cacing, dll.
 # frame rate
 fps = pygame.time.Clock()
 FPS = 30
 # bg=backgroun, pn1=Panel 1,
 # tk=Teks, btn[A,H,P,Sh]=Tombol[aktif,pointerdiarahkan,ditekan,bayangan]
 LOKASI_FONT_UNTUK_TULISAN = Path('./res/font')
-LOKASI_ULAR_TEMA_KE_1 = Path('./res/image/ular/tema0')
-LOKASI_ULAR_TEMA_KE_2 = Path('./res/image/ular/tema1')
-LOKASI_ULAR_TEMA_KE_3 = Path('./res/image/ular/tema2')
-LOKASI_ULAR_TEMA_KE_4 = Path('./res/image/ular/tema3')
+LOKASI_CACING_TEMA_KE_1 = Path('./res/image/ular/tema0')
+LOKASI_CACING_TEMA_KE_2 = Path('./res/image/ular/tema1')
+LOKASI_CACING_TEMA_KE_3 = Path('./res/image/ular/tema2')
+LOKASI_CACING_TEMA_KE_4 = Path('./res/image/ular/tema3')
 LOKASI_SUARA = Path('./res/music')
 LOKASI_GAMBAR_DAN_LAIN2 = Path('./res/image/misc')
 
 LOKASI_MAKANAN = Path('./res/image/makanan/')
 
 # Kecepatan Ular
-KECEPATAN_ULAR_BERGERAK = 160  # milisekon
+KECEPATAN_CACING_BERGERAK = 160  # bergerak setiap x milisekon
 
 # Penamaan dan Warna Tema
 JUDUL_PADA_WINDOWS = 'Game Cacing | Kelompok 1'
@@ -127,8 +127,7 @@ tema3 = {
     'rm': rgb(157, 210, 185)
 }
 
-frame_warna_loading = [tema0['btnA'],
-                       tema1['btnA'], tema2['btnA'], tema3['btnA']]
+frame_warna_loading = [tema0['btnA'], tema1['btnA'], tema2['btnA'], tema3['btnA']]
 # endregion
 
 # region Default
@@ -153,14 +152,14 @@ def Tombol(win: pygame.Surface,
            font: pygame.font.Font,
            fontSize: int = 20,
            teks: str = "",
-           warnaTeks: tuple = (0, 0, 0),
-           warnaAktif: tuple = (50, 50, 50),
-           warnaHover: tuple = (100, 100, 100),
-           warnaDitekan: tuple = (25, 25, 25),
+           warnaTeks: tuple = rgb(0, 0, 0),
+           warnaAktif: tuple = rgb(50, 50, 50),
+           warnaHover: tuple = rgb(100, 100, 100),
+           warnaDitekan: tuple = rgb(25, 25, 25),
            margin: int = 20,
            sudutRad: int = 0,
            shadowDistance: int = 0,
-           shadowColour: tuple = (210, 210, 180),
+           shadowColour: tuple = rgb(210, 210, 180),
            onClick=lambda: None,
            onRelease=lambda: print(True, 1)):
 
