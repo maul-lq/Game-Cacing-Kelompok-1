@@ -10,9 +10,10 @@ from sys import exit
 import pygame_widgets as pw
 from pygame import *
 
-from fig import *
+from konfigurasi import *
 
 waktu_mulai = tm.time()
+
 
 # region
 # inisialisasi pygame
