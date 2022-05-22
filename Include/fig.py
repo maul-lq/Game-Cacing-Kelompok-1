@@ -1,17 +1,14 @@
-# Friday, April - 15 - 2022 (15/4/22) [11:42:27,306 AM]  /  GMT+0700 || 15
-
 # /------------------------------/
 # / Pengaturan Untuk Game Cacing /
 # / @copyright 2022              /
 # /------------------------------/
 
-from pygame_widgets.button import Button
 from pathlib import Path
-import pygame
 from typing import Callable
+
 import pygame
+from pygame_widgets.button import Button
 from pygame_widgets.widget import WidgetBase
-from rich.console import Console
 
 
 def rgb(r: int, g: int, b: int, a: int = 255):
@@ -40,7 +37,7 @@ UKURAN_WINDOWS = (UKURAN_GAMBAR*BANYAK_KOTAK, UKURAN_GAMBAR*BANYAK_KOTAK)
 # Theme Colour, Skin, etc.
 # frame rate
 fps = pygame.time.Clock()
-FPS = 60
+FPS = 30
 # bg=backgroun, pn1=Panel 1,
 # tk=Teks, btn[A,H,P,Sh]=Tombol[aktif,pointerdiarahkan,ditekan,bayangan]
 LOKASI_FONT_UNTUK_TULISAN = Path('./res/font')
@@ -175,18 +172,6 @@ def Tombol(win: pygame.Surface,
 
 class ProgressBar(WidgetBase):
     def __init__(self, win, x, y, width, height, progress: Callable[[], float], **kwargs):
-        """__init__ Progressbar untuk pygame.
-
-        membuat tampilan 'progressbar' dilayarnya. (lol)
-
-        Args:
-            win (Surface): layar utama / window.
-            x (int): posisi koordinat y progressbar pada bagian topleft.
-            y (int): posisi koordinat x progressbar pada bagian topleft.
-            width (int): lebar progressbar.
-            height (int): tinggi progressbar.
-            progress (Callable[[], float]): waktu yang dipakai sampai barnya full.
-        """
         super().__init__(win, x, y, width, height)
         self.progress = progress
 
@@ -216,7 +201,6 @@ class ProgressBar(WidgetBase):
                              (self._x, self._y,
                               int(self._width * (1 - self.percent)), self._height), border_radius=2)
 
-Console().print('Memuat konfigurasi selesai!')
 
 if __name__ == "__main__":
     print(len(frame_warna_loading))
