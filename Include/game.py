@@ -10,6 +10,7 @@ from sys import exit
 import pygame_widgets as pw
 from pygame import *
 
+from debug import debug
 from konfigurasi import *
 
 waktu_mulai = tm.time()
@@ -255,8 +256,10 @@ class Cacing(Makanan):
 
 
 class GAME(Cacing):
-    def __init__(game) -> None:
+    def __init__(game, debug_mode: bool = False) -> None:
         super().__init__()
+        game.debug_mode = debug_mode
+        
         # region Menu Utama
         # menu utama
         game.aktif = True
@@ -733,18 +736,18 @@ class GAME(Cacing):
         game.badan = [Vector2(13, 5), Vector2(12, 5), Vector2(11, 5), Vector2(10, 5), Vector2(9, 5)]
         UPDATE_CACING = USEREVENT+1
         pygame.time.set_timer(UPDATE_CACING, KECEPATAN_CACING_BERGERAK)
-        bisagerak = True
+        bisagerak = False
         game.arah = Vector2(0, 0)
         game.fd_pos1 = game.def_fdPos1
         game.fd_pos2 = game.def_fdPos2
         game.fd_pos3 = game.def_fdPos3
         while game.aktif:
             ki = event.get()
-            if len(game.badan) == 66 and bisagerak:
+            if len(game.badan) == 66 and not bisagerak:
                 # jika panjang badan cacing sudah 66 
                 # dan sedang bergerak.
                 game.arah = Vector2(0, 0)
-                bisagerak = False
+                bisagerak = True
 
             if game.index_makanan >= len(game.makanan_ke1):
                 # jika index_makanan lebih dari atau sama dengan
@@ -829,6 +832,13 @@ class GAME(Cacing):
             game.draw()
 
             pw.update(ki)
+            
+            # DEBUG MODE
+            if game.debug_mode:
+                debug('Mouse')
+                debug(f"Posisi Mouse: X: {mouse.get_pos()[0]} Y: {mouse.get_pos()[1]}", 15)
+                debug(f'Tombol Mouse: R: {mouse.get_pressed()[0]} M: {mouse.get_pressed()[1]} L: {mouse.get_pressed()[2]}', 27)
+
             display.update()
             fps.tick(FPS)
             game.index_makanan += KONST_ANI*10
@@ -1058,6 +1068,13 @@ class GAME(Cacing):
             game.pengDraw()
 
             pw.update(ki)
+            
+            # DEBUG MODE
+            if game.debug_mode:
+                debug('Mouse')
+                debug(f"Posisi Mouse: X: {mouse.get_pos()[0]} Y: {mouse.get_pos()[1]}", 15)
+                debug(f'Tombol Mouse: R: {mouse.get_pressed()[0]} M: {mouse.get_pressed()[1]} L: {mouse.get_pressed()[2]}', 27)
+            
             display.update()
             fps.tick(FPS)
             game.index_makanan += KONST_ANI*10
@@ -1251,50 +1268,6 @@ class GAME(Cacing):
             display.update()
             fps.tick(FPS)
 
-    def play(game):
-        UPDATE_CACING = USEREVENT
-        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_CACING_BERGERAK)
-        tunggu = True
-        while game.plAktif:
-            for ki in event.get():
-                if ki.type == QUIT:
-                    quit()
-                    exit()
-                if ki.type == UPDATE_CACING:
-                    game.update()
-
-                if ki.type == KEYDOWN:
-                    # Kontrol si ular
-                    if ki.key == K_w or ki.key == K_UP:
-                        if game.arah.y != 1:
-                            game.arah = Vector2(0, -1)
-
-                    if ki.key == K_d or ki.key == K_RIGHT:
-                        if game.arah.x != -1:
-                            game.arah = Vector2(1, 0)
-
-                    if ki.key == K_s or ki.key == K_DOWN:
-                        if game.arah.y != -1:
-                            game.arah = Vector2(0, 1)
-
-                    if ki.key == K_a or ki.key == K_LEFT:
-                        if game.arah.x != 1 and game.arah != Vector2(0,0):
-                            game.arah = Vector2(-1, 0)
-
-                pass
-
-            if game.index_makanan >= 5:
-                game.index_makanan = 0
-
-            if tunggu:
-                tm.sleep(TMFB)
-                tunggu = False
-
-            game.drawElem()
-            display.update()
-            game.index_makanan += (KONST_ANI*10)
-            fps.tick(FPS)
-
     def skor(game):
         # membuat tulisan skor
         game.display_makanan2x = transform.smoothscale(
@@ -1303,7 +1276,7 @@ class GAME(Cacing):
             midleft=(game.border0_rect.topright[0]+125, game.pskor_rect.midleft[1]))
 
         game.nskor = 0
-        game.nskor+= game.go_nskor
+        game.nskor += game.go_nskor
 
         if game.wline == 0:
             game.teks_skor = game.font_h1.render(
@@ -1324,8 +1297,10 @@ class GAME(Cacing):
         game.teks_skorRect.y += 2
 
         # membuat piala jika player mengulang game.
-        dis_piala2x = transform.smoothscale(game.piala, (game.pskor_rect.height-25, game.pskor_rect.height-25))
-        dis_piala2xRect = dis_piala2x.get_rect(midleft=(game.border0_rect.topright[0]+(125*3), game.pskor_rect.midleft[1]))
+        dis_piala2x = transform.smoothscale(
+            game.piala, (game.pskor_rect.height-25, game.pskor_rect.height-25))
+        dis_piala2xRect = dis_piala2x.get_rect(
+            midleft=(game.border0_rect.topright[0]+(125*3), game.pskor_rect.midleft[1]))
 
         layar.blits([(game.teks_skor, game.teks_skorRect),
                     (game.display_makanan2x, game.display_makanan2xRect)])
@@ -1372,6 +1347,57 @@ class GAME(Cacing):
                         draw.rect(layar, game.warnaRumput, rumputRect)
                 pass
         pass
+
+    def play(game):
+        UPDATE_CACING = USEREVENT
+        pygame.time.set_timer(UPDATE_CACING, KECEPATAN_CACING_BERGERAK)
+        tunggu = True
+        while game.plAktif:
+            for ki in event.get():
+                if ki.type == QUIT:
+                    quit()
+                    exit()
+                if ki.type == UPDATE_CACING:
+                    game.update()
+
+                if ki.type == KEYDOWN:
+                    # Kontrol si ular
+                    if ki.key == K_w or ki.key == K_UP:
+                        if game.arah.y != 1:
+                            game.arah = Vector2(0, -1)
+
+                    if ki.key == K_d or ki.key == K_RIGHT:
+                        if game.arah.x != -1:
+                            game.arah = Vector2(1, 0)
+
+                    if ki.key == K_s or ki.key == K_DOWN:
+                        if game.arah.y != -1:
+                            game.arah = Vector2(0, 1)
+
+                    if ki.key == K_a or ki.key == K_LEFT:
+                        if game.arah.x != 1 and game.arah != Vector2(0,0):
+                            game.arah = Vector2(-1, 0)
+
+                pass
+
+            if game.index_makanan >= 5:
+                game.index_makanan = 0
+
+            if tunggu:
+                tm.sleep(TMFB)
+                tunggu = False
+
+            game.drawElem()
+            
+            # DEBUG MODE
+            if game.debug_mode:
+                debug('Mouse')
+                debug(f"Posisi Mouse: X: {mouse.get_pos()[0]} Y: {mouse.get_pos()[1]}", 15)
+                debug(f'Tombol Mouse: R: {mouse.get_pressed()[0]} M: {mouse.get_pressed()[1]} L: {mouse.get_pressed()[2]}', 27)
+            
+            display.update()
+            game.index_makanan += (KONST_ANI*10)
+            fps.tick(FPS)
 
     # endregion
 
@@ -2697,17 +2723,15 @@ class GAME(Cacing):
 
 
 if __name__ == "__main__":
-    m = GAME()
+    m = GAME(True)
     looping = False
 
     def loading_frame():
         global waktu
-        tampilan_loading = ProgressBar(layar, 0, 0,
-                                       UKURAN_WINDOWS[0]-200, 75, lambda: 1 - (tm.time() - waktu_mulai) / 10)
+        tampilan_loading = ProgressBar(layar, 0, 0, UKURAN_WINDOWS[0]-200, 75, lambda: 1 - (tm.time() - waktu_mulai) / 10)
         tampilan_loading.incompletedColour = rgb(53, 53, 53)
         tampilan_loading.setX(100)
-        tampilan_loading.setY(
-            int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)+10)
+        tampilan_loading.setY(int(UKURAN_WINDOWS[1]/2)-(tampilan_loading.getHeight()/2)+10)
 
         waktu = 1 - (tm.time() - waktu_mulai) / 10
 
@@ -2785,6 +2809,13 @@ if __name__ == "__main__":
             #             (fr_teks[4], teks_rect), (teks, fr_teks_rect)])
             layar.blits([(teks_dot, teks_dot_rect), (fr_teks[4], teks_rect)])
             pw.update(ki)
+            
+            # DEBUG MODE
+            if m.debug_mode:
+                debug('Mouse')
+                debug(f"Posisi Mouse: X: {mouse.get_pos()[0]} Y: {mouse.get_pos()[1]}", 15)
+                debug(f'Tombol Mouse: R: {mouse.get_pressed()[0]} M: {mouse.get_pressed()[1]} L: {mouse.get_pressed()[2]}', 27)
+            
             display.update()
 
             frame_index_teks_rect += KONST_ANI
