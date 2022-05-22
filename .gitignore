@@ -167,3 +167,6 @@ build.bat
 bin/
 Include/setup.py
 Include/build.bat
+Include/game.py
+Include/konfigurasi.py
+Include/debug.py
