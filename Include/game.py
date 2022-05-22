@@ -2723,7 +2723,7 @@ class GAME(Cacing):
 
 
 if __name__ == "__main__":
-    m = GAME(True)
+    m = GAME(False)
     looping = False
 
     def loading_frame():
